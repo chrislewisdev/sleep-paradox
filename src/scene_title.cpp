@@ -1,6 +1,7 @@
 #include "scene_title.h"
 
 #include "bn_sprite_text_generator.h"
+#include "bn_keypad.h"
 
 #include "common_variable_8x16_sprite_font.h"
 
@@ -16,5 +17,9 @@ namespace sp {
         text_gen.generate(0, 30, "Press A to start", text_sprites);
     }
 
-    void scene_title::update() {}
+    void scene_title::update() {
+        if (bn::keypad::a_held()) {
+            scene_manager.queue_scene_change(sp::scene_id::end);
+        }
+    }
 }

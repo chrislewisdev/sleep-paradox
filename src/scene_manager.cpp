@@ -1,6 +1,7 @@
 #include "scene_manager.h"
 
 #include "scene_title.h"
+#include "scene_end.h"
 
 namespace sp {
     void scene_manager::queue_scene_change(sp::scene_id scene_id) {
@@ -15,8 +16,11 @@ namespace sp {
                 case sp::scene_id::title:
                     stack.push_back(bn::make_unique<sp::scene_title>(*this));
                     break;
+                case sp::scene_id::end:
+                    stack.push_back(bn::make_unique<sp::scene_end>(*this));
+                    break;
                 default:
-                    BN_ERROR("Unknown scene id", (int)queued_scene_id.value());
+                    BN_ERROR("Unknown scene id ", (int)queued_scene_id.value());
             }
 
             queued_scene_id.reset();

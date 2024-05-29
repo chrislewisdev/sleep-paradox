@@ -1,5 +1,4 @@
-#ifndef SCENE_TITLE_H
-#define SCENE_TITLE_H
+#pragma once
 
 #include "bn_vector.h"
 #include "bn_sprite_ptr.h"
@@ -18,4 +17,3 @@ namespace sp {
     };
 }
 
-#endif

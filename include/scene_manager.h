@@ -1,5 +1,4 @@
-#ifndef SCENE_MANAGER_H
-#define SCENE_MANAGER_H
+#pragma once
 
 #include "bn_deque.h"
 #include "bn_unique_ptr.h"
@@ -19,4 +18,3 @@ namespace sp {
     };
 }
 
-#endif

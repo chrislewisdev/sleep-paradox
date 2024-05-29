@@ -1,5 +1,4 @@
-#ifndef SCENE_H
-#define SCENE_H
+#pragma once
 
 namespace sp {
     enum class scene_id {
@@ -16,4 +15,3 @@ namespace sp {
     };
 }
 
-#endif

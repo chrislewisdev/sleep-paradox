@@ -3,8 +3,7 @@
  * zlib License, see LICENSE file.
  */
 
-#ifndef COMMON_VARIABLE_8x16_SPRITE_FONT_H
-#define COMMON_VARIABLE_8x16_SPRITE_FONT_H
+#pragma once
 
 #include "bn_sprite_font.h"
 #include "bn_utf8_characters_map.h"
@@ -143,4 +142,3 @@ constexpr bn::sprite_font variable_8x16_sprite_font(
 
 }
 
-#endif

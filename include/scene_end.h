@@ -1,5 +1,4 @@
-#ifndef SCENE_TITLE_H
-#define SCENE_TITLE_H
+#pragma once
 
 #include "bn_vector.h"
 #include "bn_sprite_ptr.h"
@@ -8,14 +7,12 @@
 #include "scene_manager.h"
 
 namespace sp {
-    class scene_title : public scene {
+    class scene_end : public scene {
         private:
             sp::scene_manager& scene_manager;
             bn::vector<bn::sprite_ptr, 16> text_sprites;
         public:
-            scene_title(sp::scene_manager& _scene_manager);
+            scene_end(sp::scene_manager& scene_manager);
             void update();
     };
 }
-
-#endif

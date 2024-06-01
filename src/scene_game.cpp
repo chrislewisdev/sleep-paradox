@@ -14,7 +14,9 @@ namespace sp {
           bg_layer_ceiling(bn::affine_bg_items::zone_classroom_ceiling.create_bg(0, 0))
     {
         bg_layer_floor.set_priority(3);
+        bg_layer_floor.set_wrapping_enabled(false);
         bg_layer_ceiling.set_priority(1);
+        bg_layer_ceiling.set_wrapping_enabled(false);
     }
 
     void scene_game::update() {

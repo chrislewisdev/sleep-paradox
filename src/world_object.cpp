@@ -3,7 +3,11 @@
 namespace sp {
     world_object::world_object(const bn::sprite_item& _sprite_item)
         : sprite_item(_sprite_item)
-    {}
+    {
+        sprite = sprite_item.create_sprite(0, 0);
+        sprite->set_bg_priority(2);
+        position = vec3(50, 8, 50);
+    }
 
     const vec3& world_object::get_position() const {
         return position;

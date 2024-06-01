@@ -1,6 +1,7 @@
 #include "scene_manager.h"
 
 #include "scene_title.h"
+#include "scene_game.h"
 #include "scene_end.h"
 
 namespace sp {
@@ -15,6 +16,9 @@ namespace sp {
             switch (queued_scene_id.value()) {
                 case sp::scene_id::title:
                     stack.push_back(bn::make_unique<sp::scene_title>(*this));
+                    break;
+                case sp::scene_id::gameplay:
+                    stack.push_back(bn::make_unique<sp::scene_game>(*this));
                     break;
                 case sp::scene_id::end:
                     stack.push_back(bn::make_unique<sp::scene_end>(*this));

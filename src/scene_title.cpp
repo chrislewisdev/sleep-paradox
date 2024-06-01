@@ -19,7 +19,7 @@ namespace sp {
 
     void scene_title::update() {
         if (bn::keypad::a_held()) {
-            scene_manager.queue_scene_change(sp::scene_id::end);
+            scene_manager.queue_scene_change(sp::scene_id::gameplay);
         }
     }
 }

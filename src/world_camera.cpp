@@ -29,7 +29,7 @@ namespace sp {
         position = vec3(
             target.x + -bn::degrees_lut_sin(heading) * bn::degrees_lut_cos(pitch),
             target.y + bn::degrees_lut_sin(pitch),
-            target.z + -bn::degrees_lut_cos(heading) * bn::degrees_lut_cos(pitch)
+            target.z + bn::degrees_lut_cos(heading) * bn::degrees_lut_cos(pitch)
         );
 
         direction = normalise(target - position);

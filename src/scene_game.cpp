@@ -22,16 +22,15 @@ namespace sp {
         constexpr int scale = 1;
         constexpr int wall_height = 8;
 
-        vec3 target = player.get_position();
         if (bn::keypad::left_held()) {
-            target.x -= 1;
+            camera_target.x -= 1;
         } else if (bn::keypad::right_held()) {
-            target.x += 1;
+            camera_target.x += 1;
         }
         if (bn::keypad::up_held()) {
-            target.z += 1;
+            camera_target.z += 1;
         } else if (bn::keypad::down_held()) {
-            target.z -= 1;
+            camera_target.z -= 1;
         }
         if (bn::keypad::l_held()) {
             if (heading == 0) heading = 359;
@@ -41,11 +40,12 @@ namespace sp {
             else heading += 1;
         }
 
-        camera.update_camera(target, pitch, heading, scale);
+        camera.update_camera(camera_target, pitch, heading, scale);
 
         vec3 bg_position = vec3::zero * camera.get_world_transform();
-        bg_layer_floor.set_position(bg_position.x, -bg_position.z);
-        bg_layer_ceiling.set_position(bg_position.x, -bg_position.z + bn::degrees_lut_sin(pitch) * scale * -wall_height);
+        bg_layer_floor.set_pivot_position(-bg_position.x, bg_position.z);
+        bg_layer_ceiling.set_pivot_position(-bg_position.x, bg_position.z);
+        bg_layer_ceiling.set_y(bn::degrees_lut_sin(pitch) * scale * -wall_height);
 
         bg_layer_floor.set_mat_attributes(camera.get_affine_transform_xz());
         bg_layer_ceiling.set_mat_attributes(camera.get_affine_transform_xz());

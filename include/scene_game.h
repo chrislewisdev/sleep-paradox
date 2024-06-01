@@ -12,6 +12,7 @@ namespace sp {
         private:
             sp::scene_manager& scene_manager;
             world_camera camera;
+            vec3 camera_target;
             world_object player;
             bn::affine_bg_ptr bg_layer_floor, bg_layer_ceiling;
             int heading;

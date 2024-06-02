@@ -1,5 +1,6 @@
 #pragma once
 
+#include "bn_vector.h"
 #include "bn_affine_bg_ptr.h"
 
 #include "scene.h"
@@ -13,9 +14,10 @@ namespace sp {
             sp::scene_manager& scene_manager;
             world_camera camera;
             vec3 camera_target;
-            world_object player;
+            bn::vector<world_object, 10> objects;
             bn::affine_bg_ptr bg_layer_floor, bg_layer_ceiling;
             int heading;
+            int timer;
 
         public:
             scene_game(sp::scene_manager& _scene_manager);

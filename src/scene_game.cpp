@@ -9,7 +9,6 @@
 namespace sp {
     scene_game::scene_game(sp::scene_manager& _scene_manager)
         : scene_manager(_scene_manager),
-          player(bn::sprite_items::fred),
           bg_layer_floor(bn::affine_bg_items::zone_classroom_floor.create_bg(0, 0)),
           bg_layer_ceiling(bn::affine_bg_items::zone_classroom_ceiling.create_bg(0, 0))
     {
@@ -17,6 +16,10 @@ namespace sp {
         bg_layer_floor.set_wrapping_enabled(false);
         bg_layer_ceiling.set_priority(1);
         bg_layer_ceiling.set_wrapping_enabled(false);
+
+        objects.push_back(world_object(bn::sprite_items::fred));
+        objects.push_back(world_object(bn::sprite_items::fred));
+        objects.push_back(world_object(bn::sprite_items::fred));
     }
 
     void scene_game::update() {
@@ -24,15 +27,16 @@ namespace sp {
         constexpr int scale = 1;
         constexpr int wall_height = 8;
 
+        vec3 position = objects[0].get_position();
         if (bn::keypad::left_held()) {
-            camera_target.x -= 1;
+            position.x -= 1;
         } else if (bn::keypad::right_held()) {
-            camera_target.x += 1;
+            position.x += 1;
         }
         if (bn::keypad::up_held()) {
-            camera_target.z += 1;
+            position.z += 1;
         } else if (bn::keypad::down_held()) {
-            camera_target.z -= 1;
+            position.z -= 1;
         }
         if (bn::keypad::l_held()) {
             if (heading == 0) heading = 359;
@@ -52,7 +56,14 @@ namespace sp {
         bg_layer_floor.set_mat_attributes(camera.get_affine_transform_xz());
         bg_layer_ceiling.set_mat_attributes(camera.get_affine_transform_xz());
 
-        //player.set_position(target);
-        player.update(camera);
+        objects[0].set_position(position);
+        objects[1].set_position(vec3(bn::degrees_lut_sin(timer) * 50, 0, bn::degrees_lut_sin(timer) * 50));
+        objects[2].set_position(vec3(0, 0, bn::degrees_lut_sin(timer) * 50));
+
+        for (auto object : objects) {
+            object.update(camera);
+        }
+
+        timer = (timer + 1) % 360;
     }
 }

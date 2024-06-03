@@ -2,7 +2,9 @@
 
 #include "bn_keypad.h"
 
-#include "bn_sprite_items_fred.h"
+#include "bn_sprite_items_fred_side_profile.h"
+#include "bn_sprite_items_bully01_side_profile.h"
+#include "bn_sprite_items_bully02_side_profile.h"
 #include "bn_affine_bg_items_zone_classroom_floor.h"
 #include "bn_affine_bg_items_zone_classroom_ceiling.h"
 
@@ -17,9 +19,9 @@ namespace sp {
         bg_layer_ceiling.set_priority(1);
         bg_layer_ceiling.set_wrapping_enabled(false);
 
-        objects.push_back(world_object(bn::sprite_items::fred));
-        objects.push_back(world_object(bn::sprite_items::fred));
-        objects.push_back(world_object(bn::sprite_items::fred));
+        objects.push_back(world_object(bn::sprite_items::fred_side_profile));
+        objects.push_back(world_object(bn::sprite_items::bully01_side_profile));
+        objects.push_back(world_object(bn::sprite_items::bully02_side_profile));
     }
 
     void scene_game::update() {
@@ -60,8 +62,10 @@ namespace sp {
         bg_layer_ceiling.set_mat_attributes(camera.get_affine_transform_xz());
 
         objects[0].set_position(position);
-        objects[1].set_position(vec3(bn::degrees_lut_sin(timer) * 50, 0, bn::degrees_lut_sin(timer) * 50));
-        objects[2].set_position(vec3(0, 0, bn::degrees_lut_sin(timer) * 50));
+        objects[1].set_position(vec3(-48, 16, 48));
+        objects[2].set_position(vec3(48, 16, 48));
+        //objects[1].set_position(vec3(bn::degrees_lut_sin(timer) * 50, 0, bn::degrees_lut_sin(timer) * 50));
+        //objects[2].set_position(vec3(0, 0, bn::degrees_lut_sin(timer) * 50));
 
         for (auto object : objects) {
             object.update(camera);

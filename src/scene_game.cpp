@@ -53,10 +53,7 @@ namespace sp {
         camera.update_camera(position, pitch, heading, scale);
 
         vec3 bg_position = (vec3::zero - camera.get_position()) * camera.get_world_transform();
-        //bg_layer_floor.set_pivot_position(-bg_position.x, -bg_position.z);
         bg_layer_floor.set_position(bg_position.x, bg_position.z);
-        //bg_layer_ceiling.set_pivot_position(-bg_position.x, -bg_position.z);
-        //bg_layer_ceiling.set_y(bn::degrees_lut_sin(pitch) * scale * -wall_height);
         bg_layer_ceiling.set_position(bg_position.x, bg_position.z + bn::degrees_lut_sin(pitch) * scale * -wall_height);
 
         bg_layer_floor.set_mat_attributes(camera.get_affine_transform_xz());

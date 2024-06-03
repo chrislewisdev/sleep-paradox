@@ -1,10 +1,9 @@
 #include "world_object.h"
 
-#include "bn_log.h"
-
 namespace sp {
     world_object::world_object(const bn::sprite_item& _sprite_item)
-        : sprite_item(_sprite_item)
+        : position(0, 16, 0),
+          sprite_item(_sprite_item)
     {
         sprite = sprite_item.create_sprite(0, 0);
         sprite->set_bg_priority(2);
@@ -20,8 +19,8 @@ namespace sp {
 
     void world_object::update(const world_camera& camera) {
         bn::fixed scale = camera.get_scale();
+        // Translation was supposed to be part of the world transform but that was broken so we just do it manually :(
         vec3 screen_position = (position - camera.get_position()) * camera.get_world_transform() * scale;
-        //BN_LOG("SP:", screen_position.x.integer(), ", ", screen_position.y.integer(), ", ", screen_position.z.integer());
 
         // TODO: Check if sprite is on/off screen, update sprite accordingly
 

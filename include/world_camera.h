@@ -18,6 +18,7 @@ namespace sp {
             void update_transform_yz(const vec3& right_axis, const vec3& up_axis);
 
         public:
+            const vec3& get_position() const;
             const mat4& get_world_transform() const;
             bn::fixed get_scale() const;
             const bn::affine_mat_attributes& get_affine_transform_xz() const;

@@ -1,8 +1,14 @@
 #include "world_camera.h"
 
+#include "bn_log.h"
+
 #include "mat2.h"
 
 namespace sp {
+    const vec3& world_camera::get_position() const {
+        return position;
+    }
+
     const mat4& world_camera::get_world_transform() const {
         return world_transform;
     }
@@ -31,22 +37,25 @@ namespace sp {
             target.y + bn::degrees_lut_sin(pitch),
             target.z + bn::degrees_lut_cos(heading) * bn::degrees_lut_cos(pitch)
         );
+        //BN_LOG("Position: ", position.x.integer(), ",", position.y.integer(), ",", position.z.integer());
 
         direction = normalise(target - position);
 
         vec3 right_axis(bn::degrees_lut_cos(heading), 0, bn::degrees_lut_sin(heading));
+        //vec3 right_axis = -normalise(vec3::up.cross(direction));
 
         vec3 up_axis(
             direction.x,
             bn::degrees_lut_sin(pitch),
             direction.z
         );
+        //vec3 up_axis = normalise(direction.cross(right_axis));
 
         world_transform = mat4(
             vec3(right_axis.x, up_axis.x, direction.x),
             vec3(right_axis.y, up_axis.y, direction.y),
             vec3(right_axis.z, up_axis.z, direction.z),
-            -position
+            vec3::zero //-position
         );
         
         update_transform_xz(pitch, heading);

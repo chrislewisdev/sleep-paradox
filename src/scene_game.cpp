@@ -29,29 +29,35 @@ namespace sp {
 
         vec3 position = objects[0].get_position();
         if (bn::keypad::left_held()) {
-            position.x -= 1;
+            position.z -= bn::degrees_lut_sin(heading);
+            position.x -= bn::degrees_lut_cos(heading);
         } else if (bn::keypad::right_held()) {
-            position.x += 1;
+            position.z += bn::degrees_lut_sin(heading);
+            position.x += bn::degrees_lut_cos(heading);
         }
         if (bn::keypad::up_held()) {
-            position.z += 1;
+            position.z += bn::degrees_lut_cos(heading);
+            position.x -= bn::degrees_lut_sin(heading);
         } else if (bn::keypad::down_held()) {
-            position.z -= 1;
+            position.z -= bn::degrees_lut_cos(heading);
+            position.x += bn::degrees_lut_sin(heading);
         }
-        if (bn::keypad::l_held()) {
+        if (bn::keypad::r_held()) {
             if (heading == 0) heading = 359;
             else heading -= 1;
-        } else if (bn::keypad::r_held()) {
+        } else if (bn::keypad::l_held()) {
             if (heading == 359) heading = 0;
             else heading += 1;
         }
 
-        camera.update_camera(camera_target, pitch, heading, scale);
+        camera.update_camera(position, pitch, heading, scale);
 
-        vec3 bg_position = vec3::zero * camera.get_world_transform();
-        bg_layer_floor.set_pivot_position(-bg_position.x, bg_position.z);
-        bg_layer_ceiling.set_pivot_position(-bg_position.x, bg_position.z);
-        bg_layer_ceiling.set_y(bn::degrees_lut_sin(pitch) * scale * -wall_height);
+        vec3 bg_position = (vec3::zero - camera.get_position()) * camera.get_world_transform();
+        //bg_layer_floor.set_pivot_position(-bg_position.x, -bg_position.z);
+        bg_layer_floor.set_position(bg_position.x, bg_position.z);
+        //bg_layer_ceiling.set_pivot_position(-bg_position.x, -bg_position.z);
+        //bg_layer_ceiling.set_y(bn::degrees_lut_sin(pitch) * scale * -wall_height);
+        bg_layer_ceiling.set_position(bg_position.x, bg_position.z + bn::degrees_lut_sin(pitch) * scale * -wall_height);
 
         bg_layer_floor.set_mat_attributes(camera.get_affine_transform_xz());
         bg_layer_ceiling.set_mat_attributes(camera.get_affine_transform_xz());

@@ -30,6 +30,9 @@ namespace sp {
 
         if (sprite.has_value()) {
             sprite->set_position(screen_position.x, screen_position.z);
+            // This currently requires that we increase the sort layers in the Makefile
+            // We can optimise more by not creating sprites for walls that aren't visible at all
+            sprite->set_z_order(-screen_position.z.integer());
         }
     }
 }

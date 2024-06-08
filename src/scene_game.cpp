@@ -8,8 +8,8 @@
 namespace sp {
     scene_game::scene_game(sp::scene_manager& _scene_manager)
         : scene_manager(_scene_manager),
-          bg_layer_floor(bn::affine_bg_items::zone_sandbox_floor.create_bg(0, 0)),
-          bg_layer_ceiling(bn::affine_bg_items::zone_sandbox_ceiling.create_bg(0, 0))
+          bg_layer_floor(world_state.get_current_zone().floor.create_bg(0, 0)),
+          bg_layer_ceiling(world_state.get_current_zone().ceiling.create_bg(0, 0))
     {
         bg_layer_floor.set_priority(3);
         bg_layer_floor.set_wrapping_enabled(false);
@@ -22,6 +22,7 @@ namespace sp {
         constexpr int pitch = 45;
         constexpr bn::fixed scale = 1;
 
+        world_camera& camera = world_state.get_camera();
         int heading = camera.get_heading();
         if (bn::keypad::r_held()) {
             if (heading == 0) heading = 359;
@@ -34,8 +35,8 @@ namespace sp {
         // This order of operations is a little messed up because there is a circular dependency between
         // player position -> camera position -> sprite screen position
         // We can solve this by splitting update/draw into separate cycles but for now at least, let's just see how we go
-        player.update(camera);
-        camera.update_camera(player.get_position(), pitch, heading, scale);
+        camera.update_camera(world_state.get_player().get_position(), pitch, heading, scale);
+        world_state.update();
 
         vec3 bg_position = -camera.get_position() * camera.get_world_transform();
         bg_layer_floor.set_position(bg_position.x, bg_position.z);

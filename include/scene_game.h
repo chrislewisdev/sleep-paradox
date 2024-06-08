@@ -5,17 +5,13 @@
 
 #include "scene.h"
 #include "scene_manager.h"
-#include "world_camera.h"
-#include "world_object.h"
-#include "world_object_player.h"
+#include "world_state.h"
 
 namespace sp {
     class scene_game : public scene {
         private:
             sp::scene_manager& scene_manager;
-            world_camera camera;
-            world_object_player player;
-            vec3 camera_target;
+            sp::world_state world_state;
             bn::affine_bg_ptr bg_layer_floor, bg_layer_ceiling;
 
         public:

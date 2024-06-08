@@ -6,7 +6,9 @@ namespace sp {
     world_camera::world_camera() :
         pitch(45),
         heading(0),
-        scale(1)
+        scale(1),
+        affine_transform_ptr_xy(bn::sprite_affine_mat_ptr::create(affine_transform_xy)),
+        affine_transform_ptr_yz(bn::sprite_affine_mat_ptr::create(affine_transform_yz))
     {}
 
     int world_camera::get_pitch() const { return pitch; }
@@ -14,12 +16,15 @@ namespace sp {
     bn::fixed world_camera::get_scale() const { return scale; }
 
     const vec3& world_camera::get_position() const { return position; }
+    const vec3& world_camera::get_direction() const { return direction; }
 
     const mat4& world_camera::get_world_transform() const { return world_transform; }
 
     const bn::affine_mat_attributes& world_camera::get_affine_transform_xz() const { return affine_transform_xz; }
     const bn::affine_mat_attributes& world_camera::get_affine_transform_xy() const { return affine_transform_xy; }
     const bn::affine_mat_attributes& world_camera::get_affine_transform_yz() const { return affine_transform_yz; }
+    const bn::sprite_affine_mat_ptr& world_camera::get_affine_transform_ptr_xy() const { return affine_transform_ptr_xy; }
+    const bn::sprite_affine_mat_ptr& world_camera::get_affine_transform_ptr_yz() const { return affine_transform_ptr_yz; }
 
     void world_camera::update_camera(const sp::vec3& target, int _pitch, int _heading, bn::fixed _scale) {
         pitch = _pitch;
@@ -32,7 +37,7 @@ namespace sp {
             target.z + bn::degrees_lut_cos(heading) * bn::degrees_lut_cos(pitch)
         );
 
-        vec3 direction = normalise(target - position);
+        direction = normalise(target - position);
 
         vec3 right_axis(bn::degrees_lut_cos(heading), 0, bn::degrees_lut_sin(heading));
 
@@ -70,7 +75,7 @@ namespace sp {
     }
 
     void world_camera::update_transform_xy(const vec3& right_axis, const vec3& up_axis) {
-        auto scale_matrix = mat2::scale_inverse(scale + bn::fixed(0.05), scale * bn::fixed(0.55));
+        auto scale_matrix = mat2::scale_inverse(scale, scale);
         auto perspective_matrix = inverse(mat2(right_axis.x, right_axis.y, up_axis.x, up_axis.y));
         auto transform = scale_matrix * perspective_matrix;
 
@@ -80,10 +85,11 @@ namespace sp {
             transform.c.data() >> 8,
             transform.d.data() >> 8
         );
+        affine_transform_ptr_xy.set_attributes(affine_transform_xy);
     }
 
     void world_camera::update_transform_yz(const vec3& right_axis, const vec3& up_axis) {
-        auto scale_matrix = mat2::scale_inverse(scale + bn::fixed(0.05), scale * bn::fixed(0.55));
+        auto scale_matrix = mat2::scale_inverse(scale, scale);
         auto perspective_matrix = inverse(mat2(right_axis.z, right_axis.y, up_axis.z, up_axis.y));
         auto transform = scale_matrix * perspective_matrix;
 
@@ -93,6 +99,7 @@ namespace sp {
             transform.c.data() >> 8,
             transform.d.data() >> 8
         );
+        affine_transform_ptr_yz.set_attributes(affine_transform_yz);
     }
 }
 

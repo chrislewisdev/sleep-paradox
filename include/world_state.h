@@ -13,7 +13,7 @@ namespace sp {
             const world_zone* current_zone;
             world_camera camera;
             world_object_player player;
-            bn::vector<world_object_wall, 32> walls;
+            bn::vector<world_object_wall, 64> walls;
 
         public:
             world_state();

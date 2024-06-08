@@ -12,5 +12,15 @@ namespace sp {
 
     void world_object_wall::update(const world_camera& camera) {
         world_object::update(camera);
+
+        if (sprite.has_value()) {
+            bool is_visible = facing.dot(camera.get_direction()) > 0;
+            sprite->set_visible(is_visible);
+            if (facing.z != 0) {
+                sprite->set_affine_mat(camera.get_affine_transform_ptr_xy());
+            } else {
+                sprite->set_affine_mat(camera.get_affine_transform_ptr_yz());
+            }
+        }
     }
 }

@@ -1,5 +1,7 @@
 #include "world_state.h"
 
+#include "wall_generator.h"
+
 namespace sp {
     world_state::world_state() {
         load_zone(world_zone::sandbox);
@@ -11,9 +13,16 @@ namespace sp {
 
     void world_state::update() {
         player.update(camera);
+
+        for (world_object_wall& wall : walls) {
+            wall.update(camera);
+        }
     }
 
     void world_state::load_zone(const world_zone& zone) {
         current_zone = &zone;
+
+        wall_generator generator;
+        generator.generate_walls(zone, walls);
     }
 }

@@ -4,9 +4,12 @@
 #include "bn_sprite_ptr.h"
 #include "bn_sprite_item.h"
 
-#include "world_camera.h"
+#include "vec3.h"
 
 namespace sp {
+    // Declared to avoid circular dependency with world_state.h
+    class world_state;
+
     class world_object {
         protected:
             vec3 position;
@@ -20,7 +23,7 @@ namespace sp {
             const vec3& get_position() const;
             void set_position(const vec3& _position);
 
-            virtual void update(const world_camera& camera);
+            virtual void update(sp::world_state& world_state);
     };
 }
 

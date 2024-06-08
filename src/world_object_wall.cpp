@@ -1,5 +1,8 @@
 #include "world_object_wall.h"
 
+#include "world_state.h"
+#include "world_camera.h"
+
 #include "bn_sprite_items_wall_placeholder.h"
 
 namespace sp {
@@ -10,9 +13,10 @@ namespace sp {
         position = _position;
     }
 
-    void world_object_wall::update(const world_camera& camera) {
-        world_object::update(camera);
+    void world_object_wall::update(sp::world_state& world_state) {
+        world_object::update(world_state);
 
+        world_camera& camera = world_state.get_camera();
         if (sprite.has_value()) {
             bool is_visible = facing.dot(camera.get_direction()) > 0;
             sprite->set_visible(is_visible);

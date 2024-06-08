@@ -12,10 +12,10 @@ namespace sp {
     world_object_player& world_state::get_player() { return player; }
 
     void world_state::update() {
-        player.update(camera);
+        player.update(*this);
 
         for (world_object_wall& wall : walls) {
-            wall.update(camera);
+            wall.update(*this);
         }
     }
 

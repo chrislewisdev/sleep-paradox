@@ -38,4 +38,10 @@ namespace sp {
         // This is the 'tile' index NOT the 'metatile' index. Might need to change this later on
         return cell_info.tile_index();
     }
+
+    int world_zone::get_ceiling_tile(vec3 position) const {
+        int x = (position.x.integer() + floor.map_item().dimensions().width() * tile_size / 2) / metatile_size;
+        int y = (floor.map_item().dimensions().height() * tile_size / 2 - position.z.integer()) / metatile_size;
+        return get_ceiling_tile(x, y);
+    }
 }

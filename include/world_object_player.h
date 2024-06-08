@@ -7,6 +7,6 @@ namespace sp {
         public:
             world_object_player();
 
-            void update(const world_camera& camera);
+            void update(sp::world_state& world_state);
     };
 }

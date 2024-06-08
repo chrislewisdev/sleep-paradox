@@ -10,6 +10,6 @@ namespace sp {
         public:
             world_object_wall(vec3 _position, vec3 _facing);
 
-            void update(const world_camera& camera);
+            void update(sp::world_state& world_state);
     };
 }

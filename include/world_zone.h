@@ -2,6 +2,8 @@
 
 #include "bn_affine_bg_item.h"
 
+#include "vec3.h"
+
 namespace sp {
     class world_zone {
         public:
@@ -18,5 +20,6 @@ namespace sp {
             int get_height() const;
 
             int get_ceiling_tile(int x, int y) const;
+            int get_ceiling_tile(vec3 position) const;
     };
 }

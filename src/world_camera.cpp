@@ -3,31 +3,27 @@
 #include "mat2.h"
 
 namespace sp {
-    const vec3& world_camera::get_position() const {
-        return position;
-    }
+    world_camera::world_camera() :
+        pitch(45),
+        heading(0),
+        scale(1)
+    {}
 
-    const mat4& world_camera::get_world_transform() const {
-        return world_transform;
-    }
+    int world_camera::get_pitch() const { return pitch; }
+    int world_camera::get_heading() const { return heading; }
+    bn::fixed world_camera::get_scale() const { return scale; }
 
-    bn::fixed world_camera::get_scale() const {
-        return scale;
-    }
+    const vec3& world_camera::get_position() const { return position; }
 
-    const bn::affine_mat_attributes& world_camera::get_affine_transform_xz() const {
-        return affine_transform_xz;
-    }
+    const mat4& world_camera::get_world_transform() const { return world_transform; }
 
-    const bn::affine_mat_attributes& world_camera::get_affine_transform_xy() const {
-        return affine_transform_xy;
-    }
+    const bn::affine_mat_attributes& world_camera::get_affine_transform_xz() const { return affine_transform_xz; }
+    const bn::affine_mat_attributes& world_camera::get_affine_transform_xy() const { return affine_transform_xy; }
+    const bn::affine_mat_attributes& world_camera::get_affine_transform_yz() const { return affine_transform_yz; }
 
-    const bn::affine_mat_attributes& world_camera::get_affine_transform_yz() const {
-        return affine_transform_yz;
-    }
-
-    void world_camera::update_camera(const sp::vec3& target, bn::fixed pitch, bn::fixed heading, bn::fixed _scale) {
+    void world_camera::update_camera(const sp::vec3& target, int _pitch, int _heading, bn::fixed _scale) {
+        pitch = _pitch;
+        heading = _heading;
         scale = _scale;
 
         position = vec3(
@@ -36,7 +32,7 @@ namespace sp {
             target.z + bn::degrees_lut_cos(heading) * bn::degrees_lut_cos(pitch)
         );
 
-        direction = normalise(target - position);
+        vec3 direction = normalise(target - position);
 
         vec3 right_axis(bn::degrees_lut_cos(heading), 0, bn::degrees_lut_sin(heading));
 
@@ -55,12 +51,12 @@ namespace sp {
             vec3::zero 
         );
         
-        update_transform_xz(pitch, heading);
+        update_transform_xz();
         update_transform_xy(right_axis, up_axis);
         update_transform_yz(right_axis, up_axis);
     }
 
-    void world_camera::update_transform_xz(bn::fixed pitch, bn::fixed heading) {
+    void world_camera::update_transform_xz() {
         auto rotation_matrix = mat2::rotate_inverse(heading);
         auto scale_matrix = mat2::scale_inverse(scale, scale * bn::degrees_lut_cos(pitch));
         auto transform = rotation_matrix * scale_matrix;

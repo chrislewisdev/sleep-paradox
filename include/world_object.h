@@ -8,7 +8,7 @@
 
 namespace sp {
     class world_object {
-        private:
+        protected:
             vec3 position;
             bn::optional<bn::sprite_ptr> sprite;
             const bn::sprite_item& sprite_item;

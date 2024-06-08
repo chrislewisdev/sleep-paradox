@@ -8,23 +8,28 @@
 namespace sp {
     class world_camera {
         private:
-            vec3 position, direction;
+            int pitch, heading;
             bn::fixed scale;
+            vec3 position;
             mat4 world_transform;
             bn::affine_mat_attributes affine_transform_xz, affine_transform_xy, affine_transform_yz;
 
-            void update_transform_xz(bn::fixed pitch, bn::fixed heading);
+            void update_transform_xz();
             void update_transform_xy(const vec3& right_axis, const vec3& up_axis);
             void update_transform_yz(const vec3& right_axis, const vec3& up_axis);
 
         public:
+            world_camera();
+
+            int get_pitch() const;
+            int get_heading() const;
+            bn::fixed get_scale() const;
             const vec3& get_position() const;
             const mat4& get_world_transform() const;
-            bn::fixed get_scale() const;
             const bn::affine_mat_attributes& get_affine_transform_xz() const;
             const bn::affine_mat_attributes& get_affine_transform_xy() const;
             const bn::affine_mat_attributes& get_affine_transform_yz() const;
 
-            void update_camera(const vec3& target, bn::fixed pitch, bn::fixed heading, bn::fixed scale);
+            void update_camera(const vec3& target, int pitch, int heading, bn::fixed scale);
     };
 }

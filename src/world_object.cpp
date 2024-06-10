@@ -20,6 +20,13 @@ namespace sp {
         position = _position;
     }
 
+    void world_object::use_animation(const bn::string_view& name, bn::sprite_animate_action<10> (*generator)(const bn::sprite_ptr&)) {
+        if (current_animation_name == name) return;
+
+        current_animation_name = name;
+        animation = generator(*sprite);
+    }
+
     void world_object::update(sp::world_state& world_state) {
         world_camera& camera = world_state.get_camera();
         bn::fixed scale = camera.get_scale();
@@ -33,6 +40,10 @@ namespace sp {
             // This currently requires that we increase the sort layers in the Makefile
             // We can optimise more by not creating sprites for walls that aren't visible at all
             sprite->set_z_order(-screen_position.z.integer());
+        }
+
+        if (animation.has_value()) {
+            animation->update();
         }
     }
 }

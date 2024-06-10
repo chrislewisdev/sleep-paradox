@@ -14,8 +14,6 @@ namespace sp {
     }
 
     void world_object_wall::update(sp::world_state& world_state) {
-        world_object::update(world_state);
-
         world_camera& camera = world_state.get_camera();
         if (sprite.has_value()) {
             bool is_visible = facing.dot(camera.get_direction()) > 0;
@@ -26,5 +24,7 @@ namespace sp {
                 sprite->set_affine_mat(camera.get_affine_transform_ptr_yz());
             }
         }
+
+        world_object::update(world_state);
     }
 }

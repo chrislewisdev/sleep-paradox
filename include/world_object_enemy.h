@@ -1,6 +1,8 @@
 #pragma once
 
 #include "world_object.h"
+#include "rpg.h"
+#include "enemy_type.h"
 
 namespace sp {
     enum class enemy_state {
@@ -16,9 +18,12 @@ namespace sp {
             void update_attack(sp::world_state& world_state);
 
             enemy_state state = enemy_state::idle;
+            rpg_stats stats;
 
         public:
-            world_object_enemy(vec3 position);
+            world_object_enemy(const enemy_type& type, vec3 position);
+
+            const rpg_stats& get_stats() const;
 
             void update(sp::world_state& world_state);
     };

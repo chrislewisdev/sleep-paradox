@@ -7,10 +7,11 @@
 #include "bn_sprite_items_bully01_side_profile.h"
 
 namespace sp {
-    world_object_enemy::world_object_enemy(vec3 _position)
-        : world_object(bn::sprite_items::bully01_side_profile)
+    world_object_enemy::world_object_enemy(const enemy_type& type, vec3 _position)
+        : world_object(type.sprite_item)
     {
         position = _position;
+        stats = type.stats;
     }
 
     void world_object_enemy::update(sp::world_state& world_state) {

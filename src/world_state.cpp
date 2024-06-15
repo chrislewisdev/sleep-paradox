@@ -31,6 +31,6 @@ namespace sp {
         wall_generator generator;
         generator.generate_walls(zone, walls);
 
-        enemies.push_back(world_object_enemy(vec3(-150, 16, 30)));
+        enemies.push_back(world_object_enemy(enemy_type::basic, vec3(-150, 16, 30)));
     }
 }

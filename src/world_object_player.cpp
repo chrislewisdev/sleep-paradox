@@ -19,38 +19,59 @@ namespace sp {
 
     void world_object_player::update(sp::world_state& world_state) {
         world_camera& camera = world_state.get_camera();
-        const int heading = camera.get_heading();
 
-        // TODO: Fix increased diagonal speed
-        vec3 offset;
         if (bn::keypad::left_held()) {
-            offset.z -= bn::degrees_lut_sin(heading) * speed;
-            offset.x -= bn::degrees_lut_cos(heading) * speed;
             sprite->set_horizontal_flip(true);
         } else if (bn::keypad::right_held()) {
-            offset.z += bn::degrees_lut_sin(heading) * speed;
-            offset.x += bn::degrees_lut_cos(heading) * speed;
             sprite->set_horizontal_flip(false);
         }
-        if (bn::keypad::up_held()) {
-            offset.z += bn::degrees_lut_cos(heading) * speed;
-            offset.x -= bn::degrees_lut_sin(heading) * speed;
-        } else if (bn::keypad::down_held()) {
-            offset.z -= bn::degrees_lut_cos(heading) * speed;
-            offset.x += bn::degrees_lut_sin(heading) * speed;
-        }
 
-        if (offset.x != 0 || offset.z != 0) {
+        vec3 movement = get_movement_input(camera.get_heading()) * speed;
+        if (movement.x != 0 || movement.z != 0) {
             use_animation("run", animations::player::run);
         } else {
             use_animation("idle", animations::player::idle);
         }
 
-        vec3 new_position = position + offset;
+        vec3 new_position = position + movement;
         if (world_state.get_current_zone().get_ceiling_tile(new_position) == 0) {
             position = new_position;
         }
 
         world_object::update(world_state);
+    }
+
+    vec3 world_object_player::get_movement_input(bn::fixed heading) {
+        bool left = bn::keypad::left_held();
+        bool right = bn::keypad::right_held();
+        bool up = bn::keypad::up_held();
+        bool down = bn::keypad::down_held();
+
+        if (!left && !right && !up && !down) return vec3::zero;
+
+        bn::fixed direction;
+        if (left && up) {
+            direction = heading + 45;
+        } else if (left && down) {
+            direction = heading + 135;
+        } else if (right && up) {
+            direction = heading - 45;
+        } else if (right && down) {
+            direction = heading - 135;
+        } else if (left) {
+            direction = heading + 90;
+        } else if (right) {
+            direction = heading - 90;
+        } else if (up) {
+            direction = heading;
+        } else if (down) {
+            direction = heading + 180;
+        }
+
+        // Clamp to [0..360]
+        if (direction < 0) direction += 360;
+        if (direction > 360) direction -= 360;
+
+        return vec3(-bn::degrees_lut_sin(direction), 0, bn::degrees_lut_cos(direction));
     }
 }

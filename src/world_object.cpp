@@ -1,5 +1,7 @@
 #include "world_object.h"
 
+#include "bn_display.h"
+
 #include "world_state.h"
 #include "world_camera.h"
 
@@ -8,8 +10,6 @@ namespace sp {
         : position(0, 16, 0),
           sprite_item(_sprite_item)
     {
-        sprite = sprite_item.create_sprite(0, 0);
-        sprite->set_bg_priority(2);
     }
 
     const vec3& world_object::get_position() const {
@@ -21,7 +21,7 @@ namespace sp {
     }
 
     void world_object::use_animation(const bn::string_view& name, animation_generator generator) {
-        if (current_animation_name == name) return;
+        if (!sprite.has_value() || current_animation_name == name) return;
 
         current_animation_name = name;
         animation = generator(*sprite);
@@ -33,17 +33,36 @@ namespace sp {
         // Translation was supposed to be part of the world transform but that was broken so we just do it manually :(
         vec3 screen_position = (position - camera.get_position()) * camera.get_world_transform() * scale;
 
-        // TODO: Check if sprite is on/off screen, update sprite accordingly
+        // Check if sprite is on/off screen
+        constexpr int clip_left = -bn::display::width() / 2 - 32;
+        constexpr int clip_right = bn::display::width() / 2 + 32;
+        constexpr int clip_top = bn::display::height() / 2 + 32;
+        constexpr int clip_bottom = -bn::display::height() / 2 - 32;
+        const bool visible = !(screen_position.x < clip_left || screen_position.x > clip_right || screen_position.z < clip_bottom || screen_position.z > clip_top);
+
+        // Butano already filters out off-screen sprites, but by using less sprite_ptrs we save on sorting layers
+        if (!visible && sprite.has_value()) {
+            if (animation.has_value()) {
+                animation.reset();
+            }
+            sprite.reset();
+        } else if (visible && !sprite.has_value()) {
+            sprite = sprite_item.create_sprite(0, 0);
+            sprite->set_bg_priority(2);
+        }
 
         if (sprite.has_value()) {
             sprite->set_position(screen_position.x, screen_position.z);
-            // This currently requires that we increase the sort layers in the Makefile
-            // We can optimise more by not creating sprites for walls that aren't visible at all
-            sprite->set_z_order(-screen_position.z.integer());
-        }
+            // Only set sort order for visible sprites to save on sorting layers
+            if (sprite->visible()) {
+                sprite->set_z_order(-screen_position.z.integer());
+            } else {
+                sprite->set_z_order(0);
+            }
 
-        if (animation.has_value()) {
-            animation->update();
+            if (animation.has_value()) {
+                animation->update();
+            }
         }
     }
 }

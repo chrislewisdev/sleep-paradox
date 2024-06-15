@@ -20,7 +20,7 @@ namespace sp {
         position = _position;
     }
 
-    void world_object::use_animation(const bn::string_view& name, bn::sprite_animate_action<10> (*generator)(const bn::sprite_ptr&)) {
+    void world_object::use_animation(const bn::string_view& name, animation_generator generator) {
         if (current_animation_name == name) return;
 
         current_animation_name = name;

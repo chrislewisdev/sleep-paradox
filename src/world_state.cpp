@@ -12,6 +12,7 @@ namespace sp {
     world_object_player& world_state::get_player() { return player; }
     bn::ivector<world_object_wall>& world_state::get_walls() { return walls; }
     bn::ivector<world_object_enemy>& world_state::get_enemies() { return enemies; }
+    bn::ivector<bn::fixed_rect>& world_state::get_colliders() { return colliders; }
 
     void world_state::update() {
         player.update(*this);
@@ -30,6 +31,7 @@ namespace sp {
 
         wall_generator generator;
         generator.generate_walls(zone, walls);
+        generator.generate_colliders(zone, colliders);
 
         enemies.push_back(world_object_enemy(enemy_type::basic, vec3(-150, 16, 30)));
     }

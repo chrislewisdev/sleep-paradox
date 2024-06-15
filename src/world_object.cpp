@@ -69,11 +69,16 @@ namespace sp {
     vec3 world_object::test_movement(sp::world_state& world_state, vec3 movement) {
         vec3 new_position = position + movement;
 
-        if (world_state.get_current_zone().get_ceiling_tile(new_position) == 0) {
-            return movement;
+        //if (world_state.get_current_zone().get_ceiling_tile(new_position) == 0) {
+        //    return movement;
+        //}
+        bn::fixed_point position2d(new_position.x, new_position.z);
+        for (bn::fixed_rect& collider : world_state.get_colliders()) {
+            if (collider.edge_contains(position2d)) return vec3::zero;
         }
 
-        return vec3::zero;
+        //return vec3::zero;
+        return movement;
     }
 }
 

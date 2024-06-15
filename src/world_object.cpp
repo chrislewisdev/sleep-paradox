@@ -65,5 +65,15 @@ namespace sp {
             }
         }
     }
+
+    vec3 world_object::test_movement(sp::world_state& world_state, vec3 movement) {
+        vec3 new_position = position + movement;
+
+        if (world_state.get_current_zone().get_ceiling_tile(new_position) == 0) {
+            return movement;
+        }
+
+        return vec3::zero;
+    }
 }
 

@@ -13,6 +13,7 @@ namespace sp {
             vec3(bn::fixed _x, bn::fixed _y, bn::fixed _z) : x(_x), y(_y), z(_z) {}
 
             bn::fixed magnitude() const; 
+            bn::fixed magnitude_squared() const;
             bn::fixed dot(const vec3& rhs) const;
             vec3 cross(const vec3& rhs) const;
     };

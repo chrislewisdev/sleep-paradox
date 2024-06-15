@@ -12,6 +12,10 @@ namespace sp {
         return bn::sqrt(x*x + y*y + z*z);
     }
 
+    bn::fixed vec3::magnitude_squared() const {
+        return x*x + y*y + z*z;
+    }
+
     bn::fixed vec3::dot(const vec3& rhs) const {
         return x*rhs.x + y*rhs.y + z*rhs.z;
     }

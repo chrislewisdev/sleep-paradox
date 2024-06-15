@@ -33,10 +33,8 @@ namespace sp {
             use_animation("idle", animations::player::idle);
         }
 
-        vec3 new_position = position + movement;
-        if (world_state.get_current_zone().get_ceiling_tile(new_position) == 0) {
-            position = new_position;
-        }
+        vec3 delta = test_movement(world_state, movement);
+        position = position + delta;
 
         world_object::update(world_state);
     }

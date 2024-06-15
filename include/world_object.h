@@ -17,6 +17,8 @@ namespace sp {
 
     class world_object {
         protected:
+            vec3 test_movement(sp::world_state& world_state, vec3 movement);
+
             vec3 position;
             bn::optional<bn::sprite_ptr> sprite;
             const bn::sprite_item& sprite_item;

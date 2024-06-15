@@ -90,17 +90,18 @@ namespace sp {
                     // Extend vertically until the wall no longer conforms to a rectangular shape
                     cursor_x -= width;
                     cursor_y++;
-                    // TODO: This is causing the collider's vertical position to be wrong
-                    /*while (is_wall_contiguous(zone, cursor_x, cursor_y, width)) {
+                    while (is_wall_contiguous(zone, cursor_x, cursor_y, width)) {
                         height++;
                         cursor_y++;
-                    }*/
+                    }
 
                     // We ran out of contiguous wall space, register this collider
                     bn::fixed_size size(width * metatile_size, height * metatile_size);
                     bn::fixed_point centerpoint(
                         position.x() + size.width() / 2,
-                        position.y() + size.height() / 2
+                        // The Y axis needs some correction because our co-ordinate space is kind of inverted from Butano's
+                        // Our positive Z axis = Butano's negative Y axis
+                        position.y() + size.height() / 2 - (height - 1) * metatile_size
                     );
                     storage.push_back(bn::fixed_rect(centerpoint, size));
                 }

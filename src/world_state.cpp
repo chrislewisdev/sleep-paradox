@@ -2,8 +2,14 @@
 
 #include "wall_generator.h"
 
+#include "common_variable_8x8_sprite_font.h"
+
 namespace sp {
-    world_state::world_state() {
+    world_state::world_state()
+        : small_text_generator(common::variable_8x8_sprite_font)
+    {
+        small_text_generator.set_bg_priority(0);
+
         load_zone(world_zone::sandbox);
     }
 
@@ -24,15 +30,30 @@ namespace sp {
         for (world_object_wall& wall : walls) {
             wall.update(*this);
         }
+
+        for (auto iter = damage_callouts.begin(); iter < damage_callouts.end(); iter++) {
+            iter->update();
+
+            if (iter->is_done()) damage_callouts.erase(iter);
+        }
     }
 
     void world_state::load_zone(const world_zone& zone) {
         current_zone = &zone;
+
+        walls.clear();
+        enemies.clear();
+        colliders.clear();
+        damage_callouts.clear();
 
         wall_generator generator;
         generator.generate_walls(zone, walls);
         generator.generate_colliders(zone, colliders);
 
         enemies.push_back(world_object_enemy(enemy_type::basic, vec3(-150, 16, 30)));
+    }
+
+    void world_state::create_damage_callout(bn::fixed_point point, int amount, bool is_weak) {
+        damage_callouts.push_back(fx_damage_callout(small_text_generator, point, amount, is_weak));
     }
 }

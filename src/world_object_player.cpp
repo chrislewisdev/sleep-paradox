@@ -15,6 +15,9 @@ namespace sp {
         world_object(bn::sprite_items::fred_sprite_sheet)
     {
         use_animation("idle", animations::player::idle);
+
+        // TODO: We gotta get the player's current stats from somewhere!
+        health = 10;
     }
 
     void world_object_player::update(sp::world_state& world_state) {
@@ -37,6 +40,16 @@ namespace sp {
         position = position + delta;
 
         world_object::update(world_state);
+    }
+
+    void world_object_player::receive_attack(sp::world_state& world_state, const rpg_stats& attacker) {
+        int damage = calculate_damage(attacker, stats);
+        //health -= damage;
+
+        // TODO: Consider adding a method in world_object to get screen position so we ensure this is consistent
+        world_camera& camera = world_state.get_camera();
+        vec3 screen_position = (position - camera.get_position()) * camera.get_world_transform() * camera.get_scale();
+        world_state.create_damage_callout(screen_position.to_point(), damage, false);
     }
 
     vec3 world_object_player::get_movement_input(bn::fixed heading) {

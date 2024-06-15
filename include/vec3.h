@@ -1,6 +1,7 @@
 #pragma once
 
 #include "bn_core.h"
+#include "bn_fixed_point.h"
 
 namespace sp {
     class vec3 {
@@ -16,6 +17,8 @@ namespace sp {
             bn::fixed magnitude_squared() const;
             bn::fixed dot(const vec3& rhs) const;
             vec3 cross(const vec3& rhs) const;
+
+            bn::fixed_point to_point() const;
     };
 
     vec3 operator+(const vec3& lhs, const vec3& rhs);

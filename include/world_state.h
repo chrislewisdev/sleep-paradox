@@ -8,6 +8,7 @@
 #include "world_object_player.h"
 #include "world_object_wall.h"
 #include "world_object_enemy.h"
+#include "fx_damage_callout.h"
 
 namespace sp {
     class world_state {
@@ -18,6 +19,8 @@ namespace sp {
             bn::vector<world_object_wall, 64> walls;
             bn::vector<world_object_enemy, 16> enemies;
             bn::vector<bn::fixed_rect, 32> colliders;
+            bn::vector<fx_damage_callout, 16> damage_callouts;
+            bn::sprite_text_generator small_text_generator;
 
         public:
             world_state();
@@ -31,5 +34,6 @@ namespace sp {
 
             void update();
             void load_zone(const world_zone& zone);
+            void create_damage_callout(bn::fixed_point position, int amount, bool is_weak);
     };
 }

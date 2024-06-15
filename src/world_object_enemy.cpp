@@ -50,11 +50,26 @@ namespace sp {
             vec3 delta = test_movement(world_state, movement);
             position = position + delta;
         } else {
-            //state = enemy_state::attack;
+            state = enemy_state::attack;
+            // We'll probably need a nicer way to init states later on :)
+            attack_windup = 30;
         }
     }
 
     void world_object_enemy::update_attack(sp::world_state& world_state) {
+        attack_windup--;
 
+        if (attack_windup == 0) {
+            // TODO: Rather than check distance, we could do a collider-based check?
+            vec3 to_player = world_state.get_player().get_position() - position;
+            if (to_player.magnitude_squared() < 30*30) {
+                world_state.get_player().receive_attack(world_state, stats);
+            }
+        }
+
+        // Cooldown period
+        if (attack_windup == -50) {
+            state = enemy_state::chase;
+        }
     }
 }

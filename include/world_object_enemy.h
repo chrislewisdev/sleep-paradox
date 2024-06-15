@@ -19,6 +19,7 @@ namespace sp {
 
             enemy_state state = enemy_state::idle;
             rpg_stats stats;
+            int attack_windup;
 
         public:
             world_object_enemy(const enemy_type& type, vec3 position);

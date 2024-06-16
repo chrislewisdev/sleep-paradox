@@ -25,8 +25,26 @@ namespace sp {
 
         if (bn::keypad::left_held()) {
             sprite->set_horizontal_flip(true);
+            facing = -1;
         } else if (bn::keypad::right_held()) {
             sprite->set_horizontal_flip(false);
+            facing = 1;
+        }
+
+        // TODO: We can probably clean this up some
+        if (attack_cooldown > 0) attack_cooldown--;
+        if (bn::keypad::b_pressed() && attack_cooldown == 0) {
+            int heading = camera.get_heading();
+            vec3 right_axis(bn::degrees_lut_cos(heading), 0, bn::degrees_lut_sin(heading));
+            bn::fixed_rect attack_collider((position + right_axis * facing * 10).to_point(), bn::fixed_size(24, 24));
+
+            for (world_object_enemy& enemy : world_state.get_enemies()) {
+                if (enemy.get_collider().touches(attack_collider)) {
+                    enemy.receive_attack(world_state, stats);
+                }
+            }
+
+            attack_cooldown = 30;
         }
 
         vec3 movement = get_movement_input(camera.get_heading()) * speed;
@@ -46,9 +64,7 @@ namespace sp {
         int damage = calculate_damage(attacker, stats);
         //health -= damage;
 
-        // TODO: Consider adding a method in world_object to get screen position so we ensure this is consistent
-        world_camera& camera = world_state.get_camera();
-        vec3 screen_position = (position - camera.get_position()) * camera.get_world_transform() * camera.get_scale();
+        vec3 screen_position = get_screen_position(world_state.get_camera());
         world_state.create_damage_callout(screen_position.to_point(), damage, false);
     }
 

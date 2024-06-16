@@ -26,6 +26,15 @@ namespace sp {
         world_object::update(world_state);
     }
 
+    void world_object_enemy::receive_attack(sp::world_state& world_state, const rpg_stats& attacker) {
+        int damage = calculate_damage(attacker, stats);
+        //health -= damage;
+
+        vec3 screen_position = get_screen_position(world_state.get_camera());
+        world_state.create_damage_callout(screen_position.to_point(), damage, false);
+
+    }
+
     void world_object_enemy::update_idle(sp::world_state& world_state) {
         vec3 player_position = world_state.get_player().get_position();
         bn::fixed player_distance = (player_position - position).magnitude();

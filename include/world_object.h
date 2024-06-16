@@ -5,8 +5,10 @@
 #include "bn_sprite_item.h"
 #include "bn_sprite_animate_actions.h"
 #include "bn_string_view.h"
+#include "bn_fixed_rect.h"
 
 #include "vec3.h"
+#include "world_camera.h"
 
 namespace sp {
     using world_object_animation = bn::sprite_animate_action<10>;
@@ -31,6 +33,8 @@ namespace sp {
 
             const vec3& get_position() const;
             void set_position(const vec3& _position);
+            vec3 get_screen_position(const world_camera& camera) const;
+            bn::fixed_rect get_collider() const;
 
             void use_animation(const bn::string_view& name, animation_generator generator);
 

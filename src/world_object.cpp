@@ -3,9 +3,11 @@
 #include "bn_display.h"
 
 #include "world_state.h"
-#include "world_camera.h"
 
 namespace sp {
+    // We might need different colliders for each sprite but this works for now
+    constexpr bn::fixed_size collider_size(16, 16);
+
     world_object::world_object(const bn::sprite_item& _sprite_item)
         : position(0, 16, 0),
           sprite_item(_sprite_item)
@@ -20,6 +22,15 @@ namespace sp {
         position = _position;
     }
 
+    vec3 world_object::get_screen_position(const world_camera& camera) const {
+        // Translation was supposed to be part of the world transform but that was broken so we just do it manually :(
+        return (position - camera.get_position()) * camera.get_world_transform() * camera.get_scale();
+    }
+
+    bn::fixed_rect world_object::get_collider() const {
+        return bn::fixed_rect(position.to_point(), collider_size);
+    }
+
     void world_object::use_animation(const bn::string_view& name, animation_generator generator) {
         if (!sprite.has_value() || current_animation_name == name) return;
 
@@ -28,10 +39,7 @@ namespace sp {
     }
 
     void world_object::update(sp::world_state& world_state) {
-        world_camera& camera = world_state.get_camera();
-        bn::fixed scale = camera.get_scale();
-        // Translation was supposed to be part of the world transform but that was broken so we just do it manually :(
-        vec3 screen_position = (position - camera.get_position()) * camera.get_world_transform() * scale;
+        vec3 screen_position = get_screen_position(world_state.get_camera());
 
         // Check if sprite is on/off screen
         constexpr int clip_left = -bn::display::width() / 2 - 32;
@@ -69,8 +77,7 @@ namespace sp {
     vec3 world_object::test_movement(sp::world_state& world_state, vec3 movement) {
         vec3 new_position = position + movement;
 
-        // TODO: Might want different-sized colliders for different objects
-        bn::fixed_rect collider(bn::fixed_point(new_position.x, new_position.z), bn::fixed_size(16, 16));
+        bn::fixed_rect collider(bn::fixed_point(new_position.x, new_position.z), collider_size);
         for (bn::fixed_rect& world_collider : world_state.get_colliders()) {
             if (world_collider.touches(collider)) return vec3::zero;
         }

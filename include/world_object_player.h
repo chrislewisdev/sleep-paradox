@@ -10,6 +10,8 @@ namespace sp {
 
             rpg_stats stats;
             int health;
+            int facing = 1;
+            int attack_cooldown = 0;
 
         public:
             world_object_player();

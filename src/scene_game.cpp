@@ -24,7 +24,7 @@ namespace sp {
     void scene_game::update() {
         constexpr int wall_height = 32;
         constexpr int pitch = 45;
-        constexpr bn::fixed scale = 1;
+        constexpr bn::fixed scale = 1.4;
 
         world_camera& camera = world_state.get_camera();
         int heading = camera.get_heading();
@@ -42,7 +42,7 @@ namespace sp {
         camera.update_camera(world_state.get_player().get_position(), pitch, heading, scale);
         world_state.update();
 
-        vec3 bg_position = -camera.get_position() * camera.get_world_transform();
+        vec3 bg_position = -camera.get_position() * camera.get_world_transform() * scale;
         bg_layer_floor.set_position(bg_position.x, bg_position.z);
         bg_layer_ceiling.set_position(bg_position.x, bg_position.z + bn::degrees_lut_sin(pitch) * camera.get_scale() * -wall_height);
 

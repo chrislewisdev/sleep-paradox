@@ -1,6 +1,8 @@
 #include "scene_game.h"
 
 #include "bn_keypad.h"
+#include "bn_backdrop.h"
+#include "bn_color.h"
 
 #include "bn_affine_bg_items_zone_sandbox_floor.h"
 #include "bn_affine_bg_items_zone_sandbox_ceiling.h"
@@ -15,6 +17,8 @@ namespace sp {
         bg_layer_floor.set_wrapping_enabled(false);
         bg_layer_ceiling.set_priority(1);
         bg_layer_ceiling.set_wrapping_enabled(false);
+
+        bn::backdrop::set_color(bn::color(0, 0, 0));
     }
 
     void scene_game::update() {

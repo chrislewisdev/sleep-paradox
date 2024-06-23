@@ -11,6 +11,7 @@ namespace sp {
             const bn::affine_bg_item& ceiling;
 
             static const world_zone sandbox;
+            static const world_zone uri;
 
             world_zone(const bn::affine_bg_item& _floor, const bn::affine_bg_item& _ceiling);
 

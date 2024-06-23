@@ -16,7 +16,7 @@ namespace sp {
             const world_zone* current_zone;
             world_camera camera;
             world_object_player player;
-            bn::vector<world_object_wall, 64> walls;
+            bn::vector<world_object_wall, 128> walls;
             bn::vector<world_object_enemy, 16> enemies;
             bn::vector<bn::fixed_rect, 32> colliders;
             bn::vector<fx_damage_callout, 16> damage_callouts;

@@ -75,7 +75,7 @@ namespace sp {
     }
 
     void world_camera::update_transform_xy(const vec3& right_axis, const vec3& up_axis) {
-        auto scale_matrix = mat2::scale_inverse(scale, scale);
+        auto scale_matrix = mat2::scale_inverse(scale + bn::fixed(0.05), scale);
         auto perspective_matrix = inverse(mat2(right_axis.x, right_axis.y, up_axis.x, up_axis.y));
         auto transform = scale_matrix * perspective_matrix;
 
@@ -89,7 +89,7 @@ namespace sp {
     }
 
     void world_camera::update_transform_yz(const vec3& right_axis, const vec3& up_axis) {
-        auto scale_matrix = mat2::scale_inverse(scale, scale);
+        auto scale_matrix = mat2::scale_inverse(scale + bn::fixed(0.05), scale);
         auto perspective_matrix = inverse(mat2(right_axis.z, right_axis.y, up_axis.z, up_axis.y));
         auto transform = scale_matrix * perspective_matrix;
 

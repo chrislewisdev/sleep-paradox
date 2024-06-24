@@ -32,8 +32,8 @@ TARGET      	:=  $(notdir $(CURDIR))
 BUILD       	:=  build
 LIBBUTANO   	:=  /home/chris/tools/butano/butano
 PYTHON      	:=  python
-SOURCES     	:=  src
-INCLUDES    	:=  include
+SOURCES     	:=  src external/src
+INCLUDES    	:=  include external/include
 DATA        	:=
 GRAPHICS    	:=  graphics
 AUDIO       	:=  audio
@@ -47,11 +47,9 @@ USERLDFLAGS 	:=
 USERLIBDIRS 	:=  
 USERLIBS    	:=  
 DEFAULTLIBS 	:=  
-STACKTRACE		:=	
-USERBUILD   	:=  
-EXTTOOL     	:=  
-
-STACKTRACE := true
+STACKTRACE		:=	true
+USERBUILD   	:=  external
+EXTTOOL     	:=  slpx-map-tool zones --output-directory $(USERBUILD)
 
 #---------------------------------------------------------------------------------------------------------------------
 # Export absolute butano path:

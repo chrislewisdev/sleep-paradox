@@ -7,6 +7,8 @@
 #include "bn_affine_bg_items_zone_uri_floor.h"
 #include "bn_affine_bg_items_zone_uri_ceiling.h"
 
+#include "sp_zone_sample.h"
+
 namespace sp {
     constexpr int metatile_size = 32;
     constexpr int tile_size = 8;

@@ -3,3 +3,4 @@
 *.sav
 build/
 assets-staging/
+external/

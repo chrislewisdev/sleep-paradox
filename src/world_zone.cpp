@@ -6,15 +6,21 @@
 #include "bn_affine_bg_items_zone_sandbox_ceiling.h"
 #include "bn_affine_bg_items_zone_uri_floor.h"
 #include "bn_affine_bg_items_zone_uri_ceiling.h"
+#include "bn_affine_bg_tiles_items_placeholder_tiles.h"
 
-#include "sp_zone_sample.h"
+#include "sp_zone_sample_8x8.h"
 
 namespace sp {
     constexpr int metatile_size = 32;
     constexpr int tile_size = 8;
 
+    const bn::affine_bg_map_item sample_8x8_floor_map(*sp::zone_sample_8x8::floor_tiles, bn::size(sp::zone_sample_8x8::width(), sp::zone_sample_8x8::height()));
+    const bn::affine_bg_item sample_8x8_floor(bn::affine_bg_tiles_items::placeholder_tiles, bn::affine_bg_tiles_items::placeholder_tiles_palette, sample_8x8_floor_map);
+    const bn::affine_bg_map_item sample_8x8_ceiling_map(*sp::zone_sample_8x8::ceiling_tiles, bn::size(sp::zone_sample_8x8::width(), sp::zone_sample_8x8::height()));
+    const bn::affine_bg_item sample_8x8_ceiling(bn::affine_bg_tiles_items::placeholder_tiles, bn::affine_bg_tiles_items::placeholder_tiles_palette, sample_8x8_ceiling_map);
+
     const world_zone world_zone::sandbox(bn::affine_bg_items::zone_sandbox_floor, bn::affine_bg_items::zone_sandbox_ceiling);
-    const world_zone world_zone::uri(bn::affine_bg_items::zone_uri_floor, bn::affine_bg_items::zone_uri_ceiling);
+    const world_zone world_zone::uri(sample_8x8_floor, sample_8x8_ceiling);
 
     world_zone::world_zone(const bn::affine_bg_item& _floor, const bn::affine_bg_item& _ceiling) :
         floor(_floor),

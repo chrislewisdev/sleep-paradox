@@ -4,6 +4,8 @@
 #include "bn_fixed_size.h"
 
 namespace sp {
+    constexpr int empty_tile = 0;
+
     void wall_generator::generate_walls(const world_zone& zone, bn::ivector<world_object_wall>& storage) {
         const int metatile_size = zone.get_metatile_size();
         const int half_width = (zone.get_width() / 2) * metatile_size;
@@ -13,7 +15,7 @@ namespace sp {
             for (int x = 0; x < zone.get_width(); x++) {
                 int tile = zone.get_ceiling_tile(x, y);
 
-                if (tile != 0) {
+                if (tile != empty_tile) {
                     int left = x - 1 >= 0 ? zone.get_ceiling_tile(x - 1, y) : 0;
                     int right = x + 1 < zone.get_width() ? zone.get_ceiling_tile(x + 1, y) : 0;
                     int up = y - 1 >= 0 ? zone.get_ceiling_tile(x, y - 1) : 0;
@@ -25,19 +27,19 @@ namespace sp {
                         half_height - y * metatile_size - (metatile_size / 2)
                     );
 
-                    if (left == 0) {
+                    if (left == empty_tile) {
                         vec3 offset(-metatile_size / 2, 0, 0);
                         storage.push_back(world_object_wall(wall_position + offset, -vec3::right));
                     }
-                    if (right == 0) {
+                    if (right == empty_tile) {
                         vec3 offset(metatile_size / 2, 0, 0);
                         storage.push_back(world_object_wall(wall_position + offset, vec3::right));
                     }
-                    if (up == 0) {
+                    if (up == empty_tile) {
                         vec3 offset(0, 0, metatile_size / 2);
                         storage.push_back(world_object_wall(wall_position + offset, vec3::forward));
                     }
-                    if (down == 0) {
+                    if (down == empty_tile) {
                         vec3 offset(0, 0, -metatile_size / 2);
                         storage.push_back(world_object_wall(wall_position + offset, -vec3::forward));
                     }
@@ -62,7 +64,7 @@ namespace sp {
 
     bool is_wall_contiguous(const world_zone& zone, int x, int y, int width) {
         for (int cursor_x = x; cursor_x < x + width; cursor_x++) {
-            if (zone.get_ceiling_tile(cursor_x, y) == 0) return false;
+            if (zone.get_ceiling_tile(cursor_x, y) == empty_tile) return false;
         }
 
         return true;
@@ -83,7 +85,7 @@ namespace sp {
             for (int x = 0; x < zone.get_width(); x++) {
                 int tile = zone.get_ceiling_tile(x, y);
 
-                if (tile != 0) {
+                if (tile != empty_tile) {
                     bn::fixed_point position(
                         x * metatile_size - half_width,
                         half_height - y * metatile_size - metatile_size
@@ -103,7 +105,7 @@ namespace sp {
                     int cursor_x = x + 1, cursor_y = y;
                     int width = 1, height = 1;
                     // Extend horizontally until we run out of wall tiles
-                    while (cursor_x < zone.get_width() && zone.get_ceiling_tile(cursor_x, cursor_y) != 0) {
+                    while (cursor_x < zone.get_width() && zone.get_ceiling_tile(cursor_x, cursor_y) != empty_tile) {
                         width++;
                         cursor_x++;
                     }

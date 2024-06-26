@@ -52,7 +52,9 @@ namespace sp {
         generator.generate_walls(zone, walls);
         generator.generate_colliders(zone, colliders);
 
-        enemies.push_back(world_object_enemy(enemy_type::basic, vec3(-150, 16, 30)));
+        for (auto enemy_spawn : zone.get_enemy_spawns()) {
+            enemies.push_back(world_object_enemy(enemy_type::basic, vec3(enemy_spawn.x, 16, enemy_spawn.y)));
+        }
     }
 
     void world_state::create_damage_callout(bn::fixed_point point, int amount, bool is_weak) {

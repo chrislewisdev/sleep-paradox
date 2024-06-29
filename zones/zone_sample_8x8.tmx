@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="5" nextobjectid="5">
- <tileset firstgid="1" source="placeholder-tiles-8x8.tsx"/>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="5" nextobjectid="6">
+ <tileset firstgid="1" source="../assets-staging/zone_uri/placeholder-tiles-8x8.tsx"/>
  <layer id="1" name="Floor" width="64" height="64">
   <data encoding="csv">
 9,10,11,12,9,10,11,12,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,73,9,10,11,12,9,10,11,12,
@@ -73,9 +73,10 @@
   <object id="3" type="spawn" x="233.962" y="399.883"/>
  </objectgroup>
  <objectgroup color="#aa0000" id="3" name="Enemies">
-  <object id="1" type="zombie" x="207.002" y="209.787"/>
-  <object id="2" type="tooth" x="303.468" y="142.697"/>
+  <object id="1" type="creeper" x="207.002" y="209.787"/>
+  <object id="2" type="thrower" x="303.468" y="142.697"/>
   <object id="4" type="tooth" x="176" y="112"/>
+  <object id="5" type="cage" x="374.667" y="275.333"/>
  </objectgroup>
  <layer id="2" name="Ceiling" width="64" height="64" locked="1">
   <data encoding="csv">

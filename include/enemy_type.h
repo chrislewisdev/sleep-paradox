@@ -7,11 +7,14 @@
 namespace sp {
     class enemy_type {
         public:
-            enemy_type(rpg_stats _stats, bn::sprite_item _sprite_item);
+            enemy_type(rpg_stats _stats, const bn::sprite_item& _sprite_item);
 
-            static const enemy_type basic;
+            static const enemy_type tooth;
+            static const enemy_type cage;
+            static const enemy_type creeper;
+            static const enemy_type thrower;
 
             rpg_stats stats;
-            bn::sprite_item sprite_item;
+            const bn::sprite_item& sprite_item;
     };
 }

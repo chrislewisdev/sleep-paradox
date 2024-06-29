@@ -11,8 +11,6 @@ namespace sp {
         small_text_generator.set_bg_priority(0);
 
         load_zone(world_zone::uri);
-        // temporary hack since the zone has geometry in the middle
-        player.set_position(vec3(0, 16, 10));
     }
 
     const world_zone& world_state::get_current_zone() const { return *current_zone; }
@@ -51,6 +49,8 @@ namespace sp {
         wall_generator generator;
         generator.generate_walls(zone, walls);
         generator.generate_colliders(zone, colliders);
+
+        player.set_position(zone.get_player_spawn());
 
         for (auto enemy_spawn : zone.get_enemy_spawns()) {
             enemies.push_back(world_object_enemy(enemy_type::basic, vec3(enemy_spawn.x, 16, enemy_spawn.y)));

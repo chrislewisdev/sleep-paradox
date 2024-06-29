@@ -37,9 +37,11 @@ namespace sp {
 
     void world_object_enemy::update_idle(sp::world_state& world_state) {
         vec3 player_position = world_state.get_player().get_position();
-        bn::fixed player_distance = (player_position - position).magnitude();
+        vec3 to_player = player_position - position;
 
-        if (player_distance < 90) {
+        // Calculate distance using ints to avoid overflow over large distances
+        int distance_squared = to_player.x.integer() * to_player.x.integer() + to_player.z.integer() * to_player.z.integer();
+        if (distance_squared < 90*90) {
             state = enemy_state::chase;
         }
     }

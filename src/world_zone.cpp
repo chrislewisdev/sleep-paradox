@@ -17,15 +17,22 @@ namespace sp {
 
     const bn::affine_bg_item sample_8x8_floor(bn::affine_bg_tiles_items::placeholder_tiles, bn::affine_bg_tiles_items::placeholder_tiles_palette, sp::zone_sample_8x8::floor_map);
     const bn::affine_bg_item sample_8x8_ceiling(bn::affine_bg_tiles_items::placeholder_tiles, bn::affine_bg_tiles_items::placeholder_tiles_palette, sp::zone_sample_8x8::ceiling_map);
-    const world_zone world_zone::uri(sample_8x8_floor, sample_8x8_ceiling, bn::span(sp::zone_sample_8x8::enemy_spawns));
+    const world_zone world_zone::uri(
+        sample_8x8_floor,
+        sample_8x8_ceiling,
+        vec3(sp::zone_sample_8x8::spawn_point_x(), 16, sp::zone_sample_8x8::spawn_point_y()),
+        bn::span(sp::zone_sample_8x8::enemy_spawns)
+    );
 
     world_zone::world_zone(
         const bn::affine_bg_item& _floor,
         const bn::affine_bg_item& _ceiling,
+        vec3 _player_spawn,
         const bn::span<const enemy_spawn>& _enemy_spawns
     ) :
         floor(_floor),
         ceiling(_ceiling),
+        player_spawn(_player_spawn),
         enemy_spawns(_enemy_spawns)
     {}
 
@@ -40,6 +47,8 @@ namespace sp {
     int world_zone::get_height() const {
         return floor.map_item().dimensions().height() / (metatile_size / tile_size);
     }
+
+    vec3 world_zone::get_player_spawn() const { return player_spawn; }
 
     const bn::span<const enemy_spawn>& world_zone::get_enemy_spawns() const { return enemy_spawns; }
 

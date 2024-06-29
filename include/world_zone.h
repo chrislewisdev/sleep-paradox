@@ -11,17 +11,24 @@ namespace sp {
         public:
             const bn::affine_bg_item& floor;
             const bn::affine_bg_item& ceiling;
+            vec3 player_spawn;
             const bn::span<const enemy_spawn> enemy_spawns;
 
-            static const world_zone sandbox;
             static const world_zone uri;
 
-            world_zone(const bn::affine_bg_item& _floor, const bn::affine_bg_item& _ceiling, const bn::span<const enemy_spawn>& _enemy_spawns);
+            world_zone(
+                const bn::affine_bg_item& _floor,
+                const bn::affine_bg_item& _ceiling,
+                vec3 _player_spawn,
+                const bn::span<const enemy_spawn>& _enemy_spawns
+            );
 
             int get_metatile_size() const;
 
             int get_width() const;
             int get_height() const;
+
+            vec3 get_player_spawn() const;
 
             const bn::span<const enemy_spawn>& get_enemy_spawns() const;
 

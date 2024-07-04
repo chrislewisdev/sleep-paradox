@@ -1,7 +1,5 @@
 #include "world_object_enemy.h"
 
-#include "bn_log.h"
-
 #include "world_state.h"
 
 #include "bn_sprite_items_bully01_side_profile.h"
@@ -12,7 +10,14 @@ namespace sp {
     {
         position = _position;
         stats = type.stats;
+
+        health = stats.max_health;
     }
+
+    const rpg_stats& world_object_enemy::get_stats() const { return stats; }
+
+    // TODO: Account for stuff like death animations playing before an enemy is marked inactive
+    bool world_object_enemy::is_active() const { return health > 0; }
 
     void world_object_enemy::update(sp::world_state& world_state) {
         if (state == enemy_state::idle) {
@@ -28,7 +33,7 @@ namespace sp {
 
     void world_object_enemy::receive_attack(sp::world_state& world_state, const rpg_stats& attacker) {
         int damage = calculate_damage(attacker, stats);
-        //health -= damage;
+        health -= damage;
 
         vec3 screen_position = get_screen_position(world_state.get_camera());
         world_state.create_damage_callout(screen_position.to_point(), damage, false);

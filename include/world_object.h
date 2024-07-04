@@ -23,7 +23,7 @@ namespace sp {
 
             vec3 position;
             bn::optional<bn::sprite_ptr> sprite;
-            const bn::sprite_item& sprite_item;
+            const bn::sprite_item* sprite_item;
             bn::optional<world_object_animation> animation;
             bn::string_view current_animation_name;
 

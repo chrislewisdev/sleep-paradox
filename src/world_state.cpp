@@ -23,8 +23,10 @@ namespace sp {
     void world_state::update() {
         player.update(*this);
 
-        for (world_object_enemy& enemy : enemies) {
-            enemy.update(*this);
+        for (auto iter = enemies.begin(); iter < enemies.end(); iter++) {
+            iter->update(*this);
+
+            if (!iter->is_active()) enemies.erase(iter);
         }
 
         for (world_object_wall& wall : walls) {

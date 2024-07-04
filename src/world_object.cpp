@@ -10,7 +10,7 @@ namespace sp {
 
     world_object::world_object(const bn::sprite_item& _sprite_item)
         : position(0, 16, 0),
-          sprite_item(_sprite_item)
+          sprite_item(&_sprite_item)
     {
     }
 
@@ -55,7 +55,7 @@ namespace sp {
             }
             sprite.reset();
         } else if (visible && !sprite.has_value()) {
-            sprite = sprite_item.create_sprite(0, 0);
+            sprite = sprite_item->create_sprite(0, 0);
             sprite->set_bg_priority(2);
         }
 

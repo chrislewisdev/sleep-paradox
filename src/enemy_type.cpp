@@ -11,19 +11,19 @@ namespace sp {
     {}
 
     const enemy_type enemy_type::tooth(
-        rpg_stats(10, 5, 5, 2),
+        rpg_stats(12, 8, 5, 2),
         bn::sprite_items::tooth
     );
     const enemy_type enemy_type::cage(
-        rpg_stats(10, 5, 5, 2),
+        rpg_stats(20, 6, 2, 2),
         bn::sprite_items::cage
     );
     const enemy_type enemy_type::creeper(
-        rpg_stats(10, 5, 5, 2),
+        rpg_stats(8, 3, 1, 2),
         bn::sprite_items::creeper
     );
     const enemy_type enemy_type::thrower(
-        rpg_stats(10, 5, 5, 2),
+        rpg_stats(10, 5, 3, 2),
         bn::sprite_items::thrower
     );
 }

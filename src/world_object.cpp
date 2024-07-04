@@ -36,7 +36,8 @@ namespace sp {
 
         current_animation_name = name;
         current_animation_generator = generator;
-        animation = generator(*sprite);
+        
+        if (!animation.has_value() || animation->update_forever()) animation = generator(*sprite);
     }
 
     void world_object::play_animation(animation_generator generator) {

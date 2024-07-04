@@ -18,7 +18,10 @@ namespace sp {
 
         // TODO: We gotta get the player's current stats from somewhere!
         health = 10;
+        stats = rpg_stats(10, 5, 10, 5);
     }
+
+    const rpg_stats& world_object_player::get_stats() const { return stats; }
 
     void world_object_player::update(sp::world_state& world_state) {
         world_camera& camera = world_state.get_camera();

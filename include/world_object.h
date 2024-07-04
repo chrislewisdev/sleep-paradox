@@ -26,6 +26,7 @@ namespace sp {
             const bn::sprite_item* sprite_item;
             bn::optional<world_object_animation> animation;
             bn::string_view current_animation_name;
+            bn::optional<animation_generator> current_animation_generator;
 
         public:
             world_object(const bn::sprite_item& _sprite_item);
@@ -37,6 +38,7 @@ namespace sp {
             bn::fixed_rect get_collider() const;
 
             void use_animation(const bn::string_view& name, animation_generator generator);
+            void play_animation(animation_generator generator);
 
             virtual void update(sp::world_state& world_state);
     };

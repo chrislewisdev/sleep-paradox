@@ -35,6 +35,13 @@ namespace sp {
         if (!sprite.has_value() || current_animation_name == name) return;
 
         current_animation_name = name;
+        current_animation_generator = generator;
+        animation = generator(*sprite);
+    }
+
+    void world_object::play_animation(animation_generator generator) {
+        if (!sprite.has_value()) return;
+
         animation = generator(*sprite);
     }
 
@@ -70,6 +77,15 @@ namespace sp {
 
             if (animation.has_value()) {
                 animation->update();
+
+                if (animation->done()) {
+                    animation.reset();
+
+                    // Getting pretty deeply nested here, could break this out into a method...
+                    if (current_animation_generator.has_value()) {
+                        animation = current_animation_generator.value()(*sprite);
+                    }
+                }
             }
         }
     }

@@ -19,5 +19,8 @@ namespace sp::animations {
         world_object_animation blink(const bn::sprite_ptr sprite) {
             return bn::create_sprite_animate_action_once(sprite, 20, tiles, 7, 8);
         }
+        world_object_animation punch(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 13, 14, 9);
+        }
     }
 }

@@ -44,6 +44,7 @@ namespace sp {
                 }
             }
 
+            play_animation(animations::player::punch);
             attack_cooldown = 30;
         }
 

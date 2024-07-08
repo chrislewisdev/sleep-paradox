@@ -7,6 +7,7 @@
 #include "animations.h"
 
 #include "bn_sprite_items_fred_sprite_sheet.h"
+#include "bn_sprite_items_attack_fx.h"
 
 namespace sp {
     constexpr bn::fixed speed(2);
@@ -34,22 +35,13 @@ namespace sp {
             facing = 1;
         }
 
-        // TODO: We can probably clean this up some
+        // Update time-based behaviours
         if (attack_cooldown > 0) attack_cooldown--;
+
         if (bn::keypad::b_pressed() && attack_cooldown == 0) {
-            int heading = camera.get_heading();
-            vec3 right_axis(bn::degrees_lut_cos(heading), 0, bn::degrees_lut_sin(heading));
-            bn::fixed_rect attack_collider((position + right_axis * facing * 10).to_point(), bn::fixed_size(24, 24));
-
-            for (world_object_enemy& enemy : world_state.get_enemies()) {
-                if (enemy.get_collider().touches(attack_collider)) {
-                    enemy.receive_attack(world_state, stats);
-                }
-            }
-
-            play_animation(animations::player::punch);
-            attack_cooldown = 30;
+            trigger_attack(world_state);
         }
+        update_fx();
 
         vec3 movement = get_movement_input(camera.get_heading()) * speed;
         if (movement.x != 0 || movement.z != 0) {
@@ -104,5 +96,37 @@ namespace sp {
         if (direction > 360) direction -= 360;
 
         return vec3(-bn::degrees_lut_sin(direction), 0, bn::degrees_lut_cos(direction));
+    }
+
+    void world_object_player::trigger_attack(sp::world_state& world_state) {
+        auto camera = world_state.get_camera();
+        int heading = camera.get_heading();
+        vec3 right_axis(bn::degrees_lut_cos(heading), 0, bn::degrees_lut_sin(heading));
+        bn::fixed_rect attack_collider((position + right_axis * facing * 10).to_point(), bn::fixed_size(24, 24));
+
+        for (world_object_enemy& enemy : world_state.get_enemies()) {
+            if (enemy.get_collider().touches(attack_collider)) {
+                enemy.receive_attack(world_state, stats);
+            }
+        }
+
+        play_animation(animations::player::punch);
+        attack_fx = bn::sprite_items::attack_fx.create_sprite(32 * facing, 1);
+        attack_fx->set_horizontal_flip(facing == -1);
+        attack_fx->set_bg_priority(0);
+        attack_fx_animation = animations::attack_fx::punch(*attack_fx);
+
+        attack_cooldown = 20;
+    }
+
+    void world_object_player::update_fx() {
+        if (!attack_fx_animation.has_value()) return;
+        
+        attack_fx_animation->update();
+
+        if (attack_fx_animation->done()) {
+            attack_fx_animation.reset();
+            attack_fx.reset();
+        }
     }
 }

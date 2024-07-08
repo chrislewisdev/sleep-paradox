@@ -5,6 +5,7 @@
 #include "world_object.h"
 
 #include "bn_sprite_items_fred_sprite_sheet.h"
+#include "bn_sprite_items_attack_fx.h"
 
 namespace sp::animations {
     namespace player {
@@ -21,6 +22,13 @@ namespace sp::animations {
         }
         world_object_animation punch(const bn::sprite_ptr& sprite) {
             return bn::create_sprite_animate_action_once(sprite, 5, tiles, 13, 14, 9);
+        }
+    }
+    namespace attack_fx {
+        constexpr bn::sprite_tiles_item tiles = bn::sprite_items::attack_fx.tiles_item();
+
+        world_object_animation punch(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 2, 3, 2);
         }
     }
 }

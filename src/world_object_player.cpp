@@ -17,9 +17,9 @@ namespace sp {
     {
         use_animation("idle", animations::player::idle);
 
-        // TODO: We gotta get the player's current stats from somewhere!
-        health = 10;
-        stats = rpg_stats(10, 5, 10, 5);
+        level = 1;
+        stats = player_base_stats;
+        health = stats.max_health;
     }
 
     const rpg_stats& world_object_player::get_stats() const { return stats; }

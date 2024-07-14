@@ -10,6 +10,7 @@ namespace sp {
             void trigger_attack(sp::world_state& world_state);
             void update_fx();
 
+            int level;
             rpg_stats stats;
             int health;
             int facing = 1;

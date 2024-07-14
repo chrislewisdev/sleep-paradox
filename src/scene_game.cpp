@@ -8,11 +8,14 @@
 #include "bn_affine_bg_items_zone_sandbox_ceiling.h"
 
 namespace sp {
-    scene_game::scene_game(sp::scene_manager& _scene_manager)
+    scene_game::scene_game(sp::scene_manager& _scene_manager, sp::world_state& _world_state)
         : scene_manager(_scene_manager),
+          world_state(_world_state),
           bg_layer_floor(world_state.get_current_zone().floor.create_bg(0, 0)),
           bg_layer_ceiling(world_state.get_current_zone().ceiling.create_bg(0, 0))
     {
+        world_state.set_visible(true);
+
         bg_layer_floor.set_priority(3);
         bg_layer_floor.set_wrapping_enabled(false);
         bg_layer_ceiling.set_priority(1);
@@ -34,6 +37,11 @@ namespace sp {
         } else if (bn::keypad::l_held()) {
             if (heading == 359) heading = 0;
             else heading += 1;
+        }
+
+        if (bn::keypad::start_pressed()) {
+            scene_manager.queue_scene_change(sp::scene_id::pause);
+            world_state.set_visible(false);
         }
 
         // This order of operations is a little messed up because there is a circular dependency between

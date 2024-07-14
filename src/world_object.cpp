@@ -54,7 +54,8 @@ namespace sp {
         constexpr int clip_right = bn::display::width() / 2 + 32;
         constexpr int clip_top = bn::display::height() / 2 + 32;
         constexpr int clip_bottom = -bn::display::height() / 2 - 32;
-        const bool visible = !(screen_position.x < clip_left || screen_position.x > clip_right || screen_position.z < clip_bottom || screen_position.z > clip_top);
+        const bool visible = world_state.get_visible() && 
+            !(screen_position.x < clip_left || screen_position.x > clip_right || screen_position.z < clip_bottom || screen_position.z > clip_top);
 
         // Butano already filters out off-screen sprites, but by using less sprite_ptrs we save on sorting layers
         if (!visible && sprite.has_value()) {
@@ -65,6 +66,10 @@ namespace sp {
         } else if (visible && !sprite.has_value()) {
             sprite = sprite_item->create_sprite(0, 0);
             sprite->set_bg_priority(2);
+
+            if (current_animation_generator.has_value()) {
+                animation = current_animation_generator.value()(*sprite);
+            }
         }
 
         if (sprite.has_value()) {

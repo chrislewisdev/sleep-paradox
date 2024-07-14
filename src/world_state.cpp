@@ -5,8 +5,9 @@
 #include "common_variable_8x8_sprite_font.h"
 
 namespace sp {
-    world_state::world_state()
-        : small_text_generator(common::variable_8x8_sprite_font)
+    world_state::world_state() :
+        small_text_generator(common::variable_8x8_sprite_font),
+        is_visible(false)
     {
         small_text_generator.set_bg_priority(0);
 
@@ -19,6 +20,9 @@ namespace sp {
     bn::ivector<world_object_wall>& world_state::get_walls() { return walls; }
     bn::ivector<world_object_enemy>& world_state::get_enemies() { return enemies; }
     bn::ivector<bn::fixed_rect>& world_state::get_colliders() { return colliders; }
+
+    bool world_state::get_visible() const { return is_visible; }
+    void world_state::set_visible(bool visible) { is_visible = visible; }
 
     void world_state::update() {
         player.update(*this);

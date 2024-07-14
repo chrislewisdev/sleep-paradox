@@ -7,7 +7,8 @@ int main()
 {
     bn::core::init();
 
-    sp::scene_manager scene_manager;
+    sp::world_state world_state;
+    sp::scene_manager scene_manager(world_state);
     scene_manager.queue_scene_change(sp::scene_id::title);
 
     while(true)

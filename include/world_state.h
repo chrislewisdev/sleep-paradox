@@ -21,6 +21,7 @@ namespace sp {
             bn::vector<bn::fixed_rect, 32> colliders;
             bn::vector<fx_damage_callout, 16> damage_callouts;
             bn::sprite_text_generator small_text_generator;
+            bool is_visible;
 
         public:
             world_state();
@@ -31,6 +32,8 @@ namespace sp {
             bn::ivector<world_object_wall>& get_walls();
             bn::ivector<world_object_enemy>& get_enemies();
             bn::ivector<bn::fixed_rect>& get_colliders();
+            bool get_visible() const;
+            void set_visible(bool visible);
 
             void update();
             void load_zone(const world_zone& zone);

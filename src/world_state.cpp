@@ -22,7 +22,11 @@ namespace sp {
     bn::ivector<bn::fixed_rect>& world_state::get_colliders() { return colliders; }
 
     bool world_state::get_visible() const { return is_visible; }
-    void world_state::set_visible(bool visible) { is_visible = visible; }
+    void world_state::set_visible(bool visible) {
+        is_visible = visible;
+
+        if (!visible) damage_callouts.clear();
+    }
 
     void world_state::update() {
         player.update(*this);

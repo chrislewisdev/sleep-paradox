@@ -28,12 +28,11 @@ namespace sp {
         world_camera& camera = world_state.get_camera();
 
         if (bn::keypad::left_held()) {
-            sprite->set_horizontal_flip(true);
             facing = -1;
         } else if (bn::keypad::right_held()) {
-            sprite->set_horizontal_flip(false);
             facing = 1;
         }
+        if (sprite.has_value()) sprite->set_horizontal_flip(facing == -1);
 
         // Update time-based behaviours
         if (attack_cooldown > 0) attack_cooldown--;

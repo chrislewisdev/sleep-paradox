@@ -17,16 +17,18 @@ namespace sp {
             void update_chase(sp::world_state& world_state);
             void update_attack(sp::world_state& world_state);
 
-            rpg_stats stats;
+            const enemy_type* type;
             int health;
 
             enemy_state state = enemy_state::idle;
             int attack_windup;
 
         public:
-            world_object_enemy(const enemy_type& type, vec3 position);
+            world_object_enemy(const enemy_type& _type, vec3 position);
 
             const rpg_stats& get_stats() const;
+            int get_health() const;
+            int get_xp_reward() const;
             bool is_active() const;
 
             void update(sp::world_state& world_state);

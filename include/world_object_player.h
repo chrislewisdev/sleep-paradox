@@ -9,8 +9,9 @@ namespace sp {
             vec3 get_movement_input(bn::fixed heading);
             void trigger_attack(sp::world_state& world_state);
             void update_fx();
+            void apply_xp(int amount);
 
-            int level;
+            int level, xp;
             rpg_stats stats;
             int health;
             int facing = 1;

@@ -7,7 +7,7 @@
 namespace sp {
     class enemy_type {
         public:
-            enemy_type(rpg_stats _stats, const bn::sprite_item& _sprite_item);
+            enemy_type(rpg_stats _stats, int _xp_reward, const bn::sprite_item& _sprite_item);
 
             static const enemy_type tooth;
             static const enemy_type cage;
@@ -15,6 +15,7 @@ namespace sp {
             static const enemy_type thrower;
 
             rpg_stats stats;
+            int xp_reward;
             const bn::sprite_item& sprite_item;
     };
 }

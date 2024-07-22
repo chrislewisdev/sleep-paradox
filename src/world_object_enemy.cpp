@@ -5,16 +5,17 @@
 #include "bn_sprite_items_bully01_side_profile.h"
 
 namespace sp {
-    world_object_enemy::world_object_enemy(const enemy_type& type, vec3 _position)
-        : world_object(type.sprite_item)
+    world_object_enemy::world_object_enemy(const enemy_type& _type, vec3 _position)
+        : world_object(_type.sprite_item), type(&_type)
     {
         position = _position;
-        stats = type.stats;
 
-        health = stats.max_health;
+        health = type->stats.max_health;
     }
 
-    const rpg_stats& world_object_enemy::get_stats() const { return stats; }
+    const rpg_stats& world_object_enemy::get_stats() const { return type->stats; }
+    int world_object_enemy::get_health() const { return health; }
+    int world_object_enemy::get_xp_reward() const { return type->xp_reward; }
 
     // TODO: Account for stuff like death animations playing before an enemy is marked inactive
     bool world_object_enemy::is_active() const { return health > 0; }
@@ -32,7 +33,7 @@ namespace sp {
     }
 
     void world_object_enemy::receive_attack(sp::world_state& world_state, const rpg_stats& attacker) {
-        int damage = calculate_damage(attacker, stats);
+        int damage = calculate_damage(attacker, type->stats);
         health -= damage;
 
         vec3 screen_position = get_screen_position(world_state.get_camera());
@@ -79,7 +80,7 @@ namespace sp {
             // TODO: Rather than check distance, we could do a collider-based check?
             vec3 to_player = world_state.get_player().get_position() - position;
             if (to_player.magnitude_squared() < 30*30) {
-                world_state.get_player().receive_attack(world_state, stats);
+                world_state.get_player().receive_attack(world_state, type->stats);
             }
         }
 

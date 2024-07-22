@@ -105,7 +105,13 @@ namespace sp {
 
         for (world_object_enemy& enemy : world_state.get_enemies()) {
             if (enemy.get_collider().touches(attack_collider)) {
+                int was_alive = enemy.get_health() > 0;
                 enemy.receive_attack(world_state, stats);
+
+                // Did we land a killing blow?
+                if (was_alive && enemy.get_health() <= 0) {
+                    apply_xp(enemy.get_xp_reward());
+                }
             }
         }
 
@@ -127,5 +133,23 @@ namespace sp {
             attack_fx_animation.reset();
             attack_fx.reset();
         }
+    }
+
+    void world_object_player::apply_xp(int amount) {
+        xp += amount;
+
+        int xp_required = get_xp_for_level_up(level);
+        if (xp < xp_required) return;
+
+        // Level up!!!
+        xp -= xp_required;
+        level++;
+
+        stats.max_health += get_player_health_growth(level);
+        stats.attack += get_player_attack_growth(level);
+        stats.defence += get_player_defence_growth(level);
+        stats.speed += get_player_speed_growth(level);
+
+        health = stats.max_health;
     }
 }

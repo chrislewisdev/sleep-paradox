@@ -110,7 +110,10 @@ namespace sp {
 
                 // Did we land a killing blow?
                 if (was_alive && enemy.get_health() <= 0) {
-                    apply_xp(enemy.get_xp_reward());
+                    if (apply_xp(enemy.get_xp_reward())) {
+                        vec3 screen_position = get_screen_position(world_state.get_camera()) + vec3::forward * 20 - vec3::right * 25;
+                        world_state.create_callout(screen_position.to_point(), "LVL UP!");
+                    }
                 }
             }
         }
@@ -135,11 +138,11 @@ namespace sp {
         }
     }
 
-    void world_object_player::apply_xp(int amount) {
+    bool world_object_player::apply_xp(int amount) {
         xp += amount;
 
         int xp_required = get_xp_for_level_up(level);
-        if (xp < xp_required) return;
+        if (xp < xp_required) return false;
 
         // Level up!!!
         xp -= xp_required;
@@ -151,5 +154,7 @@ namespace sp {
         stats.speed += get_player_speed_growth(level);
 
         health = stats.max_health;
+
+        return true;
     }
 }

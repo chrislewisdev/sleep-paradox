@@ -1,5 +1,7 @@
 #include "world_state.h"
 
+#include "bn_string.h"
+
 #include "wall_generator.h"
 
 #include "common_variable_8x8_sprite_font.h"
@@ -25,7 +27,7 @@ namespace sp {
     void world_state::set_visible(bool visible) {
         is_visible = visible;
 
-        if (!visible) damage_callouts.clear();
+        if (!visible) callouts.clear();
     }
 
     void world_state::update() {
@@ -41,10 +43,10 @@ namespace sp {
             wall.update(*this);
         }
 
-        for (auto iter = damage_callouts.begin(); iter < damage_callouts.end(); iter++) {
+        for (auto iter = callouts.begin(); iter < callouts.end(); iter++) {
             iter->update();
 
-            if (iter->is_done()) damage_callouts.erase(iter);
+            if (iter->is_done()) callouts.erase(iter);
         }
     }
 
@@ -54,7 +56,7 @@ namespace sp {
         walls.clear();
         enemies.clear();
         colliders.clear();
-        damage_callouts.clear();
+        callouts.clear();
 
         wall_generator generator;
         generator.generate_walls(zone, walls);
@@ -68,6 +70,10 @@ namespace sp {
     }
 
     void world_state::create_damage_callout(bn::fixed_point point, int amount, bool is_weak) {
-        damage_callouts.push_back(fx_damage_callout(small_text_generator, point, amount, is_weak));
+        callouts.push_back(fx_callout(small_text_generator, point, bn::to_string<4>(amount)));
+    }
+
+    void world_state::create_callout(bn::fixed_point point, const bn::string_view& text) {
+        callouts.push_back(fx_callout(small_text_generator, point, text));
     }
 }

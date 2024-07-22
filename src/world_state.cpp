@@ -39,6 +39,11 @@ namespace sp {
             if (!iter->is_active()) enemies.erase(iter);
         }
 
+        // Temp code
+        if (enemies.size() == 0) {
+            enemies.push_back(world_object_enemy(enemy_type::cage, vec3(0, 16, 100)));
+        }
+
         for (world_object_wall& wall : walls) {
             wall.update(*this);
         }

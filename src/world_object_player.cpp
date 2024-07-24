@@ -27,6 +27,19 @@ namespace sp {
     void world_object_player::update(sp::world_state& world_state) {
         world_camera& camera = world_state.get_camera();
 
+        // Zone transitions...
+        if (bn::keypad::a_pressed()) {
+            auto collider = bn::rect(position.x.integer(), position.z.integer(), 32, 32);
+            for (auto portal : world_state.get_current_zone().get_portals()) {
+                auto rect = bn::rect(portal.x, portal.y, portal.width, portal.height);
+
+                if (collider.touches(rect)) {
+                    world_state.load_zone(portal.target_zone);
+                    return;
+                }
+            }
+        }
+
         if (bn::keypad::left_held()) {
             facing = -1;
         } else if (bn::keypad::right_held()) {

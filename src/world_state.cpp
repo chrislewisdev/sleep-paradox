@@ -1,6 +1,7 @@
 #include "world_state.h"
 
 #include "bn_string.h"
+#include "bn_log.h"
 
 #include "wall_generator.h"
 
@@ -13,7 +14,7 @@ namespace sp {
     {
         small_text_generator.set_bg_priority(0);
 
-        load_zone(world_zone::uri);
+        load_zone(world_zone::alternate);
     }
 
     const world_zone& world_state::get_current_zone() const { return *current_zone; }
@@ -40,9 +41,9 @@ namespace sp {
         }
 
         // Temp code
-        if (enemies.size() == 0) {
-            enemies.push_back(world_object_enemy(enemy_type::cage, vec3(0, 16, 100)));
-        }
+        // if (enemies.size() == 0) {
+        //     enemies.push_back(world_object_enemy(enemy_type::cage, vec3(0, 16, 100)));
+        // }
 
         for (world_object_wall& wall : walls) {
             wall.update(*this);
@@ -53,6 +54,12 @@ namespace sp {
 
             if (iter->is_done()) callouts.erase(iter);
         }
+
+        /*if (queued_zone_change.has_value()) {
+            load_zone((*queued_zone_change)->target_zone);
+            player.set_position(vec3((*queued_zone_change)->destination_x, 16, (*queued_zone_change)->destination_y));
+            queued_zone_change.reset();
+        }*/
     }
 
     void world_state::load_zone(const world_zone& zone) {
@@ -81,4 +88,8 @@ namespace sp {
     void world_state::create_callout(bn::fixed_point point, const bn::string_view& text) {
         callouts.push_back(fx_callout(small_text_generator, point, text));
     }
+
+    /*void world_state::queue_zone_change(const portal& portal) {
+        queued_zone_change = &portal;
+    }*/
 }

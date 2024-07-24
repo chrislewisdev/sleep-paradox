@@ -22,6 +22,7 @@ namespace sp {
             bn::vector<fx_callout, 16> callouts;
             bn::sprite_text_generator small_text_generator;
             bool is_visible;
+            bn::optional<const portal*> queued_zone_change;
 
         public:
             world_state();
@@ -39,5 +40,6 @@ namespace sp {
             void load_zone(const world_zone& zone);
             void create_damage_callout(bn::fixed_point position, int amount, bool is_weak);
             void create_callout(bn::fixed_point position, const bn::string_view& text);
+            // void queue_zone_change(const portal& portal);
     };
 }

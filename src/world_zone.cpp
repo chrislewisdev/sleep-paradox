@@ -8,8 +8,10 @@
 #include "bn_affine_bg_items_zone_uri_floor.h"
 #include "bn_affine_bg_items_zone_uri_ceiling.h"
 #include "bn_affine_bg_tiles_items_placeholder_tiles.h"
+#include "bn_affine_bg_tiles_items_tiles_v1.h"
 
 #include "sp_zone_sample_8x8.h"
+#include "sp_zone_corridor1.h"
 
 namespace sp {
     constexpr int metatile_size = 32;
@@ -22,6 +24,14 @@ namespace sp {
         sample_8x8_ceiling,
         vec3(sp::zone_sample_8x8::spawn_point_x(), 16, sp::zone_sample_8x8::spawn_point_y()),
         bn::span(sp::zone_sample_8x8::enemy_spawns)
+    );
+    const bn::affine_bg_item corridor1_floor(bn::affine_bg_tiles_items::tiles_v1, bn::affine_bg_tiles_items::tiles_v1_palette, sp::zone_corridor1::floor_map);
+    const bn::affine_bg_item corridor1_ceiling(bn::affine_bg_tiles_items::tiles_v1, bn::affine_bg_tiles_items::tiles_v1_palette, sp::zone_corridor1::ceiling_map);
+    const world_zone world_zone::corridor1(
+        corridor1_floor,
+        corridor1_ceiling,
+        vec3(sp::zone_corridor1::spawn_point_x(), 16, sp::zone_corridor1::spawn_point_y()),
+        bn::span(sp::zone_corridor1::enemy_spawns)
     );
 
     world_zone::world_zone(

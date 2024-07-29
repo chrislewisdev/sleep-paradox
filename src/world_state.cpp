@@ -13,7 +13,7 @@ namespace sp {
     {
         small_text_generator.set_bg_priority(0);
 
-        load_zone(world_zone::uri);
+        load_zone(world_zone::corridor1);
     }
 
     const world_zone& world_state::get_current_zone() const { return *current_zone; }

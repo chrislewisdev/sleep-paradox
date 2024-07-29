@@ -15,6 +15,7 @@ namespace sp {
             const bn::span<const enemy_spawn> enemy_spawns;
 
             static const world_zone uri;
+            static const world_zone corridor1;
 
             world_zone(
                 const bn::affine_bg_item& _floor,

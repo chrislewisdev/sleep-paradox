@@ -4,7 +4,7 @@
 #include "bn_affine_bg_item.h"
 
 #include "vec3.h"
-#include "sp_enemy_spawn.h"
+#include "enemy_spawn.h"
 
 namespace sp {
     class world_zone {

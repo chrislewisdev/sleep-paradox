@@ -40,6 +40,8 @@ namespace sp {
             void load_zone(const world_zone& zone);
             void create_damage_callout(bn::fixed_point position, int amount, bool is_weak);
             void create_callout(bn::fixed_point position, const bn::string_view& text);
-            // void queue_zone_change(const portal& portal);
+            void queue_zone_change(const portal& portal);
+            bool is_zone_change_queued() const;
+            void process_zone_change();
     };
 }

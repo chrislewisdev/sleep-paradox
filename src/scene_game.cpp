@@ -44,6 +44,18 @@ namespace sp {
             world_state.set_visible(false);
         }
 
+        if (world_state.is_zone_change_queued()) {
+            world_state.process_zone_change();
+
+            bg_layer_floor = world_state.get_current_zone().floor.create_bg(0, 0);
+            bg_layer_ceiling = world_state.get_current_zone().ceiling.create_bg(0, 0);
+
+            bg_layer_floor.set_priority(3);
+            bg_layer_floor.set_wrapping_enabled(false);
+            bg_layer_ceiling.set_priority(1);
+            bg_layer_ceiling.set_wrapping_enabled(false);
+        }
+
         // This order of operations is a little messed up because there is a circular dependency between
         // player position -> camera position -> sprite screen position
         // We can solve this by splitting update/draw into separate cycles but for now at least, let's just see how we go

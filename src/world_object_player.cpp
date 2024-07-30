@@ -6,7 +6,6 @@
 #include "world_state.h"
 #include "world_camera.h"
 #include "animations.h"
-#include "zones.h"
 
 #include "bn_sprite_items_fred_sprite_sheet.h"
 #include "bn_sprite_items_attack_fx.h"
@@ -37,11 +36,7 @@ namespace sp {
                 auto rect = bn::rect(portal.x + portal.width/2, portal.y + portal.height/2, portal.width, portal.height);
 
                 if (collider.intersects(rect)) {
-                    auto zone = get_zone_by_name(portal.target_zone_name);
-                    BN_LOG("Retrieved zone address:", zone);
-                    world_state.load_zone(*zone);
-                    position.x = portal.destination_x;
-                    position.z = portal.destination_y;
+                    world_state.queue_zone_change(portal);
                     return;
                 }
             }

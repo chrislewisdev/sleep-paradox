@@ -15,7 +15,7 @@ namespace sp {
     {
         small_text_generator.set_bg_priority(0);
 
-        load_zone(sp::zone_sample_8x8::zone);
+        load_zone(sp::zone_corridor1::zone);
     }
 
     const world_zone& world_state::get_current_zone() const { return *current_zone; }

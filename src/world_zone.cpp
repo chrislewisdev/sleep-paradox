@@ -22,6 +22,7 @@ namespace sp {
     vec3 world_zone::get_player_spawn() const { return player_spawn; }
 
     const bn::span<const enemy_spawn>& world_zone::get_enemy_spawns() const { return enemy_spawns; }
+    const bn::span<const portal>& world_zone::get_portals() const { return portals; }
 
     int world_zone::get_ceiling_tile(int x, int y) const {
         int tx = x * (metatile_size / tile_size);

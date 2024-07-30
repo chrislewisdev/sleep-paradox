@@ -1,11 +1,14 @@
 #include "world_state.h"
 
 #include "bn_string.h"
+#include "bn_log.h"
 
 #include "wall_generator.h"
+#include "world_object_wall.h"
 
 #include "common_variable_8x8_sprite_font.h"
 #include "sp_zone_sample_8x8.h"
+#include "sp_zone_alternate.h"
 #include "sp_zone_corridor1.h"
 
 namespace sp {
@@ -15,7 +18,7 @@ namespace sp {
     {
         small_text_generator.set_bg_priority(0);
 
-        load_zone(sp::zone_corridor1::zone);
+        load_zone(sp::zone_sample_8x8::zone);
     }
 
     const world_zone& world_state::get_current_zone() const { return *current_zone; }
@@ -42,9 +45,9 @@ namespace sp {
         }
 
         // Temp code
-        if (enemies.size() == 0) {
-            enemies.push_back(world_object_enemy(enemy_type::cage, vec3(0, 16, 100)));
-        }
+        // if (enemies.size() == 0) {
+        //     enemies.push_back(world_object_enemy(enemy_type::cage, vec3(0, 16, 100)));
+        // }
 
         for (world_object_wall& wall : walls) {
             wall.update(*this);
@@ -55,9 +58,16 @@ namespace sp {
 
             if (iter->is_done()) callouts.erase(iter);
         }
+
+        /*if (queued_zone_change.has_value()) {
+            load_zone((*queued_zone_change)->target_zone);
+            player.set_position(vec3((*queued_zone_change)->destination_x, 16, (*queued_zone_change)->destination_y));
+            queued_zone_change.reset();
+        }*/
     }
 
     void world_state::load_zone(const world_zone& zone) {
+        BN_LOG("Zone address:", &zone);
         current_zone = &zone;
 
         walls.clear();
@@ -83,4 +93,8 @@ namespace sp {
     void world_state::create_callout(bn::fixed_point point, const bn::string_view& text) {
         callouts.push_back(fx_callout(small_text_generator, point, text));
     }
+
+    /*void world_state::queue_zone_change(const portal& portal) {
+        queued_zone_change = &portal;
+    }*/
 }

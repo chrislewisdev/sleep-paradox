@@ -1,10 +1,12 @@
 #include "world_object_player.h"
 
 #include "bn_keypad.h"
+#include "bn_log.h"
 
 #include "world_state.h"
 #include "world_camera.h"
 #include "animations.h"
+#include "zones.h"
 
 #include "bn_sprite_items_fred_sprite_sheet.h"
 #include "bn_sprite_items_attack_fx.h"
@@ -26,6 +28,24 @@ namespace sp {
 
     void world_object_player::update(sp::world_state& world_state) {
         world_camera& camera = world_state.get_camera();
+
+        // Zone transitions...
+        if (bn::keypad::a_pressed()) {
+            auto collider = bn::rect(position.x.integer(), position.z.integer(), 32, 32);
+            for (auto portal : world_state.get_current_zone().get_portals()) {
+                BN_LOG("Portal data:", portal.x, ",", portal.y, ",", portal.width, ",", portal.height);
+                auto rect = bn::rect(portal.x + portal.width/2, portal.y + portal.height/2, portal.width, portal.height);
+
+                if (collider.intersects(rect)) {
+                    auto zone = get_zone_by_name(portal.target_zone_name);
+                    BN_LOG("Retrieved zone address:", zone);
+                    world_state.load_zone(*zone);
+                    position.x = portal.destination_x;
+                    position.z = portal.destination_y;
+                    return;
+                }
+            }
+        }
 
         if (bn::keypad::left_held()) {
             facing = -1;

@@ -3,48 +3,9 @@
 #include "bn_vector.h"
 #include "bn_affine_bg_map_cell_info.h"
 
-#include "bn_affine_bg_items_zone_sandbox_floor.h"
-#include "bn_affine_bg_items_zone_sandbox_ceiling.h"
-#include "bn_affine_bg_items_zone_uri_floor.h"
-#include "bn_affine_bg_items_zone_uri_ceiling.h"
-#include "bn_affine_bg_tiles_items_placeholder_tiles.h"
-#include "bn_affine_bg_tiles_items_tiles_v1.h"
-
-#include "sp_zone_sample_8x8.h"
-#include "sp_zone_corridor1.h"
-
 namespace sp {
     constexpr int metatile_size = 32;
     constexpr int tile_size = 8;
-
-    const bn::affine_bg_item sample_8x8_floor(bn::affine_bg_tiles_items::placeholder_tiles, bn::affine_bg_tiles_items::placeholder_tiles_palette, sp::zone_sample_8x8::floor_map);
-    const bn::affine_bg_item sample_8x8_ceiling(bn::affine_bg_tiles_items::placeholder_tiles, bn::affine_bg_tiles_items::placeholder_tiles_palette, sp::zone_sample_8x8::ceiling_map);
-    const world_zone world_zone::uri(
-        sample_8x8_floor,
-        sample_8x8_ceiling,
-        vec3(sp::zone_sample_8x8::spawn_point_x(), 16, sp::zone_sample_8x8::spawn_point_y()),
-        bn::span(sp::zone_sample_8x8::enemy_spawns)
-    );
-    const bn::affine_bg_item corridor1_floor(bn::affine_bg_tiles_items::tiles_v1, bn::affine_bg_tiles_items::tiles_v1_palette, sp::zone_corridor1::floor_map);
-    const bn::affine_bg_item corridor1_ceiling(bn::affine_bg_tiles_items::tiles_v1, bn::affine_bg_tiles_items::tiles_v1_palette, sp::zone_corridor1::ceiling_map);
-    const world_zone world_zone::corridor1(
-        corridor1_floor,
-        corridor1_ceiling,
-        vec3(sp::zone_corridor1::spawn_point_x(), 16, sp::zone_corridor1::spawn_point_y()),
-        bn::span(sp::zone_corridor1::enemy_spawns)
-    );
-
-    world_zone::world_zone(
-        const bn::affine_bg_item& _floor,
-        const bn::affine_bg_item& _ceiling,
-        vec3 _player_spawn,
-        const bn::span<const enemy_spawn>& _enemy_spawns
-    ) :
-        floor(_floor),
-        ceiling(_ceiling),
-        player_spawn(_player_spawn),
-        enemy_spawns(_enemy_spawns)
-    {}
 
     int world_zone::get_metatile_size() const {
         return metatile_size;

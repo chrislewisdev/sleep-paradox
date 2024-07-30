@@ -10,8 +10,8 @@ namespace sp {
 
             static vec3 zero, up, right, forward;
 
-            vec3() {}
-            vec3(bn::fixed _x, bn::fixed _y, bn::fixed _z) : x(_x), y(_y), z(_z) {}
+            constexpr vec3() {}
+            constexpr vec3(bn::fixed _x, bn::fixed _y, bn::fixed _z) : x(_x), y(_y), z(_z) {}
 
             bn::fixed magnitude() const; 
             bn::fixed magnitude_squared() const;

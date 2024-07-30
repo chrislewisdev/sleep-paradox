@@ -32,8 +32,7 @@ namespace sp {
         if (bn::keypad::a_pressed()) {
             auto collider = bn::rect(position.x.integer(), position.z.integer(), 32, 32);
             for (auto portal : world_state.get_current_zone().get_portals()) {
-                BN_LOG("Portal data:", portal.x, ",", portal.y, ",", portal.width, ",", portal.height);
-                auto rect = bn::rect(portal.x + portal.width/2, portal.y + portal.height/2, portal.width, portal.height);
+                auto rect = bn::rect(portal.x + portal.width/2, portal.y - portal.height/2, portal.width, portal.height);
 
                 if (collider.intersects(rect)) {
                     world_state.queue_zone_change(portal);

@@ -46,6 +46,14 @@ namespace sp {
         animation = generator(*sprite);
     }
 
+    void world_object::stop_animation() {
+        if (animation) animation.reset();
+        if (current_animation_generator) current_animation_generator.reset();
+        current_animation_name = "";
+
+        if (sprite) sprite->set_tiles(sprite_item->tiles_item());
+    }
+
     void world_object::update(sp::world_state& world_state) {
         vec3 screen_position = get_screen_position(world_state.get_camera());
 

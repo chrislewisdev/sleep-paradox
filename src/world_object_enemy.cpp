@@ -42,6 +42,8 @@ namespace sp {
     }
 
     void world_object_enemy::update_idle(sp::world_state& world_state) {
+        stop_animation();
+
         vec3 player_position = world_state.get_player().get_position();
         vec3 to_player = player_position - position;
 
@@ -53,6 +55,8 @@ namespace sp {
     }
 
     void world_object_enemy::update_chase(sp::world_state& world_state) {
+        if (type->move_animation) use_animation("move", type->move_animation.value());
+
         vec3 player_position = world_state.get_player().get_position();
         vec3 to_player = player_position - position;
 
@@ -66,6 +70,11 @@ namespace sp {
             vec3 movement = vec3(bn::degrees_lut_sin(angle), 0, bn::degrees_lut_cos(angle));
             vec3 delta = test_movement(world_state, movement);
             position = position + delta;
+
+            if (sprite) {
+                bool is_left_facing = delta.dot(world_state.get_camera().get_right_axis()) > 0;
+                sprite->set_horizontal_flip(is_left_facing);
+            }
         } else {
             state = enemy_state::attack;
             // We'll probably need a nicer way to init states later on :)
@@ -74,6 +83,8 @@ namespace sp {
     }
 
     void world_object_enemy::update_attack(sp::world_state& world_state) {
+        stop_animation();
+
         attack_windup--;
 
         if (attack_windup == 0) {

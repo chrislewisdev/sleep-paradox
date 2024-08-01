@@ -39,6 +39,7 @@ namespace sp {
 
             void use_animation(const bn::string_view& name, animation_generator generator);
             void play_animation(animation_generator generator);
+            void stop_animation();
 
             virtual void update(sp::world_state& world_state);
     };

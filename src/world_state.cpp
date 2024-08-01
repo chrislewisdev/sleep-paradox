@@ -71,7 +71,7 @@ namespace sp {
 
         player.set_position(zone.get_player_spawn());
 
-        for (auto enemy_spawn : zone.get_enemy_spawns()) {
+        for (auto& enemy_spawn : zone.get_enemy_spawns()) {
             enemies.push_back(world_object_enemy(enemy_spawn.enemy_type, vec3(enemy_spawn.x, 16, enemy_spawn.y)));
         }
     }

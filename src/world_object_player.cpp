@@ -31,7 +31,7 @@ namespace sp {
         // Zone transitions...
         if (bn::keypad::a_pressed()) {
             auto collider = bn::rect(position.x.integer(), position.z.integer(), 32, 32);
-            for (auto portal : world_state.get_current_zone().get_portals()) {
+            for (auto& portal : world_state.get_current_zone().get_portals()) {
                 auto rect = bn::rect(portal.x + portal.width/2, portal.y - portal.height/2, portal.width, portal.height);
 
                 if (collider.intersects(rect)) {
@@ -112,7 +112,7 @@ namespace sp {
     }
 
     void world_object_player::trigger_attack(sp::world_state& world_state) {
-        auto camera = world_state.get_camera();
+        auto& camera = world_state.get_camera();
         int heading = camera.get_heading();
         vec3 right_axis(bn::degrees_lut_cos(heading), 0, bn::degrees_lut_sin(heading));
         bn::fixed_rect attack_collider((position + right_axis * facing * 10).to_point(), bn::fixed_size(24, 24));

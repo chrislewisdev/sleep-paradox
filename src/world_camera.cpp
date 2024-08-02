@@ -63,6 +63,10 @@ namespace sp {
         update_transform_yz(up_axis);
     }
 
+    vec3 world_camera::to_screen(const vec3& v) {
+        return (v - position) * world_transform * scale;
+    }
+
     void world_camera::update_transform_xz() {
         auto rotation_matrix = mat2::rotate_inverse(heading);
         auto scale_matrix = mat2::scale_inverse(scale, scale * bn::degrees_lut_cos(pitch));

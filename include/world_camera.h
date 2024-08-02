@@ -37,5 +37,6 @@ namespace sp {
             const bn::sprite_affine_mat_ptr& get_affine_transform_ptr_yz() const;
 
             void update_camera(const vec3& target, int pitch, int heading, bn::fixed scale);
+            vec3 to_screen(const vec3& position);
     };
 }

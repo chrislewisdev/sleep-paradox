@@ -10,6 +10,7 @@ namespace sp {
             void trigger_attack(sp::world_state& world_state);
             void update_fx();
             bool apply_xp(int amount);
+            bn::optional<bn::fixed_point> get_interaction_point(sp::world_state& world_state);
 
             int level, xp;
             rpg_stats stats;
@@ -18,6 +19,7 @@ namespace sp {
             int attack_cooldown = 0;
             bn::optional<bn::sprite_ptr> attack_fx;
             bn::optional<world_object_animation> attack_fx_animation;
+            bn::optional<bn::sprite_ptr> interaction_callout;
 
         public:
             world_object_player();

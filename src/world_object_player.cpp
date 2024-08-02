@@ -9,6 +9,7 @@
 
 #include "bn_sprite_items_fred_sprite_sheet.h"
 #include "bn_sprite_items_attack_fx.h"
+#include "bn_sprite_items_interact.h"
 
 namespace sp {
     constexpr bn::fixed speed(2);
@@ -65,6 +66,17 @@ namespace sp {
 
         vec3 delta = test_movement(world_state, movement);
         position = position + delta;
+
+        auto interaction_point = get_interaction_point(world_state);
+        if (interaction_point) {
+            if (!interaction_callout) {
+                interaction_callout = bn::sprite_items::interact.create_sprite(*interaction_point);
+                interaction_callout->set_bg_priority(0);
+            }
+            interaction_callout->set_position(*interaction_point);
+        } else if (interaction_callout) {
+            interaction_callout.reset();
+        }
 
         world_object::update(world_state);
     }
@@ -170,5 +182,19 @@ namespace sp {
         health = stats.max_health;
 
         return true;
+    }
+
+    bn::optional<bn::fixed_point> world_object_player::get_interaction_point(sp::world_state& world_state) {
+        auto collider = bn::rect(position.x.integer(), position.z.integer(), 32, 32);
+        for (auto& portal : world_state.get_current_zone().get_portals()) {
+            auto rect = bn::rect(portal.x + portal.width/2, portal.y - portal.height/2, portal.width, portal.height);
+
+            if (collider.intersects(rect)) {
+                vec3 portal_position(portal.x + portal.width/2, 16, portal.y - portal.height/2);
+                return world_state.get_camera().to_screen(portal_position).to_point();
+            }
+        }
+
+        return bn::nullopt;
     }
 }

@@ -27,6 +27,7 @@ namespace sp {
     world_object_player& world_state::get_player() { return player; }
     bn::ivector<world_object_wall>& world_state::get_walls() { return walls; }
     bn::ivector<world_object_enemy>& world_state::get_enemies() { return enemies; }
+    bn::ivector<world_object_chest>& world_state::get_chests() { return chests; }
     bn::ivector<bn::fixed_rect>& world_state::get_colliders() { return colliders; }
 
     bool world_state::get_visible() const { return is_visible; }
@@ -48,6 +49,9 @@ namespace sp {
         for (world_object_wall& wall : walls) {
             wall.update(*this);
         }
+        for (world_object_chest& chest : chests) {
+            chest.update(*this);
+        }
 
         for (auto iter = callouts.begin(); iter < callouts.end(); iter++) {
             iter->update();
@@ -57,13 +61,13 @@ namespace sp {
     }
 
     void world_state::load_zone(const world_zone& zone) {
-        BN_LOG("Zone address:", &zone);
         current_zone = &zone;
 
         walls.clear();
         enemies.clear();
         colliders.clear();
         callouts.clear();
+        chests.clear();
 
         wall_generator generator;
         generator.generate_walls(zone, walls);
@@ -74,6 +78,8 @@ namespace sp {
         for (auto& enemy_spawn : zone.get_enemy_spawns()) {
             enemies.push_back(world_object_enemy(enemy_spawn.enemy_type, vec3(enemy_spawn.x, 16, enemy_spawn.y)));
         }
+
+        chests.push_back(world_object_chest(vec3(50, 8, -50)));
     }
 
     void world_state::create_damage_callout(bn::fixed_point point, int amount, bool is_weak) {

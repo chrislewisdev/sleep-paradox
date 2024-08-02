@@ -192,6 +192,14 @@ namespace sp {
             }
         }
 
+        auto facing_position = position + world_state.get_camera().get_right_axis() * facing * 15;
+        auto facing_collider = bn::rect(facing_position.x.integer(), facing_position.z.integer(), 16, 16);
+        for (auto& chest : world_state.get_chests()) {
+            if (chest.get_collider().touches(facing_collider)) {
+                return &chest;
+            }
+        }
+
         return bn::nullopt;
     }
 }

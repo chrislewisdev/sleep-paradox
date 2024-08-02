@@ -87,6 +87,10 @@ namespace sp {
         world_state.create_damage_callout(screen_position.to_point(), damage, false);
     }
 
+    void world_object_player::grant_item(sp::item_id item_id) {
+        inventory.push_back(item_id);
+    }
+
     vec3 world_object_player::get_movement_input(bn::fixed heading) {
         bool left = bn::keypad::left_held();
         bool right = bn::keypad::right_held();
@@ -195,7 +199,7 @@ namespace sp {
         auto facing_position = position + world_state.get_camera().get_right_axis() * facing * 15;
         auto facing_collider = bn::rect(facing_position.x.integer(), facing_position.z.integer(), 16, 16);
         for (auto& chest : world_state.get_chests()) {
-            if (chest.get_collider().touches(facing_collider)) {
+            if (!chest.get_is_opened() && chest.get_collider().touches(facing_collider)) {
                 return &chest;
             }
         }

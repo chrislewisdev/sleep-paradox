@@ -79,7 +79,7 @@ namespace sp {
             enemies.push_back(world_object_enemy(enemy_spawn.enemy_type, vec3(enemy_spawn.x, 16, enemy_spawn.y)));
         }
 
-        chests.push_back(world_object_chest(vec3(50, 8, -50)));
+        chests.push_back(world_object_chest(vec3(50, 8, -50), item_id::potion));
     }
 
     void world_state::create_damage_callout(bn::fixed_point point, int amount, bool is_weak) {
@@ -100,5 +100,12 @@ namespace sp {
         load_zone(*get_zone_by_name((*queued_zone_change)->target_zone_name));
         player.set_position(vec3((*queued_zone_change)->destination_x, 16, (*queued_zone_change)->destination_y));
         queued_zone_change.reset();
+    }
+
+    void world_state::activate_chest(const world_object_chest& chest) {
+        // Find the chest and trigger its non-const method...
+        for (auto& c : chests) {
+            if (&c == &chest) c.activate(*this);
+        }
     }
 }

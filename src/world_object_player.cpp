@@ -31,14 +31,10 @@ namespace sp {
 
         // Zone transitions...
         if (bn::keypad::a_pressed()) {
-            auto collider = bn::rect(position.x.integer(), position.z.integer(), 32, 32);
-            for (auto& portal : world_state.get_current_zone().get_portals()) {
-                auto rect = bn::rect(portal.x + portal.width/2, portal.y - portal.height/2, portal.width, portal.height);
-
-                if (collider.intersects(rect)) {
-                    world_state.queue_zone_change(portal);
-                    return;
-                }
+            auto interactable = get_interactable(world_state);
+            if (interactable) {
+                (*interactable)->interact(world_state);
+                return;
             }
         }
 
@@ -67,13 +63,15 @@ namespace sp {
         vec3 delta = test_movement(world_state, movement);
         position = position + delta;
 
-        auto interaction_point = get_interaction_point(world_state);
-        if (interaction_point) {
+        auto interactable = get_interactable(world_state);
+        if (interactable) {
+            auto screen_position = camera.to_screen((*interactable)->get_position()).to_point();
             if (!interaction_callout) {
-                interaction_callout = bn::sprite_items::interact.create_sprite(*interaction_point);
+                interaction_callout = bn::sprite_items::interact.create_sprite(screen_position);
                 interaction_callout->set_bg_priority(0);
             }
-            interaction_callout->set_position(*interaction_point);
+            // If the interaction point moves, we need to ensure it is up to date
+            interaction_callout->set_position(screen_position);
         } else if (interaction_callout) {
             interaction_callout.reset();
         }
@@ -184,14 +182,13 @@ namespace sp {
         return true;
     }
 
-    bn::optional<bn::fixed_point> world_object_player::get_interaction_point(sp::world_state& world_state) {
+    bn::optional<const interactable*> world_object_player::get_interactable(sp::world_state& world_state) {
         auto collider = bn::rect(position.x.integer(), position.z.integer(), 32, 32);
         for (auto& portal : world_state.get_current_zone().get_portals()) {
             auto rect = bn::rect(portal.x + portal.width/2, portal.y - portal.height/2, portal.width, portal.height);
 
             if (collider.intersects(rect)) {
-                vec3 portal_position(portal.x + portal.width/2, 16, portal.y - portal.height/2);
-                return world_state.get_camera().to_screen(portal_position).to_point();
+                return &portal;
             }
         }
 

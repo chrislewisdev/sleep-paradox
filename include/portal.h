@@ -2,8 +2,10 @@
 
 #include "bn_string_view.h"
 
+#include "interactable.h"
+
 namespace sp {
-    class portal {
+    class portal : public interactable {
         public:
             const bn::string_view target_zone_name;
             const int16_t x, y;
@@ -27,6 +29,9 @@ namespace sp {
                 destination_x(_destination_x),
                 destination_y(_destination_y)
             {}
+
+            vec3 get_position() const;
+            void interact(sp::world_state& world_state) const;
     };
 }
 

@@ -9,6 +9,7 @@
 #include "world_object_wall.h"
 #include "world_object_enemy.h"
 #include "world_object_chest.h"
+#include "world_object_projectile.h"
 #include "fx_callout.h"
 
 namespace sp {
@@ -22,6 +23,7 @@ namespace sp {
             bn::vector<bn::fixed_rect, 32> colliders;
             bn::vector<fx_callout, 16> callouts;
             bn::vector<world_object_chest, 4> chests;
+            bn::vector<world_object_projectile, 8> projectiles;
             bn::sprite_text_generator small_text_generator;
             bool is_visible;
             bn::optional<const portal*> queued_zone_change;
@@ -48,5 +50,6 @@ namespace sp {
             void process_zone_change();
 
             void activate_chest(const world_object_chest& chest);
+            void spawn_projectile(world_object_projectile&& projectile);
     };
 }

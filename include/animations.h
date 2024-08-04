@@ -9,6 +9,8 @@
 #include "bn_sprite_items_cage_sheet.h"
 #include "bn_sprite_items_tooth_sheet.h"
 #include "bn_sprite_items_creeper_sheet.h"
+#include "bn_sprite_items_thrower_sheet.h"
+#include "bn_sprite_items_apple_sheet.h"
 
 namespace sp::animations {
     namespace player {
@@ -53,6 +55,25 @@ namespace sp::animations {
         constexpr bn::sprite_tiles_item tiles = bn::sprite_items::tooth_sheet.tiles_item();
 
         inline world_object_animation move(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_forever(sprite, 5, tiles, 0, 1, 2, 3, 4, 5, 6, 7);
+        }
+    }
+    namespace thrower {
+        constexpr bn::sprite_tiles_item tiles = bn::sprite_items::thrower_sheet.tiles_item();
+
+        inline world_object_animation move(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_forever(sprite, 5, tiles, 0, 1, 2, 3, 4);
+        }
+
+        inline world_object_animation attack(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 5, 6, 7, 0);
+        }
+    }
+
+    namespace apple {
+        constexpr bn::sprite_tiles_item tiles = bn::sprite_items::apple_sheet.tiles_item();
+
+        inline world_object_animation spin(const bn::sprite_ptr& sprite) {
             return bn::create_sprite_animate_action_forever(sprite, 5, tiles, 0, 1, 2, 3, 4, 5, 6, 7);
         }
     }

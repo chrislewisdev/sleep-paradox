@@ -58,6 +58,12 @@ namespace sp {
 
             if (iter->is_done()) callouts.erase(iter);
         }
+
+        for (auto iter = projectiles.begin(); iter < projectiles.end(); iter++) {
+            iter->update(*this);
+
+            if (!iter->is_active()) projectiles.erase(iter);
+        }
     }
 
     void world_state::load_zone(const world_zone& zone) {
@@ -107,5 +113,9 @@ namespace sp {
         for (auto& c : chests) {
             if (&c == &chest) c.activate(*this);
         }
+    }
+
+    void world_state::spawn_projectile(world_object_projectile&& projectile) {
+        projectiles.push_back(projectile);
     }
 }

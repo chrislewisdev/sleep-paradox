@@ -62,7 +62,8 @@ namespace sp {
 
         // Calculate distance using ints to avoid overflow over large distances
         int distance_squared = to_player.x.integer() * to_player.x.integer() + to_player.z.integer() * to_player.z.integer();
-        if (distance_squared > 25*25) {
+        auto attack_distance = type->behaviour_type == behaviour_type::melee ? 25*25 : 50*50;
+        if (distance_squared > attack_distance) {
             // Calculated using angle to player because normalising vectors over a certain length seems buggy (yields a negative vector)
             bn::fixed angle = bn::degrees_atan2(to_player.x.integer(), to_player.z.integer());
             if (angle < 0) angle += 360;
@@ -79,19 +80,24 @@ namespace sp {
             state = enemy_state::attack;
             // We'll probably need a nicer way to init states later on :)
             attack_windup = 30;
+
+            if (type->attack_animation) play_animation(type->attack_animation.value());
+            else stop_animation();
         }
     }
 
     void world_object_enemy::update_attack(sp::world_state& world_state) {
-        stop_animation();
-
         attack_windup--;
 
         if (attack_windup == 0) {
-            // TODO: Rather than check distance, we could do a collider-based check?
             vec3 to_player = world_state.get_player().get_position() - position;
-            if (to_player.magnitude_squared() < 30*30) {
-                world_state.get_player().receive_attack(world_state, type->stats);
+            if (type->behaviour_type == behaviour_type::melee) {
+                // TODO: Rather than check distance, we could do a collider-based check?
+                if (to_player.magnitude_squared() < 30*30) {
+                    world_state.get_player().receive_attack(world_state, type->stats);
+                }
+            } else if (type->behaviour_type == behaviour_type::ranged) {
+                world_state.spawn_projectile(world_object_projectile(position, normalise(to_player)));
             }
         }
 

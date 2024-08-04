@@ -15,6 +15,7 @@ namespace sp {
         private:
             void update_idle(sp::world_state& world_state);
             void update_chase(sp::world_state& world_state);
+            void enter_attack();
             void update_attack(sp::world_state& world_state);
 
             const enemy_type* type;

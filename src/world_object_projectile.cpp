@@ -13,13 +13,13 @@ namespace sp {
         position = _position;
 
         active = true;
-
-        use_animation("spin", sp::animations::apple::spin);
     }
 
     bool world_object_projectile::is_active() const { return active; }
 
     void world_object_projectile::update(sp::world_state& world_state) {
+        use_animation("spin", sp::animations::apple::spin);
+
         position = position + velocity;
 
         // TODO: Check for player collision!

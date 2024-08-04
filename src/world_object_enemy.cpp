@@ -62,7 +62,7 @@ namespace sp {
 
         // Calculate distance using ints to avoid overflow over large distances
         int distance_squared = to_player.x.integer() * to_player.x.integer() + to_player.z.integer() * to_player.z.integer();
-        auto attack_distance = type->behaviour_type == behaviour_type::melee ? 25*25 : 50*50;
+        auto attack_distance = type->behaviour_type == behaviour_type::melee ? 25*25 : 75*75;
         if (distance_squared > attack_distance) {
             // Calculated using angle to player because normalising vectors over a certain length seems buggy (yields a negative vector)
             bn::fixed angle = bn::degrees_atan2(to_player.x.integer(), to_player.z.integer());
@@ -77,27 +77,33 @@ namespace sp {
                 sprite->set_horizontal_flip(is_left_facing);
             }
         } else {
-            state = enemy_state::attack;
-            // We'll probably need a nicer way to init states later on :)
-            attack_windup = 30;
-
-            if (type->attack_animation) play_animation(type->attack_animation.value());
-            else stop_animation();
+            enter_attack();
         }
+    }
+
+    void world_object_enemy::enter_attack() {
+        state = enemy_state::attack;
+
+        attack_windup = type->behaviour_type == behaviour_type::melee ? 30 : 10;
+
+        if (type->attack_animation) play_animation(type->attack_animation.value());
+        else stop_animation();
     }
 
     void world_object_enemy::update_attack(sp::world_state& world_state) {
         attack_windup--;
 
         if (attack_windup == 0) {
-            vec3 to_player = world_state.get_player().get_position() - position;
             if (type->behaviour_type == behaviour_type::melee) {
+                vec3 to_player = world_state.get_player().get_position() - position;
                 // TODO: Rather than check distance, we could do a collider-based check?
                 if (to_player.magnitude_squared() < 30*30) {
                     world_state.get_player().receive_attack(world_state, type->stats);
                 }
             } else if (type->behaviour_type == behaviour_type::ranged) {
-                world_state.spawn_projectile(world_object_projectile(position, normalise(to_player)));
+                vec3 spawn_position = position + vec3::right * 9 + vec3::up * 9;
+                vec3 to_player = world_state.get_player().get_position() - spawn_position;
+                world_state.spawn_projectile(world_object_projectile(spawn_position, normalise(to_player) * 2));
             }
         }
 

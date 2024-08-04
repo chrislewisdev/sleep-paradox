@@ -1,24 +1,17 @@
 #include "scene_title.h"
 
-#include "bn_sprite_text_generator.h"
 #include "bn_keypad.h"
 
-#include "common_variable_8x16_sprite_font.h"
+#include "bn_regular_bg_items_title.h"
 
 namespace sp {
-    scene_title::scene_title(sp::scene_manager& _scene_manager)
-        : scene_manager(_scene_manager)
-    {
-        bn::sprite_text_generator text_gen(common::variable_8x16_sprite_font);
-        text_gen.set_center_alignment();
-
-        text_gen.generate(0, -50, "Sleep Paradox", text_sprites);
-        text_gen.generate(0, -8, "Title scene", text_sprites);
-        text_gen.generate(0, 30, "Press A to start", text_sprites);
-    }
+    scene_title::scene_title(sp::scene_manager& _scene_manager) :
+        scene_manager(_scene_manager),
+        bg(bn::regular_bg_items::title.create_bg(0, 0))
+    {}
 
     void scene_title::update() {
-        if (bn::keypad::a_held()) {
+        if (bn::keypad::a_held() || bn::keypad::start_held()) {
             scene_manager.queue_scene_change(sp::scene_id::gameplay);
         }
     }

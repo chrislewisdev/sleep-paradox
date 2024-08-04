@@ -1,18 +1,24 @@
 #include "world_object_enemy.h"
 
-#include "bn_log.h"
-
 #include "world_state.h"
 
 #include "bn_sprite_items_bully01_side_profile.h"
 
 namespace sp {
-    world_object_enemy::world_object_enemy(const enemy_type& type, vec3 _position)
-        : world_object(type.sprite_item)
+    world_object_enemy::world_object_enemy(const enemy_type& _type, vec3 _position)
+        : world_object(_type.sprite_item), type(&_type)
     {
         position = _position;
-        stats = type.stats;
+
+        health = type->stats.max_health;
     }
+
+    const rpg_stats& world_object_enemy::get_stats() const { return type->stats; }
+    int world_object_enemy::get_health() const { return health; }
+    int world_object_enemy::get_xp_reward() const { return type->xp_reward; }
+
+    // TODO: Account for stuff like death animations playing before an enemy is marked inactive
+    bool world_object_enemy::is_active() const { return health > 0; }
 
     void world_object_enemy::update(sp::world_state& world_state) {
         if (state == enemy_state::idle) {
@@ -27,8 +33,8 @@ namespace sp {
     }
 
     void world_object_enemy::receive_attack(sp::world_state& world_state, const rpg_stats& attacker) {
-        int damage = calculate_damage(attacker, stats);
-        //health -= damage;
+        int damage = calculate_damage(attacker, type->stats);
+        health -= damage;
 
         vec3 screen_position = get_screen_position(world_state.get_camera());
         world_state.create_damage_callout(screen_position.to_point(), damage, false);
@@ -36,6 +42,8 @@ namespace sp {
     }
 
     void world_object_enemy::update_idle(sp::world_state& world_state) {
+        stop_animation();
+
         vec3 player_position = world_state.get_player().get_position();
         vec3 to_player = player_position - position;
 
@@ -47,6 +55,8 @@ namespace sp {
     }
 
     void world_object_enemy::update_chase(sp::world_state& world_state) {
+        if (type->move_animation) use_animation("move", type->move_animation.value());
+
         vec3 player_position = world_state.get_player().get_position();
         vec3 to_player = player_position - position;
 
@@ -60,6 +70,11 @@ namespace sp {
             vec3 movement = vec3(bn::degrees_lut_sin(angle), 0, bn::degrees_lut_cos(angle));
             vec3 delta = test_movement(world_state, movement);
             position = position + delta;
+
+            if (sprite) {
+                bool is_left_facing = delta.dot(world_state.get_camera().get_right_axis()) > 0;
+                sprite->set_horizontal_flip(is_left_facing);
+            }
         } else {
             state = enemy_state::attack;
             // We'll probably need a nicer way to init states later on :)
@@ -68,13 +83,15 @@ namespace sp {
     }
 
     void world_object_enemy::update_attack(sp::world_state& world_state) {
+        stop_animation();
+
         attack_windup--;
 
         if (attack_windup == 0) {
             // TODO: Rather than check distance, we could do a collider-based check?
             vec3 to_player = world_state.get_player().get_position() - position;
             if (to_player.magnitude_squared() < 30*30) {
-                world_state.get_player().receive_attack(world_state, stats);
+                world_state.get_player().receive_attack(world_state, type->stats);
             }
         }
 

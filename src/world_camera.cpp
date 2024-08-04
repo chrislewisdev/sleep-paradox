@@ -17,6 +17,7 @@ namespace sp {
 
     const vec3& world_camera::get_position() const { return position; }
     const vec3& world_camera::get_direction() const { return direction; }
+    const vec3& world_camera::get_right_axis() const { return right_axis; }
 
     const mat4& world_camera::get_world_transform() const { return world_transform; }
 
@@ -37,9 +38,10 @@ namespace sp {
             target.z + bn::degrees_lut_cos(heading) * bn::degrees_lut_cos(pitch)
         );
 
+        // We could probably recalculate all these things only when pitch/heading changes...
         direction = normalise(target - position);
 
-        vec3 right_axis(bn::degrees_lut_cos(heading), 0, bn::degrees_lut_sin(heading));
+        right_axis = vec3(bn::degrees_lut_cos(heading), 0, bn::degrees_lut_sin(heading));
 
         vec3 up_axis(
             direction.x,
@@ -57,8 +59,12 @@ namespace sp {
         );
         
         update_transform_xz();
-        update_transform_xy(right_axis, up_axis);
-        update_transform_yz(right_axis, up_axis);
+        update_transform_xy(up_axis);
+        update_transform_yz(up_axis);
+    }
+
+    vec3 world_camera::to_screen(const vec3& v) {
+        return (v - position) * world_transform * scale;
     }
 
     void world_camera::update_transform_xz() {
@@ -74,7 +80,7 @@ namespace sp {
         );
     }
 
-    void world_camera::update_transform_xy(const vec3& right_axis, const vec3& up_axis) {
+    void world_camera::update_transform_xy(const vec3& up_axis) {
         auto scale_matrix = mat2::scale_inverse(scale + bn::fixed(0.05), scale);
         auto perspective_matrix = inverse(mat2(right_axis.x, right_axis.y, up_axis.x, up_axis.y));
         auto transform = scale_matrix * perspective_matrix;
@@ -88,7 +94,7 @@ namespace sp {
         affine_transform_ptr_xy.set_attributes(affine_transform_xy);
     }
 
-    void world_camera::update_transform_yz(const vec3& right_axis, const vec3& up_axis) {
+    void world_camera::update_transform_yz(const vec3& up_axis) {
         auto scale_matrix = mat2::scale_inverse(scale + bn::fixed(0.05), scale);
         auto perspective_matrix = inverse(mat2(right_axis.z, right_axis.y, up_axis.z, up_axis.y));
         auto transform = scale_matrix * perspective_matrix;

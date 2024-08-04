@@ -1,0 +1,5 @@
+{
+    "type": "affine_bg_tiles",
+    "generate_palette": "true",
+    "palette_colors_count": 256
+}

@@ -4,6 +4,7 @@ namespace sp {
     enum class scene_id {
         title,
         gameplay,
+        pause,
         end,
     };
 

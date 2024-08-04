@@ -10,7 +10,7 @@ namespace sp {
 
     world_object::world_object(const bn::sprite_item& _sprite_item)
         : position(0, 16, 0),
-          sprite_item(_sprite_item)
+          sprite_item(&_sprite_item)
     {
     }
 
@@ -35,7 +35,23 @@ namespace sp {
         if (!sprite.has_value() || current_animation_name == name) return;
 
         current_animation_name = name;
+        current_animation_generator = generator;
+        
+        if (!animation.has_value() || animation->update_forever()) animation = generator(*sprite);
+    }
+
+    void world_object::play_animation(animation_generator generator) {
+        if (!sprite.has_value()) return;
+
         animation = generator(*sprite);
+    }
+
+    void world_object::stop_animation() {
+        if (animation) animation.reset();
+        if (current_animation_generator) current_animation_generator.reset();
+        current_animation_name = "";
+
+        if (sprite) sprite->set_tiles(sprite_item->tiles_item());
     }
 
     void world_object::update(sp::world_state& world_state) {
@@ -46,7 +62,8 @@ namespace sp {
         constexpr int clip_right = bn::display::width() / 2 + 32;
         constexpr int clip_top = bn::display::height() / 2 + 32;
         constexpr int clip_bottom = -bn::display::height() / 2 - 32;
-        const bool visible = !(screen_position.x < clip_left || screen_position.x > clip_right || screen_position.z < clip_bottom || screen_position.z > clip_top);
+        const bool visible = world_state.get_visible() && 
+            !(screen_position.x < clip_left || screen_position.x > clip_right || screen_position.z < clip_bottom || screen_position.z > clip_top);
 
         // Butano already filters out off-screen sprites, but by using less sprite_ptrs we save on sorting layers
         if (!visible && sprite.has_value()) {
@@ -55,8 +72,12 @@ namespace sp {
             }
             sprite.reset();
         } else if (visible && !sprite.has_value()) {
-            sprite = sprite_item.create_sprite(0, 0);
+            sprite = sprite_item->create_sprite(0, 0);
             sprite->set_bg_priority(2);
+
+            if (current_animation_generator.has_value()) {
+                animation = current_animation_generator.value()(*sprite);
+            }
         }
 
         if (sprite.has_value()) {
@@ -70,6 +91,15 @@ namespace sp {
 
             if (animation.has_value()) {
                 animation->update();
+
+                if (animation->done()) {
+                    animation.reset();
+
+                    // Getting pretty deeply nested here, could break this out into a method...
+                    if (current_animation_generator.has_value()) {
+                        animation = current_animation_generator.value()(*sprite);
+                    }
+                }
             }
         }
     }

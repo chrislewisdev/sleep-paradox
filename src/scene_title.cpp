@@ -2,6 +2,8 @@
 
 #include "bn_keypad.h"
 
+#include "institutionalised.h"
+
 #include "bn_regular_bg_items_title.h"
 
 namespace sp {
@@ -13,6 +15,7 @@ namespace sp {
     void scene_title::update() {
         if (bn::keypad::a_held() || bn::keypad::start_held()) {
             scene_manager.queue_scene_change(sp::scene_id::gameplay);
+            cell_song_setup(InstitutionalisedSongStruct);
         }
     }
 }

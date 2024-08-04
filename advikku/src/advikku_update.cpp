@@ -275,16 +275,16 @@ void cell_song_update() {
 			} else if (ch[i].portamento_direction) {
 				//portamento up
 				if (ch[i].portamento_direction == 1)
-					ch[i].current_freq -= ch[i].portamento_speed;
+					ch[i].current_freq += ch[i].portamento_speed;
 				//portamento down
 				else if (ch[i].portamento_direction == 2)
-					ch[i].current_freq += ch[i].portamento_speed;
+					ch[i].current_freq -= ch[i].portamento_speed;
 				//tone portamento
 				else if (ch[i].portamento_direction == 3) {
 					if (ch[i].portamento_freq_goal > ch[i].current_freq)
-						ch[i].current_freq += ch[i].portamento_speed;
-					else if (ch[i].portamento_freq_goal < ch[i].current_freq)
 						ch[i].current_freq -= ch[i].portamento_speed;
+					else if (ch[i].portamento_freq_goal < ch[i].current_freq)
+						ch[i].current_freq += ch[i].portamento_speed;
 				}
 			} else if (ch[i].arp_enabled) {
 				switch (advik_arp_index) {

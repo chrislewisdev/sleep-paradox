@@ -5,9 +5,6 @@
 #include "scene_title.h"
 
 #include "advikku_global.h"
-#include "advikku_setup.h"
-#include "advikku_update.h"
-#include "daedalus.h"
 
 int main()
 {
@@ -23,8 +20,6 @@ int main()
 	REG_SNDDMGCNT = SDMG_BUILD_LR(SDMG_SQR1 | SDMG_SQR2 | SDMG_WAVE | SDMG_NOISE, 6);
 	// DMG ratio to 100%
 	REG_SNDDSCNT= SDS_DMG100 | SDS_A100 | SDS_AR | SDS_AL | SDS_ATMR0 | SDS_ARESET | SDS_B100 | SDS_BR | SDS_BL |SDS_BTMR1 | SDS_BRESET;
-
-	cell_song_setup(DaedalusSongStruct);
 
     while(true)
     {

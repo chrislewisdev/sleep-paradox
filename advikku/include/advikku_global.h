@@ -176,3 +176,5 @@ extern const int16_t vib_table[];
 
 #endif
 
+#include "advikku_update.h"
+#include "advikku_setup.h"

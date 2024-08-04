@@ -22,10 +22,15 @@ namespace sp {
 
         position = position + velocity;
 
-        // TODO: Check for player collision!
+        auto collider = bn::fixed_rect(position.to_point(), bn::fixed_size(4, 4));
+        auto& player = world_state.get_player();
+        if (player.get_collider().touches(collider)) {
+            player.receive_attack(world_state, enemy_type::thrower.stats);
+            active = false;
+        }
 
-        for (auto& collider : world_state.get_colliders()) {
-            if (collider.touches(get_collider())) {
+        for (auto& world_collider : world_state.get_colliders()) {
+            if (collider.touches(world_collider)) {
                 active = false;
             }
         }

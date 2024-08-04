@@ -74,7 +74,7 @@ namespace sp::animations {
         constexpr bn::sprite_tiles_item tiles = bn::sprite_items::apple_sheet.tiles_item();
 
         inline world_object_animation spin(const bn::sprite_ptr& sprite) {
-            return bn::create_sprite_animate_action_forever(sprite, 5, tiles, 0, 1, 2, 3, 4, 5, 6, 7);
+            return bn::create_sprite_animate_action_forever(sprite, 1, tiles, 0, 1, 2, 3, 4, 5, 6, 7);
         }
     }
 }

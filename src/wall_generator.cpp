@@ -50,15 +50,19 @@ namespace sp {
         // Generate edge walls
         for (int x = 0; x < zone.get_width(); x++) {
             // Top edge
-            storage.push_back(world_object_wall(vec3(x * metatile_size + metatile_size / 2 - half_width, metatile_size / 2, -half_height), vec3::forward));
-            // Bottom edhe
-            storage.push_back(world_object_wall(vec3(x * metatile_size + metatile_size / 2 - half_width, metatile_size / 2, half_height), -vec3::forward));
+            if (zone.get_ceiling_tile(x, zone.get_height() - 1) == empty_tile)
+                storage.push_back(world_object_wall(vec3(x * metatile_size + metatile_size / 2 - half_width, metatile_size / 2, -half_height), vec3::forward));
+            // Bottom edge
+            if (zone.get_ceiling_tile(x, 0) == empty_tile)
+                storage.push_back(world_object_wall(vec3(x * metatile_size + metatile_size / 2 - half_width, metatile_size / 2, half_height), -vec3::forward));
         }
         for (int y = 0; y < zone.get_height(); y++) {
             // Left edge
-            storage.push_back(world_object_wall(vec3(-half_width, metatile_size / 2, half_height - (y * metatile_size + metatile_size / 2)), vec3::right));
+            if (zone.get_ceiling_tile(0, y) == empty_tile)
+                storage.push_back(world_object_wall(vec3(-half_width, metatile_size / 2, half_height - (y * metatile_size + metatile_size / 2)), vec3::right));
             // Right edge
-            storage.push_back(world_object_wall(vec3(half_width, metatile_size / 2, half_height - (y * metatile_size + metatile_size / 2)), -vec3::right));
+            if (zone.get_ceiling_tile(zone.get_width() - 1, y) == empty_tile)
+                storage.push_back(world_object_wall(vec3(half_width, metatile_size / 2, half_height - (y * metatile_size + metatile_size / 2)), -vec3::right));
         }
     }
 
@@ -74,12 +78,6 @@ namespace sp {
         const int metatile_size = zone.get_metatile_size();
         const int half_width = (zone.get_width() / 2) * metatile_size;
         const int half_height = (zone.get_height() / 2) * metatile_size;
-
-        // Generate edge colliders
-        storage.push_back(bn::fixed_rect(bn::fixed_point(0, -half_height - metatile_size / 2), bn::fixed_size(half_width * 2, metatile_size)));
-        storage.push_back(bn::fixed_rect(bn::fixed_point(0, half_height + metatile_size / 2), bn::fixed_size(half_width * 2, metatile_size)));
-        storage.push_back(bn::fixed_rect(bn::fixed_point(-half_width - metatile_size / 2, 0), bn::fixed_size(metatile_size, half_height * 2)));
-        storage.push_back(bn::fixed_rect(bn::fixed_point(half_width + metatile_size / 2, 0), bn::fixed_size(metatile_size, half_height * 2)));
 
         for (int y = 0; y < zone.get_height(); y++) {
             for (int x = 0; x < zone.get_width(); x++) {
@@ -129,5 +127,12 @@ namespace sp {
                 }
             }
         }
+
+        // Generate edge colliders
+        storage.push_back(bn::fixed_rect(bn::fixed_point(0, -half_height - metatile_size / 2), bn::fixed_size(half_width * 2, metatile_size)));
+        storage.push_back(bn::fixed_rect(bn::fixed_point(0, half_height + metatile_size / 2), bn::fixed_size(half_width * 2, metatile_size)));
+        storage.push_back(bn::fixed_rect(bn::fixed_point(-half_width - metatile_size / 2, 0), bn::fixed_size(metatile_size, half_height * 2)));
+        storage.push_back(bn::fixed_rect(bn::fixed_point(half_width + metatile_size / 2, 0), bn::fixed_size(metatile_size, half_height * 2)));
+
     }
 }

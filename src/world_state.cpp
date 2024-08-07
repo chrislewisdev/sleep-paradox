@@ -85,7 +85,7 @@ namespace sp {
             enemies.push_back(world_object_enemy(enemy_spawn.enemy_type, vec3(enemy_spawn.x, 16, enemy_spawn.y)));
         }
 
-        chests.push_back(world_object_chest(vec3(50, 8, -50), item_id::potion));
+        // chests.push_back(world_object_chest(vec3(50, 8, -50), item_id::potion));
     }
 
     void world_state::create_damage_callout(bn::fixed_point point, int amount, bool is_weak) {

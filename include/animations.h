@@ -7,8 +7,14 @@
 #include "bn_sprite_items_fred_sprite_sheet.h"
 #include "bn_sprite_items_attack_fx.h"
 #include "bn_sprite_items_cage_sheet.h"
+#include "bn_sprite_items_cage_attack_sheet.h"
+#include "bn_sprite_items_cage_trapped_sheet.h"
 #include "bn_sprite_items_tooth_sheet.h"
+#include "bn_sprite_items_tooth_windup_sheet.h"
+#include "bn_sprite_items_tooth_charge_sheet.h"
+#include "bn_sprite_items_tooth_hit_sheet.h"
 #include "bn_sprite_items_creeper_sheet.h"
+#include "bn_sprite_items_creeper_attack_sheet.h"
 #include "bn_sprite_items_thrower_sheet.h"
 #include "bn_sprite_items_apple_sheet.h"
 
@@ -39,23 +45,47 @@ namespace sp::animations {
     
     namespace creeper {
         constexpr bn::sprite_tiles_item tiles = bn::sprite_items::creeper_sheet.tiles_item();
+        constexpr bn::sprite_tiles_item attack_tiles = bn::sprite_items::creeper_attack_sheet.tiles_item();
 
         inline world_object_animation move(const bn::sprite_ptr& sprite) {
             return bn::create_sprite_animate_action_forever(sprite, 5, tiles, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        }
+        inline world_object_animation attack(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_once(sprite, 5, attack_tiles, 0, 1, 2, 3, 4, 5, 6, 0);
         }
     }
     namespace cage {
         constexpr bn::sprite_tiles_item tiles = bn::sprite_items::cage_sheet.tiles_item();
+        constexpr bn::sprite_tiles_item attack_tiles = bn::sprite_items::cage_attack_sheet.tiles_item();
+        constexpr bn::sprite_tiles_item trapped_tiles = bn::sprite_items::cage_trapped_sheet.tiles_item();
 
         inline world_object_animation move(const bn::sprite_ptr& sprite) {
             return bn::create_sprite_animate_action_forever(sprite, 5, tiles, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
         }
+        inline world_object_animation attack(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_once(sprite, 5, attack_tiles, 0, 1, 2, 3, 4, 5, 0);
+        }
+        inline world_object_animation trapped(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_forever(sprite, 5, trapped_tiles, 0, 1, 2, 3, 4, 5);
+        }
     }
     namespace tooth {
         constexpr bn::sprite_tiles_item tiles = bn::sprite_items::tooth_sheet.tiles_item();
+        constexpr bn::sprite_tiles_item windup_tiles = bn::sprite_items::tooth_windup_sheet.tiles_item();
+        constexpr bn::sprite_tiles_item charge_tiles = bn::sprite_items::tooth_charge_sheet.tiles_item();
+        constexpr bn::sprite_tiles_item bonk_tiles = bn::sprite_items::tooth_hit_sheet.tiles_item();
 
         inline world_object_animation move(const bn::sprite_ptr& sprite) {
             return bn::create_sprite_animate_action_forever(sprite, 5, tiles, 0, 1, 2, 3, 4, 5, 6, 7);
+        }
+        inline world_object_animation windup(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_once(sprite, 5, windup_tiles, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        }
+        inline world_object_animation charge(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_forever(sprite, 5, charge_tiles, 0, 1, 2, 3, 4, 5, 6);
+        }
+        inline world_object_animation bonk(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_once(sprite, 5, bonk_tiles, 0, 1, 2, 3, 4);
         }
     }
     namespace thrower {
@@ -69,7 +99,6 @@ namespace sp::animations {
             return bn::create_sprite_animate_action_once(sprite, 5, tiles, 5, 6, 7, 0);
         }
     }
-
     namespace apple {
         constexpr bn::sprite_tiles_item tiles = bn::sprite_items::apple_sheet.tiles_item();
 

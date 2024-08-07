@@ -29,7 +29,7 @@ namespace sp {
         behaviour_type::melee,
         bn::sprite_items::tooth,
         sp::animations::tooth::move,
-        bn::nullopt
+        sp::animations::tooth::windup
     );
     const enemy_type enemy_type::cage(
         rpg_stats(20, 6, 2, 2),
@@ -37,7 +37,7 @@ namespace sp {
         behaviour_type::melee,
         bn::sprite_items::cage,
         sp::animations::cage::move,
-        bn::nullopt
+        sp::animations::cage::attack
     );
     const enemy_type enemy_type::creeper(
         rpg_stats(8, 3, 1, 2),
@@ -45,7 +45,7 @@ namespace sp {
         behaviour_type::melee,
         bn::sprite_items::creeper,
         sp::animations::creeper::move,
-        bn::nullopt
+        sp::animations::creeper::attack
     );
     const enemy_type enemy_type::thrower(
         rpg_stats(10, 5, 3, 2),

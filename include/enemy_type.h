@@ -10,6 +10,8 @@ namespace sp {
     enum class behaviour_type {
         melee,
         ranged,
+        charger,
+        trapper,
     };
 
     class enemy_type {
@@ -20,7 +22,9 @@ namespace sp {
                 sp::behaviour_type _behaviour_type,
                 const bn::sprite_item& _sprite_item,
                 bn::optional<animation_generator> _move_animation,
-                bn::optional<animation_generator> _attack_animation
+                bn::optional<animation_generator> _attack_animation,
+                bn::optional<animation_generator> _attack_loop_animation,
+                bn::optional<animation_generator> _attack_end_animation
             );
 
             static const enemy_type tooth;
@@ -32,7 +36,10 @@ namespace sp {
             int xp_reward;
             sp::behaviour_type behaviour_type;
             const bn::sprite_item& sprite_item;
+            bn::optional<animation_generator> idle_animation;
             bn::optional<animation_generator> move_animation;
             bn::optional<animation_generator> attack_animation;
+            bn::optional<animation_generator> attack_loop_animation;
+            bn::optional<animation_generator> attack_end_animation;
     };
 }

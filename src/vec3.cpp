@@ -28,6 +28,10 @@ namespace sp {
         return bn::fixed_point(x, z);
     }
 
+    bool operator==(const vec3& lhs, const vec3& rhs) {
+        return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
+    }
+
     vec3 operator+(const vec3& lhs, const vec3& rhs) {
         return vec3(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
     }

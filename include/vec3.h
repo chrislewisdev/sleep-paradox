@@ -21,6 +21,7 @@ namespace sp {
             bn::fixed_point to_point() const;
     };
 
+    bool operator==(const vec3& lhs, const vec3& rhs);
     vec3 operator+(const vec3& lhs, const vec3& rhs);
     vec3 operator-(const vec3& lhs, const vec3& rhs); 
     vec3 operator*(const vec3& lhs, const bn::fixed& rhs);

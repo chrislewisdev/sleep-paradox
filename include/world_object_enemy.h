@@ -8,7 +8,10 @@ namespace sp {
     enum class enemy_state {
         idle,
         chase,
-        attack
+        attack,
+        charge,
+        bonk,
+        trapped_player,
     };
 
     class world_object_enemy : public world_object {
@@ -17,12 +20,20 @@ namespace sp {
             void update_chase(sp::world_state& world_state);
             void enter_attack();
             void update_attack(sp::world_state& world_state);
+            void update_charge(sp::world_state& world_state);
+            void enter_bonk();
+            void update_bonk(sp::world_state& world_state);
+            void update_trap_player(sp::world_state& world_state);
+
+            int get_windup_duration() const;
+            int get_attack_distance_squared() const;
 
             const enemy_type* type;
             int health;
 
             enemy_state state = enemy_state::idle;
             int attack_windup;
+            vec3 charge_vector;
 
         public:
             world_object_enemy(const enemy_type& _type, vec3 position);

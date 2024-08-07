@@ -75,6 +75,9 @@ namespace sp::animations {
         constexpr bn::sprite_tiles_item charge_tiles = bn::sprite_items::tooth_charge_sheet.tiles_item();
         constexpr bn::sprite_tiles_item bonk_tiles = bn::sprite_items::tooth_hit_sheet.tiles_item();
 
+        inline world_object_animation idle(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_forever(sprite, 5, tiles, 0, 0);
+        }
         inline world_object_animation move(const bn::sprite_ptr& sprite) {
             return bn::create_sprite_animate_action_forever(sprite, 5, tiles, 0, 1, 2, 3, 4, 5, 6, 7);
         }

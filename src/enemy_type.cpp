@@ -40,12 +40,12 @@ namespace sp {
     const enemy_type enemy_type::cage(
         rpg_stats(20, 6, 2, 2),
         10,
-        behaviour_type::melee,
+        behaviour_type::trapper,
         bn::sprite_items::cage,
         sp::animations::cage::move,
         sp::animations::cage::attack,
-        bn::nullopt,
-        bn::nullopt
+        sp::animations::cage::trapped,
+        sp::animations::cage::release
     );
     const enemy_type enemy_type::creeper(
         rpg_stats(8, 3, 1, 2),

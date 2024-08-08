@@ -1,5 +1,7 @@
 #include "world_object_enemy.h"
 
+#include "bn_keypad.h"
+
 #include "world_state.h"
 
 #include "bn_sprite_items_bully01_side_profile.h"
@@ -115,7 +117,11 @@ namespace sp {
             } else if (type->behaviour_type == behaviour_type::trapper) {
                 vec3 to_player = world_state.get_player().get_position() - position;
                 if (to_player.magnitude_squared() < 30*30) {
+                    attack_windup = 100;
+                    trap_dmg_timer = 40;
                     state = enemy_state::trapped_player;
+                    world_state.get_player().set_visible(false);
+                    world_state.get_player().set_trapped(true);
                 }
             }
         }
@@ -163,7 +169,28 @@ namespace sp {
     }
 
     void world_object_enemy::update_trap_player(sp::world_state& world_state) {
-        if (type->attack_loop_animation) use_animation("entrapment", type->attack_loop_animation.value());
+        if (attack_windup > 0 && type->attack_loop_animation) use_animation("entrapment", type->attack_loop_animation.value());
+
+        if (attack_windup > 1 && (bn::keypad::a_pressed() || bn::keypad::b_pressed())) {
+            attack_windup -= 5;
+            if (attack_windup < 1) attack_windup = 1;
+        }
+
+        if (attack_windup > 0 && --trap_dmg_timer == 0) {
+            world_state.get_player().receive_attack(world_state, type->stats);
+            trap_dmg_timer = 40;
+        }
+
+        if (--attack_windup == 0) {
+            stop_animation();
+            if (type->attack_end_animation) play_animation(type->attack_end_animation.value());
+            world_state.get_player().set_visible(true);
+            world_state.get_player().set_trapped(false);
+        }
+
+        if (attack_windup == -60) {
+            state = enemy_state::idle;
+        }
     }
 
     int world_object_enemy::get_windup_duration() const {

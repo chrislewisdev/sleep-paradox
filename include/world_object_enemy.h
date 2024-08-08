@@ -34,6 +34,7 @@ namespace sp {
             enemy_state state = enemy_state::idle;
             int attack_windup;
             vec3 charge_vector;
+            int trap_dmg_timer;
 
         public:
             world_object_enemy(const enemy_type& _type, vec3 position);

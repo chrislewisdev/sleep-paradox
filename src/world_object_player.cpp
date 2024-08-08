@@ -29,51 +29,53 @@ namespace sp {
     void world_object_player::update(sp::world_state& world_state) {
         world_camera& camera = world_state.get_camera();
 
-        // Zone transitions...
-        if (bn::keypad::a_pressed()) {
+        if (!is_trapped)
+        {
+            if (bn::keypad::a_pressed()) {
+                auto interactable = get_interactable(world_state);
+                if (interactable) {
+                    (*interactable)->interact(world_state);
+                    return;
+                }
+            }
+
+            if (bn::keypad::left_held()) {
+                facing = -1;
+            } else if (bn::keypad::right_held()) {
+                facing = 1;
+            }
+            if (sprite.has_value()) sprite->set_horizontal_flip(facing == -1);
+
+            // Update time-based behaviours
+            if (attack_cooldown > 0) attack_cooldown--;
+
+            if (bn::keypad::b_pressed() && attack_cooldown == 0) {
+                trigger_attack(world_state);
+            }
+            update_fx();
+
+            vec3 movement = get_movement_input(camera.get_heading()) * speed;
+            if (movement.x != 0 || movement.z != 0) {
+                use_animation("run", animations::player::run);
+            } else {
+                use_animation("idle", animations::player::idle);
+            }
+
+            vec3 delta = test_movement(world_state, movement);
+            position = position + delta;
+
             auto interactable = get_interactable(world_state);
             if (interactable) {
-                (*interactable)->interact(world_state);
-                return;
+                auto screen_position = camera.to_screen((*interactable)->get_position()).to_point();
+                if (!interaction_callout) {
+                    interaction_callout = bn::sprite_items::interact.create_sprite(screen_position);
+                    interaction_callout->set_bg_priority(0);
+                }
+                // If the interaction point moves, we need to ensure it is up to date
+                interaction_callout->set_position(screen_position);
+            } else if (interaction_callout) {
+                interaction_callout.reset();
             }
-        }
-
-        if (bn::keypad::left_held()) {
-            facing = -1;
-        } else if (bn::keypad::right_held()) {
-            facing = 1;
-        }
-        if (sprite.has_value()) sprite->set_horizontal_flip(facing == -1);
-
-        // Update time-based behaviours
-        if (attack_cooldown > 0) attack_cooldown--;
-
-        if (bn::keypad::b_pressed() && attack_cooldown == 0) {
-            trigger_attack(world_state);
-        }
-        update_fx();
-
-        vec3 movement = get_movement_input(camera.get_heading()) * speed;
-        if (movement.x != 0 || movement.z != 0) {
-            use_animation("run", animations::player::run);
-        } else {
-            use_animation("idle", animations::player::idle);
-        }
-
-        vec3 delta = test_movement(world_state, movement);
-        position = position + delta;
-
-        auto interactable = get_interactable(world_state);
-        if (interactable) {
-            auto screen_position = camera.to_screen((*interactable)->get_position()).to_point();
-            if (!interaction_callout) {
-                interaction_callout = bn::sprite_items::interact.create_sprite(screen_position);
-                interaction_callout->set_bg_priority(0);
-            }
-            // If the interaction point moves, we need to ensure it is up to date
-            interaction_callout->set_position(screen_position);
-        } else if (interaction_callout) {
-            interaction_callout.reset();
         }
 
         world_object::update(world_state);
@@ -89,6 +91,10 @@ namespace sp {
 
     void world_object_player::grant_item(sp::item_id item_id) {
         inventory.push_back(item_id);
+    }
+
+    void world_object_player::set_trapped(bool trapped) {
+        is_trapped = trapped;
     }
 
     vec3 world_object_player::get_movement_input(bn::fixed heading) {

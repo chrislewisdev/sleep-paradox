@@ -68,6 +68,9 @@ namespace sp::animations {
         inline world_object_animation trapped(const bn::sprite_ptr& sprite) {
             return bn::create_sprite_animate_action_forever(sprite, 5, trapped_tiles, 0, 1, 2, 3, 4, 5);
         }
+        inline world_object_animation release(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_once(sprite, 2, attack_tiles, 1, 2, 3, 4, 0);
+        }
     }
     namespace tooth {
         constexpr bn::sprite_tiles_item tiles = bn::sprite_items::tooth_sheet.tiles_item();

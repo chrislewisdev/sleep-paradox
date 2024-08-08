@@ -23,6 +23,7 @@ namespace sp {
             bn::optional<world_object_animation> attack_fx_animation;
             bn::optional<bn::sprite_ptr> interaction_callout;
             bn::vector<sp::item_id, 16> inventory;
+            bool is_trapped = false;
 
         public:
             world_object_player();
@@ -32,5 +33,6 @@ namespace sp {
             void update(sp::world_state& world_state);
             void receive_attack(sp::world_state& world_state, const rpg_stats& attacker);
             void grant_item(sp::item_id item_id);
+            void set_trapped(bool trapped);
     };
 }

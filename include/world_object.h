@@ -27,6 +27,7 @@ namespace sp {
             bn::optional<world_object_animation> animation;
             bn::string_view current_animation_name;
             bn::optional<animation_generator> current_animation_generator;
+            bool is_visible = true;
 
         public:
             world_object(const bn::sprite_item& _sprite_item);
@@ -42,6 +43,7 @@ namespace sp {
             void stop_animation();
 
             virtual void update(sp::world_state& world_state);
+            void set_visible(bool visible);
     };
 }
 

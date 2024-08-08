@@ -62,7 +62,7 @@ namespace sp {
         constexpr int clip_right = bn::display::width() / 2 + 32;
         constexpr int clip_top = bn::display::height() / 2 + 32;
         constexpr int clip_bottom = -bn::display::height() / 2 - 32;
-        const bool visible = world_state.get_visible() && 
+        const bool visible = is_visible && world_state.get_visible() && 
             !(screen_position.x < clip_left || screen_position.x > clip_right || screen_position.z < clip_bottom || screen_position.z > clip_top);
 
         // Butano already filters out off-screen sprites, but by using less sprite_ptrs we save on sorting layers
@@ -102,6 +102,10 @@ namespace sp {
                 }
             }
         }
+    }
+
+    void world_object::set_visible(bool visible) {
+        is_visible = visible;
     }
 
     vec3 world_object::test_movement(sp::world_state& world_state, vec3 movement) {

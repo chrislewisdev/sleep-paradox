@@ -11,6 +11,8 @@
 #include "sp_zone_sample_8x8.h"
 #include "sp_zone_alternate.h"
 #include "sp_zone_corridor1.h"
+#include "sp_zone_s_c1.h"
+#include "sp_zone_s_w.h"
 
 namespace sp {
     world_state::world_state() :
@@ -19,7 +21,7 @@ namespace sp {
     {
         small_text_generator.set_bg_priority(0);
 
-        load_zone(sp::zone_sample_8x8::zone);
+        load_zone(sp::zone_s_w::zone);
     }
 
     const world_zone& world_state::get_current_zone() const { return *current_zone; }

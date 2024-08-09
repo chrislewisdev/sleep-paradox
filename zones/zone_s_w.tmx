@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="5" nextobjectid="4">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="9">
  <tileset firstgid="1" source="sp_tiles_v2.tsx"/>
  <layer id="1" name="Floor" width="64" height="64" locked="1">
   <data encoding="csv">
@@ -141,4 +141,34 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup color="#ff00ff" id="5" name="Portals">
+  <object id="5" x="27.75" y="321" width="103.25" height="29.875">
+   <properties>
+    <property name="x" type="int" value="80"/>
+    <property name="y" type="int" value="80"/>
+    <property name="zone" value="s_c1"/>
+   </properties>
+  </object>
+  <object id="6" x="186.375" y="130.063" width="103.25" height="29.875">
+   <properties>
+    <property name="x" type="int" value="208"/>
+    <property name="y" type="int" value="426"/>
+    <property name="zone" value="s_w_b"/>
+   </properties>
+  </object>
+  <object id="7" x="347.042" y="319.729" width="103.25" height="29.875">
+   <properties>
+    <property name="x" type="int" value="80"/>
+    <property name="y" type="int" value="80"/>
+    <property name="zone" value="s_c2"/>
+   </properties>
+  </object>
+  <object id="8" x="480.125" y="200.313" width="32.5" height="81.625">
+   <properties>
+    <property name="x" type="int" value="110"/>
+    <property name="y" type="int" value="384"/>
+    <property name="zone" value="e_w"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

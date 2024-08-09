@@ -69,6 +69,7 @@ namespace sp {
     }
 
     void world_state::load_zone(const world_zone& zone) {
+        BN_LOG("Zone address:", &zone);
         current_zone = &zone;
 
         walls.clear();

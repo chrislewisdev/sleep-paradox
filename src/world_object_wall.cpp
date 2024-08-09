@@ -3,11 +3,11 @@
 #include "world_state.h"
 #include "world_camera.h"
 
-#include "bn_sprite_items_wall_placeholder.h"
+#include "bn_sprite_items_wall_default.h"
 
 namespace sp {
     world_object_wall::world_object_wall(vec3 _position, vec3 _facing) :
-        world_object(bn::sprite_items::wall_placeholder),
+        world_object(bn::sprite_items::wall_default),
         facing(_facing)
     {
         position = _position;

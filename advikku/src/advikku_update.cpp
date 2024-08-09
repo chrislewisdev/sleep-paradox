@@ -480,8 +480,12 @@ void cell_song_update() {
 						break;
 					//if set volume
 					case 0x0c:
-						ch[i].queue_volume = 1;
-						ch[i].volume = ch[i].effect_param;
+						if (ch[i].effect_param == 0) {
+							ch[i].queue_cut = 1;
+						} else {
+							ch[i].queue_volume = 1;
+							ch[i].volume = ch[i].effect_param;
+						}
 						break;
 					//if pattern break
 					case 0x0d:

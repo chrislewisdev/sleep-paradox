@@ -1,5 +1,7 @@
 #include "bn_core.h"
 #include "bn_unique_ptr.h"
+#include "bn_backdrop.h"
+#include "bn_color.h"
 
 #include "scene_manager.h"
 #include "scene_title.h"
@@ -14,6 +16,7 @@ int main()
     sp::scene_manager scene_manager(*world_state);
     scene_manager.queue_scene_change(sp::scene_id::title);
 
+    bn::backdrop::set_color(bn::color(3, 2, 2));
 
     REG_SNDSTAT= SSTAT_ENABLE;
 	// snd1 on left/right ; both full volume

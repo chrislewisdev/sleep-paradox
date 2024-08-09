@@ -16,10 +16,10 @@ namespace sp {
                 int tile = zone.get_ceiling_tile(x, y);
 
                 if (tile != empty_tile) {
-                    int left = x - 1 >= 0 ? zone.get_ceiling_tile(x - 1, y) : 0;
-                    int right = x + 1 < zone.get_width() ? zone.get_ceiling_tile(x + 1, y) : 0;
-                    int up = y - 1 >= 0 ? zone.get_ceiling_tile(x, y - 1) : 0;
-                    int down = y + 1 < zone.get_height() ? zone.get_ceiling_tile(x, y + 1) : 0;
+                    int left = x - 1 >= 0 ? zone.get_ceiling_tile(x - 1, y) : 1;
+                    int right = x + 1 < zone.get_width() ? zone.get_ceiling_tile(x + 1, y) : 1;
+                    int up = y - 1 >= 0 ? zone.get_ceiling_tile(x, y - 1) : 1;
+                    int down = y + 1 < zone.get_height() ? zone.get_ceiling_tile(x, y + 1) : 1;
 
                     vec3 wall_position(
                         x * metatile_size + (metatile_size / 2) - half_width,

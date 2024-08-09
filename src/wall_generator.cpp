@@ -6,6 +6,47 @@
 namespace sp {
     constexpr int empty_tile = 0;
 
+    int get_zone_padding_left(const world_zone& zone) {
+        for (int x = 0; x < zone.get_width(); x++) {
+            for (int y = 0; y < zone.get_height(); y++) {
+                if (zone.get_ceiling_tile(x, y) != empty_tile) return x;
+            }
+        }
+
+        // Should only happen on an empty map...
+        return zone.get_width();
+    }
+    int get_zone_padding_right(const world_zone& zone) {
+        for (int x = zone.get_width() - 1; x >= 0; x--) {
+            for (int y = 0; y < zone.get_height(); y++) {
+                if (zone.get_ceiling_tile(x, y) != empty_tile) return zone.get_width() - 1 - x;
+            }
+        }
+
+        // Should only happen on an empty map...
+        return zone.get_width();
+    }
+    int get_zone_padding_top(const world_zone& zone) {
+        for (int y = 0; y < zone.get_height(); y++) {
+            for (int x = 0; x < zone.get_width(); x++) {
+                if (zone.get_ceiling_tile(x, y) != empty_tile) return y;
+            }
+        }
+
+        // Should only happen on an empty map...
+        return zone.get_height();
+    }
+    int get_zone_padding_bottom(const world_zone& zone) {
+        for (int y = zone.get_height() - 1; y >= 0; y--) {
+            for (int x = 0; x < zone.get_width(); x++) {
+                if (zone.get_ceiling_tile(x, y) != empty_tile) return zone.get_height() - 1 - y;
+            }
+        }
+
+        // Should only happen on an empty map...
+        return zone.get_height();
+    }
+
     void wall_generator::generate_walls(const world_zone& zone, bn::ivector<world_object_wall>& storage) {
         const int metatile_size = zone.get_metatile_size();
         const int half_width = (zone.get_width() / 2) * metatile_size;
@@ -129,10 +170,14 @@ namespace sp {
         }
 
         // Generate edge colliders
-        storage.push_back(bn::fixed_rect(bn::fixed_point(0, -half_height - metatile_size / 2), bn::fixed_size(half_width * 2, metatile_size)));
-        storage.push_back(bn::fixed_rect(bn::fixed_point(0, half_height + metatile_size / 2), bn::fixed_size(half_width * 2, metatile_size)));
-        storage.push_back(bn::fixed_rect(bn::fixed_point(-half_width - metatile_size / 2, 0), bn::fixed_size(metatile_size, half_height * 2)));
-        storage.push_back(bn::fixed_rect(bn::fixed_point(half_width + metatile_size / 2, 0), bn::fixed_size(metatile_size, half_height * 2)));
+        int padding_left = get_zone_padding_left(zone) * metatile_size;
+        int padding_right = get_zone_padding_right(zone) * metatile_size;
+        int padding_top = get_zone_padding_top(zone) * metatile_size;
+        int padding_bottom = get_zone_padding_bottom(zone) * metatile_size;
+        storage.push_back(bn::fixed_rect(bn::fixed_point(0, -half_height - metatile_size / 2 + padding_bottom), bn::fixed_size(half_width * 2, metatile_size)));
+        storage.push_back(bn::fixed_rect(bn::fixed_point(0, half_height + metatile_size / 2 - padding_top), bn::fixed_size(half_width * 2, metatile_size)));
+        storage.push_back(bn::fixed_rect(bn::fixed_point(-half_width - metatile_size / 2 + padding_left, 0), bn::fixed_size(metatile_size, half_height * 2)));
+        storage.push_back(bn::fixed_rect(bn::fixed_point(half_width + metatile_size / 2 - padding_right, 0), bn::fixed_size(metatile_size, half_height * 2)));
 
     }
 }

@@ -151,8 +151,8 @@
   </object>
   <object id="3" x="385.263" y="36.9093" width="63.8585" height="24.0632">
    <properties>
-    <property name="x" type="int" value="130"/>
-    <property name="y" type="int" value="236"/>
+    <property name="x" type="int" value="257"/>
+    <property name="y" type="int" value="361"/>
     <property name="zone" value="n_w_s1"/>
    </properties>
   </object>

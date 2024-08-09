@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <tonc.h>
 //converted by Nikku4211's furtoadvik.py, reliant on zumi.dxy's chipchune.py
+#include "donotsaygoodnight.h"
 #include "advikku_global.h"
 #include "blank_bin.h"
 #include "powerkick_bin.h"

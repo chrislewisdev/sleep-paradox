@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="3">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="4">
  <tileset firstgid="1" source="sp_tiles_v2.tsx"/>
  <layer id="1" name="Floor" width="64" height="64">
   <data encoding="csv">
@@ -147,6 +147,13 @@
     <property name="x" type="int" value="18"/>
     <property name="y" type="int" value="400"/>
     <property name="zone" value="atrium"/>
+   </properties>
+  </object>
+  <object id="3" x="-1.29165" y="214.667" width="33.25" height="113.333">
+   <properties>
+    <property name="x" type="int" value="496"/>
+    <property name="y" type="int" value="273"/>
+    <property name="zone" value="library"/>
    </properties>
   </object>
  </objectgroup>

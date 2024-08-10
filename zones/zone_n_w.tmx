@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="4">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="6">
  <tileset firstgid="1" source="sp_tiles_v2.tsx"/>
  <layer id="1" name="Floor" width="64" height="64">
   <data encoding="csv">
@@ -154,6 +154,20 @@
     <property name="x" type="int" value="257"/>
     <property name="y" type="int" value="361"/>
     <property name="zone" value="n_w_s1"/>
+   </properties>
+  </object>
+  <object id="4" x="190.708" y="420.694" width="63.8585" height="24.0632">
+   <properties>
+    <property name="x" type="int" value="257"/>
+    <property name="y" type="int" value="146"/>
+    <property name="zone" value="n_w_s2"/>
+   </properties>
+  </object>
+  <object id="5" x="95.7947" y="61.9767" width="29.8386" height="102.249">
+   <properties>
+    <property name="x" type="int" value="490"/>
+    <property name="y" type="int" value="337"/>
+    <property name="zone" value="nw_w"/>
    </properties>
   </object>
  </objectgroup>

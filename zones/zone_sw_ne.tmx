@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="4">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="8">
  <tileset firstgid="1" source="sp_tiles_v2.tsx"/>
  <layer id="1" name="Floor" width="64" height="64">
   <data encoding="csv">
@@ -72,7 +72,12 @@
  <objectgroup color="#00ff00" id="3" name="Spawn" locked="1">
   <object id="1" x="358.667" y="226.667"/>
  </objectgroup>
- <objectgroup id="4" name="Enemies" locked="1"/>
+ <objectgroup color="#ff0000" id="4" name="Enemies">
+  <object id="4" type="tooth" x="325.278" y="262.61"/>
+  <object id="5" type="tooth" x="266.191" y="364.67"/>
+  <object id="6" type="tooth" x="260.819" y="256.045"/>
+  <object id="7" type="tooth" x="266.191" y="153.985"/>
+ </objectgroup>
  <layer id="2" name="Ceiling" width="64" height="64">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

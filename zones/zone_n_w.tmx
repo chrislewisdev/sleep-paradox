@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="6">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="12">
  <tileset firstgid="1" source="sp_tiles_v2.tsx"/>
  <layer id="1" name="Floor" width="64" height="64">
   <data encoding="csv">
@@ -140,7 +140,14 @@
  <objectgroup color="#00ff00" id="3" name="Spawn">
   <object id="1" x="423.126" y="350.213"/>
  </objectgroup>
- <objectgroup id="4" name="Enemies"/>
+ <objectgroup color="#ff0000" id="4" name="Enemies">
+  <object id="6" type="tooth" x="339.602" y="353.927"/>
+  <object id="7" type="thrower" x="333.037" y="383.769"/>
+  <object id="8" type="creeper" x="429.725" y="198.748"/>
+  <object id="9" type="creeper" x="196.361" y="299.614"/>
+  <object id="10" type="creeper" x="149.807" y="340.796"/>
+  <object id="11" type="creeper" x="162.341" y="272.159"/>
+ </objectgroup>
  <objectgroup color="#ff00ff" id="5" name="Portals">
   <object id="2" x="475.728" y="320.707" width="35.2101" height="98.0715">
    <properties>

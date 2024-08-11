@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="5">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="16">
  <tileset firstgid="1" source="sp_tiles_v2.tsx"/>
  <layer id="1" name="Floor" width="64" height="64">
   <data encoding="csv">
@@ -72,7 +72,19 @@
  <objectgroup color="#00ff00" id="3" name="Spawn" locked="1">
   <object id="1" x="358.667" y="226.667"/>
  </objectgroup>
- <objectgroup id="4" name="Enemies" locked="1"/>
+ <objectgroup color="#ff0000" id="4" name="Enemies">
+  <object id="5" type="creeper" x="339.006" y="203.523"/>
+  <object id="6" type="creeper" x="298.42" y="234.558"/>
+  <object id="7" type="creeper" x="304.389" y="270.966"/>
+  <object id="8" type="creeper" x="363.476" y="283.499"/>
+  <object id="9" type="creeper" x="297.227" y="329.456"/>
+  <object id="10" type="creeper" x="250.076" y="297.824"/>
+  <object id="11" type="creeper" x="253.061" y="262.013"/>
+  <object id="12" type="creeper" x="345.571" y="325.875"/>
+  <object id="13" type="creeper" x="207.701" y="374.816"/>
+  <object id="14" type="creeper" x="256.045" y="359.298"/>
+  <object id="15" type="creeper" x="339.006" y="375.413"/>
+ </objectgroup>
  <layer id="2" name="Ceiling" width="64" height="64">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

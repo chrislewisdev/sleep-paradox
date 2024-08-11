@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="4">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="11">
  <tileset firstgid="1" source="sp_tiles_v2.tsx"/>
  <layer id="1" name="Floor" width="64" height="64">
   <data encoding="csv">
@@ -72,7 +72,15 @@
  <objectgroup color="#00ff00" id="3" name="Spawn">
   <object id="1" x="414.173" y="269.043"/>
  </objectgroup>
- <objectgroup id="4" name="Enemies"/>
+ <objectgroup color="#ff0000" id="4" name="Enemies">
+  <object id="4" type="tooth" x="449.421" y="157.566"/>
+  <object id="5" type="tooth" x="403.464" y="389.14"/>
+  <object id="6" type="tooth" x="207.701" y="166.519"/>
+  <object id="7" type="tooth" x="146.226" y="384.366"/>
+  <object id="8" type="thrower" x="337.812" y="165.325"/>
+  <object id="9" type="thrower" x="277.531" y="356.314"/>
+  <object id="10" type="thrower" x="95.4946" y="166.519"/>
+ </objectgroup>
  <layer id="2" name="Ceiling" width="64" height="64">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

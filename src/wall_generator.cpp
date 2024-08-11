@@ -89,7 +89,7 @@ namespace sp {
         }
 
         // Generate edge walls
-        for (int x = 0; x < zone.get_width(); x++) {
+        /*for (int x = 0; x < zone.get_width(); x++) {
             // Top edge
             if (zone.get_ceiling_tile(x, zone.get_height() - 1) == empty_tile)
                 storage.push_back(world_object_wall(vec3(x * metatile_size + metatile_size / 2 - half_width, metatile_size / 2, -half_height), vec3::forward));
@@ -104,7 +104,7 @@ namespace sp {
             // Right edge
             if (zone.get_ceiling_tile(zone.get_width() - 1, y) == empty_tile)
                 storage.push_back(world_object_wall(vec3(half_width, metatile_size / 2, half_height - (y * metatile_size + metatile_size / 2)), -vec3::right));
-        }
+        }*/
     }
 
     bool is_wall_contiguous(const world_zone& zone, int x, int y, int width) {

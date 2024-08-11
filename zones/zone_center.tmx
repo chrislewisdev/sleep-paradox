@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="4">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="12">
  <tileset firstgid="1" source="sp_tiles_v2.tsx"/>
  <layer id="1" name="Floor" width="64" height="64">
   <data encoding="csv">
@@ -72,7 +72,16 @@
  <objectgroup color="#00ff00" id="3" name="Spawn">
   <object id="1" x="358.667" y="226.667"/>
  </objectgroup>
- <objectgroup id="4" name="Enemies"/>
+ <objectgroup color="#ff0000" id="4" name="Enemies">
+  <object id="4" type="creeper" x="348.667" y="86.6667"/>
+  <object id="5" type="creeper" x="424.667" y="300"/>
+  <object id="6" type="creeper" x="283.333" y="448.667"/>
+  <object id="7" type="creeper" x="97.3333" y="434"/>
+  <object id="8" type="creeper" x="80" y="215.333"/>
+  <object id="9" type="thrower" x="81.3333" y="117.333"/>
+  <object id="10" type="creeper" x="118" y="60"/>
+  <object id="11" type="creeper" x="446.667" y="378.667"/>
+ </objectgroup>
  <layer id="2" name="Ceiling" width="64" height="64">
   <data encoding="csv">
 77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,

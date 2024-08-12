@@ -3,7 +3,9 @@
 #include "bn_keypad.h"
 #include "bn_backdrop.h"
 #include "bn_color.h"
+#include "bn_format.h"
 
+#include "common_variable_8x8_sprite_font.h"
 #include "bn_affine_bg_items_zone_sandbox_floor.h"
 #include "bn_affine_bg_items_zone_sandbox_ceiling.h"
 
@@ -12,7 +14,8 @@ namespace sp {
         : scene_manager(_scene_manager),
           world_state(_world_state),
           bg_layer_floor(world_state.get_current_zone().floor.create_bg(0, 0)),
-          bg_layer_ceiling(world_state.get_current_zone().ceiling.create_bg(0, 0))
+          bg_layer_ceiling(world_state.get_current_zone().ceiling.create_bg(0, 0)),
+          text_generator(common::variable_8x8_sprite_font)
     {
         world_state.set_visible(true);
 
@@ -20,6 +23,8 @@ namespace sp {
         bg_layer_floor.set_wrapping_enabled(false);
         bg_layer_ceiling.set_priority(1);
         bg_layer_ceiling.set_wrapping_enabled(false);
+
+        text_generator.set_bg_priority(0);
     }
 
     void scene_game::update() {
@@ -67,5 +72,8 @@ namespace sp {
         bg_layer_floor.set_mat_attributes(camera.get_affine_transform_xz());
         bg_layer_ceiling.set_mat_attributes(camera.get_affine_transform_xz());
 
+        auto& player = world_state.get_player();
+        auto text = bn::format<16>("HP: {}/{}", player.get_health(), player.get_stats().max_health);
+        hud_health_sprites = text_generator.generate<4>(-118, 72, text);
     }
 }

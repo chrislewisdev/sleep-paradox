@@ -127,7 +127,7 @@ namespace sp {
         }
 
         // Cooldown period
-        if (attack_windup == -50) {
+        if (attack_windup == get_attack_cooldown()) {
             state = enemy_state::chase;
         }
     }
@@ -210,6 +210,14 @@ namespace sp {
             case behaviour_type::trapper: return 25*25;
             default:
             case behaviour_type::melee: return 25*25;
+        }
+    }
+
+    int world_object_enemy::get_attack_cooldown() const {
+        switch (type->behaviour_type) {
+            case behaviour_type::ranged: return -100;
+            default:
+            case behaviour_type::melee: return -50;
         }
     }
 }

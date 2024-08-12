@@ -27,6 +27,7 @@ namespace sp {
 
             int get_windup_duration() const;
             int get_attack_distance_squared() const;
+            int get_attack_cooldown() const;
 
             const enemy_type* type;
             int health;

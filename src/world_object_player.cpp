@@ -25,6 +25,7 @@ namespace sp {
     }
 
     const rpg_stats& world_object_player::get_stats() const { return stats; }
+    int world_object_player::get_health() const { return health; }
 
     void world_object_player::update(sp::world_state& world_state) {
         world_camera& camera = world_state.get_camera();
@@ -83,7 +84,7 @@ namespace sp {
 
     void world_object_player::receive_attack(sp::world_state& world_state, const rpg_stats& attacker) {
         int damage = calculate_damage(attacker, stats);
-        //health -= damage;
+        health -= damage;
 
         vec3 screen_position = get_screen_position(world_state.get_camera());
         world_state.create_damage_callout(screen_position.to_point(), damage, false);

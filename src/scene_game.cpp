@@ -30,16 +30,28 @@ namespace sp {
     void scene_game::update() {
         constexpr int wall_height = 32;
         constexpr int pitch = 45;
-        constexpr bn::fixed scale = 1.4;
+        constexpr bn::fixed scale = 1.2;
 
         world_camera& camera = world_state.get_camera();
         int heading = camera.get_heading();
-        if (bn::keypad::r_held()) {
+        /*if (bn::keypad::r_held()) {
             if (heading == 0) heading = 359;
             else heading -= 1;
         } else if (bn::keypad::l_held()) {
             if (heading == 359) heading = 0;
             else heading += 1;
+        }*/
+        if (bn::keypad::l_pressed()) {
+            if (target_heading == 0) target_heading = 90;
+            else if (target_heading == 90) target_heading = 180;
+            else if (target_heading == 180) target_heading = 270;
+            else if (target_heading == 270) target_heading = 360;
+        }
+        if (heading < target_heading) heading += 5;
+        // Gotta wrap back around to 0 after a full rotation...
+        if (target_heading == 360 && heading == 360) {
+            target_heading = 0;
+            heading = 0;
         }
 
         if (bn::keypad::start_pressed()) {

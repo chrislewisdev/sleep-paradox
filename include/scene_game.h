@@ -17,6 +17,7 @@ namespace sp {
             bn::affine_bg_ptr bg_layer_floor, bg_layer_ceiling;
             bn::sprite_text_generator text_generator;
             bn::vector<bn::sprite_ptr, 4> hud_health_sprites;
+            int target_heading = 0;
 
         public:
             scene_game(sp::scene_manager& _scene_manager, sp::world_state& _world_state);

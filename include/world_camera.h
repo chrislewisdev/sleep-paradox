@@ -9,7 +9,7 @@
 namespace sp {
     class world_camera {
         private:
-            int pitch, heading;
+            int pitch, base_heading, heading;
             bn::fixed scale;
             vec3 position, direction, right_axis;
             mat4 world_transform;

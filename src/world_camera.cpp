@@ -5,14 +5,14 @@
 namespace sp {
     world_camera::world_camera() :
         pitch(45),
-        heading(0),
+        base_heading(0),
         scale(1),
         affine_transform_ptr_xy(bn::sprite_affine_mat_ptr::create(affine_transform_xy)),
         affine_transform_ptr_yz(bn::sprite_affine_mat_ptr::create(affine_transform_yz))
     {}
 
     int world_camera::get_pitch() const { return pitch; }
-    int world_camera::get_heading() const { return heading; }
+    int world_camera::get_heading() const { return base_heading; }
     bn::fixed world_camera::get_scale() const { return scale; }
 
     const vec3& world_camera::get_position() const { return position; }
@@ -29,8 +29,18 @@ namespace sp {
 
     void world_camera::update_camera(const sp::vec3& target, int _pitch, int _heading, bn::fixed _scale) {
         pitch = _pitch;
-        heading = _heading;
+        base_heading = _heading;
         scale = _scale;
+
+        auto x_factor = base_heading == 0
+            ? 1
+            : base_heading == 180 ? -1 : 0;
+        auto z_factor = base_heading == 90
+            ? 1
+            : base_heading == 270 ? -1 : 0;
+        heading = base_heading - (target.x.integer() / 10 * x_factor) - (target.z.integer() / 10 * z_factor);
+        if (heading < 0) heading += 360;
+        if (heading > 360) heading -= 360;
 
         position = vec3(
             target.x + -bn::degrees_lut_sin(heading) * bn::degrees_lut_cos(pitch),

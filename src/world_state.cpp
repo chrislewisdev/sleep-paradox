@@ -8,11 +8,7 @@
 #include "zones.h"
 
 #include "common_variable_8x8_sprite_font.h"
-#include "sp_zone_sample_8x8.h"
-#include "sp_zone_alternate.h"
-#include "sp_zone_corridor1.h"
 #include "sp_zone_s_c1.h"
-#include "sp_zone_s_w.h"
 
 namespace sp {
     world_state::world_state() :

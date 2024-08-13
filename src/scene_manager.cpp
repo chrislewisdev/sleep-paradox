@@ -4,6 +4,7 @@
 #include "scene_game.h"
 #include "scene_pause.h"
 #include "scene_end.h"
+#include "scene_game_over.h"
 
 namespace sp {
     scene_manager::scene_manager(sp::world_state& _world_state) : world_state(_world_state) {}
@@ -28,6 +29,9 @@ namespace sp {
                     break;
                 case sp::scene_id::end:
                     stack.push_back(bn::make_unique<sp::scene_end>(*this));
+                    break;
+                case sp::scene_id::game_over:
+                    stack.push_back(bn::make_unique<sp::scene_game_over>(*this, world_state));
                     break;
                 default:
                     BN_ERROR("Unknown scene id ", (int)queued_scene_id.value());

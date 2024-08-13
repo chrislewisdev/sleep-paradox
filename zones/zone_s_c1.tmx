@@ -69,8 +69,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup color="#00ff00" id="3" name="Spawn" locked="1">
-  <object id="1" x="358.667" y="226.667"/>
+ <objectgroup color="#00ff00" id="3" name="Spawn">
+  <object id="1" x="222" y="233.667"/>
  </objectgroup>
  <objectgroup id="4" name="Enemies" locked="1"/>
  <layer id="2" name="Ceiling" width="64" height="64">

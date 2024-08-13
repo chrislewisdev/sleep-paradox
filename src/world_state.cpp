@@ -107,6 +107,11 @@ namespace sp {
         queued_zone_change.reset();
     }
 
+    void world_state::respawn() {
+        player.respawn();
+        load_zone(*current_zone);
+    }
+
     void world_state::activate_chest(const world_object_chest& chest) {
         // Find the chest and trigger its non-const method...
         for (auto& c : chests) {

@@ -35,5 +35,6 @@ namespace sp {
             void receive_attack(sp::world_state& world_state, const rpg_stats& attacker);
             void grant_item(sp::item_id item_id);
             void set_trapped(bool trapped);
+            void respawn();
     };
 }

@@ -98,6 +98,10 @@ namespace sp {
         is_trapped = trapped;
     }
 
+    void world_object_player::respawn() {
+        health = stats.max_health;
+    }
+
     vec3 world_object_player::get_movement_input(bn::fixed heading) {
         bool left = bn::keypad::left_held();
         bool right = bn::keypad::right_held();

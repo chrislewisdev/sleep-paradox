@@ -70,7 +70,7 @@
 </data>
  </layer>
  <objectgroup color="#00ff00" id="3" name="Spawn">
-  <object id="1" x="256.667" y="252.167"/>
+  <object id="1" x="443.334" y="454.834"/>
  </objectgroup>
  <layer id="2" name="Ceiling" width="64" height="64">
   <data encoding="csv">

@@ -69,8 +69,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup color="#00ff00" id="3" name="Spawn" locked="1">
-  <object id="1" x="358.667" y="226.667"/>
+ <objectgroup color="#00ff00" id="3" name="Spawn">
+  <object id="1" x="269.738" y="148.481"/>
  </objectgroup>
  <objectgroup color="#ff0000" id="4" name="Enemies">
   <object id="5" type="thrower" x="299.614" y="270.966"/>

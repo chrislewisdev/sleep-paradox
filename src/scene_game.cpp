@@ -59,6 +59,11 @@ namespace sp {
             world_state.set_visible(false);
         }
 
+        if (world_state.get_player().get_health() <= 0) {
+            scene_manager.queue_scene_change(sp::scene_id::game_over);
+            world_state.set_visible(false);
+        }
+
         if (world_state.is_zone_change_queued()) {
             world_state.process_zone_change();
 

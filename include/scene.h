@@ -6,6 +6,7 @@ namespace sp {
         gameplay,
         pause,
         end,
+        game_over,
     };
 
     class scene {

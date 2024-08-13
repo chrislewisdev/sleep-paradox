@@ -70,7 +70,7 @@
 </data>
  </layer>
  <objectgroup color="#00ff00" id="3" name="Spawn">
-  <object id="1" x="298.983" y="235.62"/>
+  <object id="1" x="339.568" y="218.908"/>
  </objectgroup>
  <objectgroup color="#ff0000" id="4" name="Enemies">
   <object id="5" type="cage" x="176.665" y="246.495"/>

@@ -43,5 +43,9 @@ namespace sp {
             int get_ceiling_tile(int x, int y) const;
             int get_ceiling_tile(vec3 position) const;
 
+            int get_ceiling_tile_north(int x, int y) const;
+            int get_ceiling_tile_south(int x, int y) const;
+            int get_ceiling_tile_west(int x, int y) const;
+            int get_ceiling_tile_east(int x, int y) const;
     };
 }

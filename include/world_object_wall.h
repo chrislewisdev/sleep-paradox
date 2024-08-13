@@ -9,6 +9,7 @@ namespace sp {
 
         public:
             world_object_wall(vec3 _position, vec3 _facing);
+            world_object_wall(vec3 _position, vec3 _facing, const bn::sprite_item& texture);
 
             void update(sp::world_state& world_state);
     };

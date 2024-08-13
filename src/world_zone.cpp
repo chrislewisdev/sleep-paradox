@@ -35,6 +35,43 @@ namespace sp {
         return cell_info.tile_index();
     }
 
+    int world_zone::get_ceiling_tile_north(int x, int y) const {
+        int tx = x * (metatile_size / tile_size) + 1;
+        int ty = y * (metatile_size / tile_size);
+
+        auto cell = ceiling.map_item().cell(tx, ty);
+        bn::affine_bg_map_cell_info cell_info(cell);
+        
+        return cell_info.tile_index();
+    }
+    int world_zone::get_ceiling_tile_south(int x, int y) const {
+        int tx = x * (metatile_size / tile_size) + 1;
+        int ty = y * (metatile_size / tile_size) + 3;
+
+        auto cell = ceiling.map_item().cell(tx, ty);
+        bn::affine_bg_map_cell_info cell_info(cell);
+        
+        return cell_info.tile_index();
+    }
+    int world_zone::get_ceiling_tile_west(int x, int y) const {
+        int tx = x * (metatile_size / tile_size);
+        int ty = y * (metatile_size / tile_size) + 1;
+
+        auto cell = ceiling.map_item().cell(tx, ty);
+        bn::affine_bg_map_cell_info cell_info(cell);
+        
+        return cell_info.tile_index();
+    }
+    int world_zone::get_ceiling_tile_east(int x, int y) const {
+        int tx = x * (metatile_size / tile_size) + 3;
+        int ty = y * (metatile_size / tile_size) + 1;
+
+        auto cell = ceiling.map_item().cell(tx, ty);
+        bn::affine_bg_map_cell_info cell_info(cell);
+        
+        return cell_info.tile_index();
+    }
+
     int world_zone::get_ceiling_tile(vec3 position) const {
         int x = (position.x.integer() + floor.map_item().dimensions().width() * tile_size / 2) / metatile_size;
         int y = (floor.map_item().dimensions().height() * tile_size / 2 - position.z.integer()) / metatile_size;

@@ -13,6 +13,13 @@ namespace sp {
         position = _position;
     }
 
+    world_object_wall::world_object_wall(vec3 _position, vec3 _facing, const bn::sprite_item& texture) :
+        world_object(texture),
+        facing(_facing)
+    {
+        position = _position;
+    }
+
     void world_object_wall::update(sp::world_state& world_state) {
         world_camera& camera = world_state.get_camera();
         if (sprite.has_value()) {

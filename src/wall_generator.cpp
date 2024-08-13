@@ -3,6 +3,11 @@
 #include "bn_fixed_point.h"
 #include "bn_fixed_size.h"
 
+#include "bn_sprite_items_wall_default.h"
+#include "bn_sprite_items_wall_alt01.h"
+#include "bn_sprite_items_wall_alt02.h"
+#include "bn_sprite_items_wall_alt03.h"
+
 namespace sp {
     constexpr int empty_tile = 0;
 
@@ -47,6 +52,15 @@ namespace sp {
         return zone.get_height();
     }
 
+    const bn::sprite_item& get_wall_texture(int tile_id) {
+        switch (tile_id) {
+            case 15: return bn::sprite_items::wall_alt01;
+            case 31: return bn::sprite_items::wall_alt02;
+            case 47: return bn::sprite_items::wall_alt03;
+            default: return bn::sprite_items::wall_default;
+        }
+    }
+
     void wall_generator::generate_walls(const world_zone& zone, bn::ivector<world_object_wall>& storage) {
         const int metatile_size = zone.get_metatile_size();
         const int half_width = (zone.get_width() / 2) * metatile_size;
@@ -70,19 +84,19 @@ namespace sp {
 
                     if (left == empty_tile) {
                         vec3 offset(-metatile_size / 2, 0, 0);
-                        storage.push_back(world_object_wall(wall_position + offset, -vec3::right));
+                        storage.push_back(world_object_wall(wall_position + offset, -vec3::right, get_wall_texture(zone.get_ceiling_tile_west(x, y))));
                     }
                     if (right == empty_tile) {
                         vec3 offset(metatile_size / 2, 0, 0);
-                        storage.push_back(world_object_wall(wall_position + offset, vec3::right));
+                        storage.push_back(world_object_wall(wall_position + offset, vec3::right, get_wall_texture(zone.get_ceiling_tile_east(x, y))));
                     }
                     if (up == empty_tile) {
                         vec3 offset(0, 0, metatile_size / 2);
-                        storage.push_back(world_object_wall(wall_position + offset, vec3::forward));
+                        storage.push_back(world_object_wall(wall_position + offset, vec3::forward, get_wall_texture(zone.get_ceiling_tile_north(x, y))));
                     }
                     if (down == empty_tile) {
                         vec3 offset(0, 0, -metatile_size / 2);
-                        storage.push_back(world_object_wall(wall_position + offset, -vec3::forward));
+                        storage.push_back(world_object_wall(wall_position + offset, -vec3::forward, get_wall_texture(zone.get_ceiling_tile_south(x, y))));
                     }
                 }
             }

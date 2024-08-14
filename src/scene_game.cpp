@@ -4,6 +4,7 @@
 #include "bn_backdrop.h"
 #include "bn_color.h"
 #include "bn_format.h"
+#include "bn_bg_palette_ptr.h"
 
 #include "common_variable_8x8_sprite_font.h"
 #include "bn_affine_bg_items_zone_sandbox_floor.h"
@@ -30,7 +31,7 @@ namespace sp {
     void scene_game::update() {
         constexpr int wall_height = 32;
         constexpr int pitch = 45;
-        constexpr bn::fixed scale = 1.2;
+        constexpr bn::fixed scale = 1.4;
 
         world_camera& camera = world_state.get_camera();
         int heading = camera.get_heading();
@@ -72,8 +73,12 @@ namespace sp {
 
             bg_layer_floor.set_priority(3);
             bg_layer_floor.set_wrapping_enabled(false);
+            //bg_layer_floor.set_palette(world_state.get_current_zone().floor.palette_item().create_new_palette());
+            auto palette = bg_layer_floor.palette();
+            palette.set_colors(world_state.get_current_zone().floor.palette_item());
             bg_layer_ceiling.set_priority(1);
             bg_layer_ceiling.set_wrapping_enabled(false);
+            //bg_layer_ceiling.set_palette(world_state.get_current_zone().ceiling.palette_item());
         }
 
         // This order of operations is a little messed up because there is a circular dependency between

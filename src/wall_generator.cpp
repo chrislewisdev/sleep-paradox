@@ -7,6 +7,7 @@
 #include "bn_sprite_items_wall_alt01.h"
 #include "bn_sprite_items_wall_alt02.h"
 #include "bn_sprite_items_wall_alt03.h"
+#include "bn_sprite_items_wall_exterior.h"
 
 namespace sp {
     constexpr int empty_tile = 0;
@@ -57,6 +58,10 @@ namespace sp {
             case 15: return bn::sprite_items::wall_alt01;
             case 31: return bn::sprite_items::wall_alt02;
             case 47: return bn::sprite_items::wall_alt03;
+            case 65:
+            case 80:
+            case 83:
+            case 113: return bn::sprite_items::wall_exterior;
             default: return bn::sprite_items::wall_default;
         }
     }

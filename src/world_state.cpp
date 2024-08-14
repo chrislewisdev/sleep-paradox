@@ -9,6 +9,7 @@
 
 #include "common_variable_8x8_sprite_font.h"
 #include "sp_zone_s_c1.h"
+#include "sp_zone_sw_n.h"
 
 namespace sp {
     world_state::world_state() :
@@ -17,7 +18,7 @@ namespace sp {
     {
         small_text_generator.set_bg_priority(0);
 
-        load_zone(sp::zone_s_c1::zone);
+        load_zone(sp::zone_sw_n::zone);
     }
 
     const world_zone& world_state::get_current_zone() const { return *current_zone; }

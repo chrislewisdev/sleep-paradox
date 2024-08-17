@@ -1,9 +1,9 @@
 #pragma once
-#include "../source/advikku_global.h"
+#include "advikku_global.h"
 #include <stdint.h>
 #include <tonc.h>
 
-#include "blank_raw.h"
+#include "blank_bin.h"
 
 /*
     Song name:  No_Can_Do

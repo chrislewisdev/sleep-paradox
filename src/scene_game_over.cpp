@@ -3,6 +3,9 @@
 #include "bn_sprite_text_generator.h"
 #include "bn_keypad.h"
 
+#include "advikku_global.h"
+#include "nocando.h"
+
 #include "common_variable_8x16_sprite_font.h"
 #include "bn_regular_bg_items_game_over.h"
 
@@ -15,6 +18,8 @@ namespace sp {
         bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
         text_generator.set_center_alignment();
         text_generator.generate(0, 70, "Press A to respawn", text_sprites);
+
+        cell_song_setup(No_Can_DoSongStruct);
     }
 
     void scene_game_over::update() {

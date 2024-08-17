@@ -18,7 +18,7 @@ namespace sp {
     void scene_title::update() {
         if (bn::keypad::a_held() || bn::keypad::start_held()) {
             scene_manager.queue_scene_change(sp::scene_id::gameplay);
-            cell_song_setup(InstitutionalisedSongStruct);
+            // cell_song_setup(InstitutionalisedSongStruct);
         }
     }
 }

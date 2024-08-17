@@ -6,6 +6,9 @@
 #include "bn_format.h"
 #include "bn_bg_palette_ptr.h"
 
+#include "advikku_global.h"
+#include "institutionalised.h"
+
 #include "common_variable_8x8_sprite_font.h"
 #include "bn_affine_bg_items_zone_sandbox_floor.h"
 #include "bn_affine_bg_items_zone_sandbox_ceiling.h"
@@ -26,6 +29,8 @@ namespace sp {
         bg_layer_ceiling.set_wrapping_enabled(false);
 
         text_generator.set_bg_priority(0);
+
+        cell_song_setup(InstitutionalisedSongStruct);
     }
 
     void scene_game::update() {
@@ -55,10 +60,10 @@ namespace sp {
             heading = 0;
         }
 
-        if (bn::keypad::start_pressed()) {
+        /*if (bn::keypad::start_pressed()) {
             scene_manager.queue_scene_change(sp::scene_id::pause);
             world_state.set_visible(false);
-        }
+        }*/
 
         if (world_state.get_player().get_health() <= 0) {
             scene_manager.queue_scene_change(sp::scene_id::game_over);

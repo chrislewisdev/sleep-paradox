@@ -7,6 +7,7 @@
 #include "world_object_wall.h"
 #include "zones.h"
 
+#include "bn_sprite_items_statue.h"
 #include "common_variable_8x8_sprite_font.h"
 #include "sp_zone_s_c1.h"
 #include "sp_zone_sw_n.h"
@@ -51,6 +52,9 @@ namespace sp {
         for (world_object_chest& chest : chests) {
             chest.update(*this);
         }
+        for (world_object_prop& prop : props) {
+            prop.update(*this);
+        }
 
         for (auto iter = callouts.begin(); iter < callouts.end(); iter++) {
             iter->update();
@@ -74,6 +78,7 @@ namespace sp {
         colliders.clear();
         callouts.clear();
         chests.clear();
+        props.clear();
 
         wall_generator generator;
         generator.generate_walls(zone, walls);
@@ -85,7 +90,10 @@ namespace sp {
             enemies.push_back(world_object_enemy(enemy_spawn.enemy_type, vec3(enemy_spawn.x, 16, enemy_spawn.y)));
         }
 
-        // chests.push_back(world_object_chest(vec3(50, 8, -50), item_id::potion));
+        // Hack for the center garden statue
+        if (&zone == get_zone_by_name("center")) {
+            props.push_back(world_object_prop(vec3(16, 16, 0), bn::sprite_items::statue));
+        }
     }
 
     void world_state::create_damage_callout(bn::fixed_point point, int amount, bool is_weak) {

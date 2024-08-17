@@ -5,6 +5,7 @@
 #include "world_object.h"
 
 #include "bn_sprite_items_fred_sprite_sheet.h"
+#include "bn_sprite_items_fred_dash_sheet.h"
 #include "bn_sprite_items_attack_fx.h"
 #include "bn_sprite_items_cage_sheet.h"
 #include "bn_sprite_items_cage_attack_sheet.h"
@@ -21,6 +22,7 @@
 namespace sp::animations {
     namespace player {
         constexpr bn::sprite_tiles_item tiles = bn::sprite_items::fred_sprite_sheet.tiles_item();
+        constexpr bn::sprite_tiles_item dash_tiles = bn::sprite_items::fred_dash_sheet.tiles_item();
 
         inline world_object_animation idle(const bn::sprite_ptr& sprite) {
             return bn::create_sprite_animate_action_forever(sprite, 30, tiles, 9, 10);
@@ -33,6 +35,9 @@ namespace sp::animations {
         }
         inline world_object_animation punch(const bn::sprite_ptr& sprite) {
             return bn::create_sprite_animate_action_once(sprite, 5, tiles, 13, 14, 9);
+        }
+        inline world_object_animation dash(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_once(sprite, 5, dash_tiles, 0, 1, 2, 0);
         }
     }
     namespace attack_fx {

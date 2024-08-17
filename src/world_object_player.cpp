@@ -53,9 +53,19 @@ namespace sp {
             if (bn::keypad::b_pressed() && attack_cooldown == 0) {
                 trigger_attack(world_state);
             }
+            
             update_fx();
 
-            vec3 movement = get_movement_input(camera.get_heading()) * speed;
+            if (speed_burst > 0) {
+                speed_burst -= 0.2;
+                if (speed_burst < 0) speed_burst = 0;
+            }
+
+            vec3 movement = get_movement_input(camera.get_heading()) * (speed + speed_burst);
+            if (bn::keypad::r_pressed() && movement != vec3::zero && speed_burst == 0) {
+                speed_burst = 5;
+                play_animation(sp::animations::player::dash);
+            }
             if (movement.x != 0 || movement.z != 0) {
                 use_animation("run", animations::player::run);
             } else {
@@ -83,6 +93,9 @@ namespace sp {
     }
 
     void world_object_player::receive_attack(sp::world_state& world_state, const rpg_stats& attacker) {
+        // Grant iframes at beginning of dash
+        if (speed_burst > 2) return;
+
         int damage = calculate_damage(attacker, stats);
         health -= damage;
 

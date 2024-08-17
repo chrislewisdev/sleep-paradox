@@ -24,6 +24,7 @@ namespace sp {
             bn::optional<bn::sprite_ptr> interaction_callout;
             bn::vector<sp::item_id, 16> inventory;
             bool is_trapped = false;
+            bn::fixed speed_burst;
 
         public:
             world_object_player();

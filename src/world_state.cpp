@@ -19,7 +19,7 @@ namespace sp {
     {
         small_text_generator.set_bg_priority(0);
 
-        load_zone(sp::zone_sw_n::zone);
+        load_zone(sp::zone_s_c1::zone);
     }
 
     const world_zone& world_state::get_current_zone() const { return *current_zone; }

@@ -4,16 +4,17 @@
 #include "bn_keypad.h"
 
 #include "common_variable_8x16_sprite_font.h"
+#include "bn_regular_bg_items_game_over.h"
 
 namespace sp {
     scene_game_over::scene_game_over(sp::scene_manager& _scene_manager, sp::world_state& _world_state) :
         scene_manager(_scene_manager),
-        world_state(_world_state)
+        world_state(_world_state),
+        bg(bn::regular_bg_items::game_over.create_bg(0, 0))
     {
         bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
         text_generator.set_center_alignment();
-        text_generator.generate(0, 0, "You died :(", text_sprites);
-        text_generator.generate(0, 16, "Press A to respawn", text_sprites);
+        text_generator.generate(0, 70, "Press A to respawn", text_sprites);
     }
 
     void scene_game_over::update() {

@@ -13,7 +13,7 @@ namespace sp {
         private:
             sp::scene_manager& scene_manager;
             sp::world_state& world_state;
-            bn::vector<bn::sprite_ptr, 16> text_sprites;
+            bn::vector<bn::sprite_ptr, 24> text_sprites;
             bn::regular_bg_ptr bg;
  
         public:

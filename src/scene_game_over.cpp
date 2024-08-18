@@ -17,6 +17,8 @@ namespace sp {
     {
         bn::sprite_text_generator text_generator(common::variable_8x16_sprite_font);
         text_generator.set_center_alignment();
+        text_generator.generate(0, -70, "Death is just the start.", text_sprites);
+        text_generator.generate(0, -60, "Succumb to the dreams.", text_sprites);
         text_generator.generate(0, 70, "Press A to respawn", text_sprites);
 
         cell_song_setup(No_Can_DoSongStruct);

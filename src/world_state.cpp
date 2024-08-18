@@ -153,6 +153,18 @@ namespace sp {
         load_zone(*current_zone);
     }
 
+    void world_state::cleanup() {
+        walls.clear();
+        enemies.clear();
+        colliders.clear();
+        callouts.clear();
+        chests.clear();
+        props.clear();
+        boss.reset();
+
+        player.cleanup();
+    }
+
     void world_state::activate_chest(const world_object_chest& chest) {
         // Find the chest and trigger its non-const method...
         for (auto& c : chests) {

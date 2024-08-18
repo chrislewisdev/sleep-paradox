@@ -28,7 +28,7 @@ namespace sp {
                     stack.push_back(bn::make_unique<sp::scene_pause>(*this, world_state));
                     break;
                 case sp::scene_id::end:
-                    stack.push_back(bn::make_unique<sp::scene_end>(*this));
+                    stack.push_back(bn::make_unique<sp::scene_end>(*this, world_state));
                     break;
                 case sp::scene_id::game_over:
                     stack.push_back(bn::make_unique<sp::scene_game_over>(*this, world_state));

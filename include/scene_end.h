@@ -10,9 +10,10 @@ namespace sp {
     class scene_end : public scene {
         private:
             sp::scene_manager& scene_manager;
+            sp::world_state& world_state;
             bn::vector<bn::sprite_ptr, 16> text_sprites;
         public:
-            scene_end(sp::scene_manager& scene_manager);
+            scene_end(sp::scene_manager& scene_manager, sp::world_state& world_state);
             void update();
     };
 }

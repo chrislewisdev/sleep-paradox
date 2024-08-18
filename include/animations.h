@@ -46,7 +46,7 @@ namespace sp::animations {
         constexpr bn::sprite_tiles_item tiles = bn::sprite_items::attack_fx.tiles_item();
 
         inline world_object_animation punch(const bn::sprite_ptr& sprite) {
-            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 0, 1, 2, 3, 4, 4); 
+            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 0, 1, 2, 3, 4, 2); 
         }
     }
     

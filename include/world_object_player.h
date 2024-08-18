@@ -37,5 +37,6 @@ namespace sp {
             void grant_item(sp::item_id item_id);
             void set_trapped(bool trapped);
             void respawn();
+            void cleanup();
     };
 }

@@ -202,6 +202,11 @@ namespace sp {
         }
     }
 
+    void world_object_player::cleanup() {
+        attack_fx_animation.reset();
+        attack_fx.reset();
+    }
+
     bool world_object_player::apply_xp(int amount) {
         xp += amount;
 

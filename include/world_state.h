@@ -55,6 +55,7 @@ namespace sp {
             bool is_zone_change_queued() const;
             void process_zone_change();
             void respawn();
+            void cleanup();
 
             void activate_chest(const world_object_chest& chest);
             void spawn_projectile(world_object_projectile&& projectile);

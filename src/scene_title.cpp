@@ -22,7 +22,7 @@ namespace sp {
             if (timer == 0) bg = bn::regular_bg_items::title.create_bg(0, 0);
         }
 
-        if (timer == 0 && bn::keypad::a_held() || bn::keypad::start_held()) {
+        if (timer == 0 && (bn::keypad::a_held() || bn::keypad::start_held())) {
             scene_manager.queue_scene_change(sp::scene_id::gameplay);
             // cell_song_setup(InstitutionalisedSongStruct);
         }

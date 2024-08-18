@@ -104,6 +104,9 @@ namespace sp {
         for (auto& enemy_spawn : zone.get_enemy_spawns()) {
             enemies.push_back(world_object_enemy(enemy_spawn.enemy_type, vec3(enemy_spawn.x, 16, enemy_spawn.y)));
         }
+        for (auto& prop_spawn : zone.get_prop_spawns()) {
+            props.push_back(world_object_prop(vec3(prop_spawn.x, 16, prop_spawn.y), prop_spawn.sprite));
+        }
 
         // Hack for the center garden statue
         if (&zone == get_zone_by_name("center")) {

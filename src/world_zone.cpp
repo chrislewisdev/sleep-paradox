@@ -23,6 +23,7 @@ namespace sp {
 
     const bn::span<const enemy_spawn>& world_zone::get_enemy_spawns() const { return enemy_spawns; }
     const bn::span<const portal>& world_zone::get_portals() const { return portals; }
+    const bn::span<const prop_spawn>& world_zone::get_prop_spawns() const { return prop_spawns; }
 
     int world_zone::get_ceiling_tile(int x, int y) const {
         int tx = x * (metatile_size / tile_size);

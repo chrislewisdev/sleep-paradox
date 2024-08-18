@@ -2,6 +2,14 @@
 
 Sleep Paradox is an entry into GBA Jam 2024 by staticlinkage, Urigamiart, Nikku4211 and Locusbelmont.
 
+## Credits
+
+- Programming: staticlinkage
+- Art: Urigamiart and Locusbelmont
+- Music: Nikku4211
+
+Fonts used are the work of Sparklin Labs / Pixel-boy under Creative Commons
+
 ## Playing
 
 As an honest-to-goodness GBA game, Sleep Paradox can be played in a GBA emulator such as mGBA, or on original hardware via a flash cart.

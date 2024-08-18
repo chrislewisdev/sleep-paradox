@@ -6,6 +6,7 @@
 #include "vec3.h"
 #include "enemy_spawn.h"
 #include "portal.h"
+#include "prop_spawn.h"
 
 namespace sp {
     class world_zone {
@@ -15,19 +16,22 @@ namespace sp {
             const vec3 player_spawn;
             const bn::span<const enemy_spawn> enemy_spawns;
             const bn::span<const portal> portals;
+            const bn::span<const prop_spawn> prop_spawns;
 
             constexpr world_zone(
                 const bn::affine_bg_item& _floor,
                 const bn::affine_bg_item& _ceiling,
                 const vec3& _player_spawn,
                 const bn::span<const enemy_spawn>& _enemy_spawns,
-                const bn::span<const portal>& _portals
+                const bn::span<const portal>& _portals,
+                const bn::span<const prop_spawn>& _prop_spawns
             ) :
                 floor(_floor),
                 ceiling(_ceiling),
                 player_spawn(_player_spawn),
                 enemy_spawns(_enemy_spawns),
-                portals(_portals)
+                portals(_portals),
+                prop_spawns(_prop_spawns)
             {}
 
             int get_metatile_size() const;
@@ -39,6 +43,7 @@ namespace sp {
 
             const bn::span<const enemy_spawn>& get_enemy_spawns() const;
             const bn::span<const portal>& get_portals() const;
+            const bn::span<const prop_spawn>& get_prop_spawns() const;
 
             int get_ceiling_tile(int x, int y) const;
             int get_ceiling_tile(vec3 position) const;

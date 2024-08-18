@@ -26,7 +26,7 @@ namespace sp {
             bn::vector<fx_callout, 16> callouts;
             bn::vector<world_object_chest, 4> chests;
             bn::vector<world_object_projectile, 8> projectiles;
-            bn::vector<world_object_prop, 4> props;
+            bn::vector<world_object_prop, 8> props;
             bn::sprite_text_generator small_text_generator;
             bool is_visible;
             bn::optional<const portal*> queued_zone_change;

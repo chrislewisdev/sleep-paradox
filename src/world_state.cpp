@@ -10,6 +10,11 @@
 #include "fyingde.h"
 
 #include "bn_sprite_items_statue.h"
+#include "bn_sprite_items_npc_classmate01.h"
+#include "bn_sprite_items_npc_classmate02.h"
+#include "bn_sprite_items_npc_classmate03.h"
+#include "bn_sprite_items_npc_classmate04.h"
+#include "bn_sprite_items_npc_classmate05.h"
 #include "common_variable_8x8_sprite_font.h"
 #include "sp_zone_s_c1.h"
 #include "sp_zone_sw_n.h"
@@ -103,6 +108,14 @@ namespace sp {
         // Hack for the center garden statue
         if (&zone == get_zone_by_name("center")) {
             props.push_back(world_object_prop(vec3(16, 16, 0), bn::sprite_items::statue));
+        }
+        // First room
+        if (&zone == get_zone_by_name("s_c1")) {
+            props.push_back(world_object_prop(vec3(-76, 16, 32), bn::sprite_items::npc_classmate01));
+            props.push_back(world_object_prop(vec3(-16, 16, 64), bn::sprite_items::npc_classmate02));
+            props.push_back(world_object_prop(vec3(-70, 8, 0), bn::sprite_items::npc_classmate03));
+            props.push_back(world_object_prop(vec3(-16, 16, 8), bn::sprite_items::npc_classmate04));
+            props.push_back(world_object_prop(vec3(32, 16, 0), bn::sprite_items::npc_classmate05));
         }
 
         // Boss hack

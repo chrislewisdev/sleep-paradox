@@ -5,8 +5,10 @@ Sleep Paradox is an entry into GBA Jam 2024 by staticlinkage, Urigamiart, Nikku4
 ## Credits
 
 - Programming: staticlinkage
-- Art: Urigamiart and Locusbelmont
+- Art: Urigamiart
 - Music: Nikku4211
+
+Locusbelmont also assisted with some sprite work.
 
 Fonts used are the work of Sparklin Labs / Pixel-boy under Creative Commons
 

@@ -11,7 +11,7 @@ namespace sp {
     {
         position = _position;
 
-        stats = rpg_stats(10, 10, 10, 5);
+        stats = rpg_stats(100, 15, 15, 5);
         health = stats.max_health;
     }
 
@@ -46,7 +46,8 @@ namespace sp {
     }
 
     void world_object_boss::update_idle(sp::world_state& world_state) {
-        use_animation("idle", sp::animations::boss::idle);
+        if (is_transformed) use_animation("idle", sp::animations::boss::idle);
+        else use_animation("idle_human", sp::animations::boss::idle_human);
 
         vec3 player_position = world_state.get_player().get_position();
         vec3 to_player = player_position - position;
@@ -54,6 +55,13 @@ namespace sp {
         // Calculate distance using ints to avoid overflow over large distances
         int distance_squared = to_player.x.integer() * to_player.x.integer() + to_player.z.integer() * to_player.z.integer();
         if (distance_squared < 90*90) {
+            if (!is_transformed) {
+                play_animation(sp::animations::boss::transform);
+                is_transformed = true;
+                attack_windup = 60;
+            }
+        }
+        if (is_transformed && --attack_windup <= 0) {
             state = enemy_state::chase;
         }
     }

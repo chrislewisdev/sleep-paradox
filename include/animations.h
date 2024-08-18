@@ -137,10 +137,10 @@ namespace sp::animations {
             return bn::create_sprite_animate_action_once(sprite, 5, tiles, 23, 24, 25, 26, 27);
         }
         inline world_object_animation throw_attack(const bn::sprite_ptr& sprite) {
-            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 28, 29, 30);
+            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 28, 29, 30, 30);
         }
         inline world_object_animation transform(const bn::sprite_ptr& sprite) {
-            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 4, 5, 6, 7, 8, 9, 10, 11);
+            return bn::create_sprite_animate_action_once(sprite, 10, tiles, 4, 5, 6, 7, 8, 9, 10, 11, 11);
         }
         inline world_object_animation idle_human(const bn::sprite_ptr& sprite) {
             return bn::create_sprite_animate_action_forever(sprite, 5, tiles, 0, 1, 2, 3);

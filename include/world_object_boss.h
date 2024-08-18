@@ -26,6 +26,7 @@ namespace sp {
             int attack_windup;
             bn::random rng;
             bool use_melee;
+            bool is_transformed = false;
 
         public:
             world_object_boss(vec3 position);

@@ -193,6 +193,7 @@ namespace sp {
         
         attack_fx->set_horizontal_flip(facing == -1);
         attack_fx->set_position(32 * facing, 1);
+        attack_fx->set_visible(is_visible);
         attack_fx_animation->update();
 
         if (attack_fx_animation->done()) {

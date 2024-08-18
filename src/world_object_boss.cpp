@@ -85,7 +85,7 @@ namespace sp {
 
             if (sprite) {
                 bool is_left_facing = delta.dot(world_state.get_camera().get_right_axis()) > 0;
-                sprite->set_horizontal_flip(is_left_facing);
+                sprite->set_horizontal_flip(!is_left_facing);
             }
         } else {
             enter_attack();

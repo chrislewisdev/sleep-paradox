@@ -113,6 +113,8 @@ namespace sp {
 
     void world_object_player::respawn() {
         health = stats.max_health;
+        is_trapped = false;
+        is_visible = true;
     }
 
     vec3 world_object_player::get_movement_input(bn::fixed heading) {

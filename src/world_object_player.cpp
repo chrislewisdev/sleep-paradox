@@ -172,6 +172,13 @@ namespace sp {
             }
         }
 
+        auto& boss = world_state.get_boss();
+        if (boss) {
+            if (boss->get_collider().touches(attack_collider)) {
+                boss->receive_attack(world_state, stats);
+            }
+        }
+
         play_animation(animations::player::punch);
         attack_fx = bn::sprite_items::attack_fx.create_sprite(32 * facing, 1);
         attack_fx->set_horizontal_flip(facing == -1);

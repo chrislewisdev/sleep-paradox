@@ -11,6 +11,7 @@
 #include "world_object_chest.h"
 #include "world_object_projectile.h"
 #include "world_object_prop.h"
+#include "world_object_boss.h"
 #include "fx_callout.h"
 
 namespace sp {
@@ -29,17 +30,20 @@ namespace sp {
             bn::sprite_text_generator small_text_generator;
             bool is_visible;
             bn::optional<const portal*> queued_zone_change;
+            bn::optional<world_object_boss> boss;
 
         public:
             world_state();
 
             const world_zone& get_current_zone() const;
+            bool is_final_zone() const;
             world_camera& get_camera();
             world_object_player& get_player();
             bn::ivector<world_object_wall>& get_walls();
             bn::ivector<world_object_enemy>& get_enemies();
             bn::ivector<world_object_chest>& get_chests();
             bn::ivector<bn::fixed_rect>& get_colliders();
+            bn::optional<world_object_boss>& get_boss();
             bool get_visible() const;
             void set_visible(bool visible);
 

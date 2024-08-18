@@ -7,9 +7,10 @@ namespace sp {
         private:
             vec3 velocity;
             bool active;
+            animation_generator animation;
 
         public:
-            world_object_projectile(vec3 _position, vec3 _velocity);
+            world_object_projectile(vec3 _position, vec3 _velocity, animation_generator _animation);
 
             bool is_active() const;
 

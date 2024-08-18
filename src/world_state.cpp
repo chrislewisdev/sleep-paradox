@@ -6,11 +6,14 @@
 #include "wall_generator.h"
 #include "world_object_wall.h"
 #include "zones.h"
+#include "advikku_global.h"
+#include "fyingde.h"
 
 #include "bn_sprite_items_statue.h"
 #include "common_variable_8x8_sprite_font.h"
 #include "sp_zone_s_c1.h"
 #include "sp_zone_sw_n.h"
+#include "sp_zone_gym.h"
 
 namespace sp {
     world_state::world_state() :
@@ -23,12 +26,14 @@ namespace sp {
     }
 
     const world_zone& world_state::get_current_zone() const { return *current_zone; }
+    bool world_state::is_final_zone() const { return current_zone == get_zone_by_name("gym"); }
     world_camera& world_state::get_camera() { return camera; }
     world_object_player& world_state::get_player() { return player; }
     bn::ivector<world_object_wall>& world_state::get_walls() { return walls; }
     bn::ivector<world_object_enemy>& world_state::get_enemies() { return enemies; }
     bn::ivector<world_object_chest>& world_state::get_chests() { return chests; }
     bn::ivector<bn::fixed_rect>& world_state::get_colliders() { return colliders; }
+    bn::optional<world_object_boss>& world_state::get_boss() { return boss; }
 
     bool world_state::get_visible() const { return is_visible; }
     void world_state::set_visible(bool visible) {
@@ -44,6 +49,10 @@ namespace sp {
             iter->update(*this);
 
             if (!iter->is_active()) enemies.erase(iter);
+        }
+        if (boss) {
+            boss->update(*this);
+            if (!boss->is_active()) boss.reset();
         }
 
         for (world_object_wall& wall : walls) {
@@ -79,6 +88,7 @@ namespace sp {
         callouts.clear();
         chests.clear();
         props.clear();
+        boss.reset();
 
         wall_generator generator;
         generator.generate_walls(zone, walls);
@@ -93,6 +103,12 @@ namespace sp {
         // Hack for the center garden statue
         if (&zone == get_zone_by_name("center")) {
             props.push_back(world_object_prop(vec3(16, 16, 0), bn::sprite_items::statue));
+        }
+
+        // Boss hack
+        if (&zone == get_zone_by_name("gym")) {
+            boss = world_object_boss(vec3::zero);
+            cell_song_setup(FyingDeSongStruct);
         }
     }
 

@@ -5,9 +5,12 @@
 #include "bn_color.h"
 #include "bn_format.h"
 #include "bn_bg_palette_ptr.h"
+#include "bn_log.h"
 
 #include "advikku_global.h"
 #include "institutionalised.h"
+#include "fyingde.h"
+#include "zones.h"
 
 #include "common_variable_8x8_sprite_font.h"
 #include "bn_affine_bg_items_zone_sandbox_floor.h"
@@ -30,7 +33,8 @@ namespace sp {
 
         text_generator.set_bg_priority(0);
 
-        cell_song_setup(InstitutionalisedSongStruct);
+        if (world_state.is_final_zone()) cell_song_setup(FyingDeSongStruct);
+        else cell_song_setup(InstitutionalisedSongStruct);
     }
 
     void scene_game::update() {
@@ -84,6 +88,11 @@ namespace sp {
             bg_layer_ceiling.set_priority(1);
             bg_layer_ceiling.set_wrapping_enabled(false);
             //bg_layer_ceiling.set_palette(world_state.get_current_zone().ceiling.palette_item());
+        }
+        // When the final boss is killed, go to the ending scene...
+        if (world_state.is_final_zone() && !world_state.get_boss()) {
+            scene_manager.queue_scene_change(sp::scene_id::end);
+            world_state.set_visible(false);
         }
 
         // This order of operations is a little messed up because there is a circular dependency between

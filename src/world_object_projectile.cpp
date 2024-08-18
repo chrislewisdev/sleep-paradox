@@ -6,9 +6,10 @@
 #include "bn_sprite_items_apple_sheet.h"
 
 namespace sp {
-    world_object_projectile::world_object_projectile(vec3 _position, vec3 _velocity) :
+    world_object_projectile::world_object_projectile(vec3 _position, vec3 _velocity, animation_generator _animation) :
         world_object(bn::sprite_items::apple_sheet),
-        velocity(_velocity)
+        velocity(_velocity),
+        animation(_animation)
     {
         position = _position;
 
@@ -18,7 +19,7 @@ namespace sp {
     bool world_object_projectile::is_active() const { return active; }
 
     void world_object_projectile::update(sp::world_state& world_state) {
-        use_animation("spin", sp::animations::apple::spin);
+        use_animation("spin", animation);
 
         position = position + velocity;
 

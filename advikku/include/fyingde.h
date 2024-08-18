@@ -1,12 +1,12 @@
 #pragma once
 #include <stdint.h>
 #include <tonc.h>
-#include "../source/advikku_global.h"
+#include "advikku_global.h"
 //converted by Nikku4211's furtoadvik.py, reliant on zumi.dxy's chipchune.py
-#include "blank_raw.h"
-#include "powerkick_raw.h"
-#include "powersnare2_raw.h"
-#include "heavyskitta_raw.h"
+#include "blank_bin.h"
+#include "powerkick_bin.h"
+#include "powersnare2_bin.h"
+#include "heavyskitta_bin.h"
 extern const uint8_t FyingDeSongHeader[];
 extern const uint8_t FyingDeSongOrderChan0_0[];
 extern const uint8_t FyingDeSongOrderChan1_0[];

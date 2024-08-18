@@ -18,6 +18,8 @@
 #include "bn_sprite_items_creeper_attack_sheet.h"
 #include "bn_sprite_items_thrower_sheet.h"
 #include "bn_sprite_items_apple_sheet.h"
+#include "bn_sprite_items_boss_sheet.h"
+#include "bn_sprite_items_boss_ball_sheet.h"
 
 namespace sp::animations {
     namespace player {
@@ -115,6 +117,36 @@ namespace sp::animations {
 
         inline world_object_animation spin(const bn::sprite_ptr& sprite) {
             return bn::create_sprite_animate_action_forever(sprite, 1, tiles, 0, 1, 2, 3, 4, 5, 6, 7);
+        }
+    }
+
+    namespace boss {
+        constexpr bn::sprite_tiles_item tiles = bn::sprite_items::boss_sheet.tiles_item();
+        constexpr bn::sprite_tiles_item ball_tiles = bn::sprite_items::boss_ball_sheet.tiles_item();
+
+        inline world_object_animation idle(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_forever(sprite, 5, tiles, 12, 13, 14);
+        }
+        inline world_object_animation move(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_forever(sprite, 5, tiles, 31, 32, 33,34, 35, 36, 37);
+        }
+        inline world_object_animation attack(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 15, 16, 17, 18, 19, 20, 21, 22);
+        }
+        inline world_object_animation windup(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 23, 24, 25, 26, 27);
+        }
+        inline world_object_animation throw_attack(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 28, 29, 30);
+        }
+        inline world_object_animation transform(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 4, 5, 6, 7, 8, 9, 10, 11);
+        }
+        inline world_object_animation idle_human(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_forever(sprite, 5, tiles, 0, 1, 2, 3);
+        }
+        inline world_object_animation ball_spin(const bn::sprite_ptr& sprite) {
+            return bn::create_sprite_animate_action_forever(sprite, 2, ball_tiles, 0, 1, 2, 3);
         }
     }
 }

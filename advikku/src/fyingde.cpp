@@ -2,6 +2,7 @@
 #include <tonc.h>
 //converted by Nikku4211's furtoadvik.py, reliant on zumi.dxy's chipchune.py
 #include "advikku_global.h"
+#include "fyingde.h"
 #include "blank_bin.h"
 #include "powerkick_bin.h"
 #include "powersnare2_bin.h"

@@ -3,6 +3,7 @@
 #include "bn_keypad.h"
 
 #include "world_state.h"
+#include "animations.h"
 
 #include "bn_sprite_items_bully01_side_profile.h"
 
@@ -109,7 +110,7 @@ namespace sp {
             } else if (type->behaviour_type == behaviour_type::ranged) {
                 vec3 spawn_position = position + vec3::right * 9 + vec3::up * 9;
                 vec3 to_player = world_state.get_player().get_position() - spawn_position;
-                world_state.spawn_projectile(world_object_projectile(spawn_position, normalise(to_player) * 2));
+                world_state.spawn_projectile(world_object_projectile(spawn_position, normalise(to_player) * 2, sp::animations::apple::spin));
             } else if (type->behaviour_type == behaviour_type::charger) {
                 vec3 to_player = world_state.get_player().get_position() - position;
                 charge_vector = normalise(to_player) * 3;

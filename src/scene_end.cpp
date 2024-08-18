@@ -11,7 +11,8 @@ namespace sp {
         bn::sprite_text_generator text_gen(common::variable_8x16_sprite_font);
         text_gen.set_center_alignment();
 
-        text_gen.generate(0, -8, "End scene", text_sprites);
+        text_gen.generate(0, -8, "The end!", text_sprites);
+        text_gen.generate(0, 8, "Thanks for playing :3", text_sprites);
     }
 
     void scene_end::update() {}

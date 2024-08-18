@@ -36,7 +36,7 @@ namespace sp::animations {
             return bn::create_sprite_animate_action_once(sprite, 20, tiles, 7, 8);
         }
         inline world_object_animation punch(const bn::sprite_ptr& sprite) {
-            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 13, 14, 9);
+            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 11, 12, 13, 14, 15, 11);
         }
         inline world_object_animation dash(const bn::sprite_ptr& sprite) {
             return bn::create_sprite_animate_action_once(sprite, 5, dash_tiles, 0, 1, 2, 0);
@@ -46,7 +46,7 @@ namespace sp::animations {
         constexpr bn::sprite_tiles_item tiles = bn::sprite_items::attack_fx.tiles_item();
 
         inline world_object_animation punch(const bn::sprite_ptr& sprite) {
-            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 2, 3, 2);
+            return bn::create_sprite_animate_action_once(sprite, 5, tiles, 0, 1, 2, 3, 4, 4); 
         }
     }
     

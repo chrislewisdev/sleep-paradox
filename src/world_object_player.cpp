@@ -191,6 +191,8 @@ namespace sp {
     void world_object_player::update_fx() {
         if (!attack_fx_animation.has_value()) return;
         
+        attack_fx->set_horizontal_flip(facing == -1);
+        attack_fx->set_position(32 * facing, 1);
         attack_fx_animation->update();
 
         if (attack_fx_animation->done()) {
